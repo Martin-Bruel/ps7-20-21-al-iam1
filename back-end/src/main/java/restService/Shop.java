@@ -18,7 +18,7 @@ public class Shop { // on peut faire de l'héritage
         shopType=type;
         this.address=address;
         this.name=name;
-        contentJSON=String.valueOf(id)+"content.json";
+        contentJSON="src/main/java/restService/content/"+String.valueOf(id)+"content.json";
         file = new File(contentJSON);
         createJSON();
     }
