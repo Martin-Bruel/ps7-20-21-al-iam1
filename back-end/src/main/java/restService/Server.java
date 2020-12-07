@@ -13,7 +13,8 @@ public class Server {
 	
 	@GetMapping("/hello-world")
 	@ResponseBody
-	public Shop shop(@RequestParam(value = "name",defaultValue = "") String name){
-		return new Shop(counter.incrementAndGet(),ShopType.COMMERCE, name, "10 avenue Tour");
+	public String shop(@RequestParam(value = "name",defaultValue = "") String name){
+		Shop shop = new Shop(counter.incrementAndGet(),ShopType.COMMERCE, name, "10 avenue Tour");
+		return shop.getJSON();
 	}
 }

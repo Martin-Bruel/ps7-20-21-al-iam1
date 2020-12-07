@@ -22,6 +22,15 @@ public class Shop { // on peut faire de l'héritage
         file = new File(contentJSON);
         createJSON();
     }
+    
+    String getJSON(){
+        JSONObject header = new JSONObject();
+        header.put("id",id);
+        header.put("name",name);
+        header.put("address",address);
+        header.put("type", shopType);
+        return header.toJSONString();
+    }
 
     long getID(){
         return id;
