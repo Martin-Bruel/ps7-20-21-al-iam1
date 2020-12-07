@@ -1,6 +1,7 @@
 package restService;
 
 import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
 import org.json.simple.JSONObject;
 
@@ -10,6 +11,7 @@ public class Shop { // on peut faire de l'héritage
     private String address;
     ShopType shopType;
     String contentJSON;
+    File file;
 
     Shop(long id, ShopType type, String name,String address){
         this.id=id;
@@ -17,6 +19,7 @@ public class Shop { // on peut faire de l'héritage
         this.address=address;
         this.name=name;
         contentJSON=String.valueOf(id)+"content.json";
+        file = new File(contentJSON);
         createJSON();
     }
 
@@ -30,12 +33,16 @@ public class Shop { // on peut faire de l'héritage
         header.put("name",name);
         header.put("address",address);
         header.put("type", shopType);
-        try (FileWriter file = new FileWriter("/content/"+contentJSON)) {
- 
-            file.write(header.toJSONString());
-            file.flush();
- 
-        } catch (IOException e) {
+        
+        try {
+			if (!file.exists())
+				file.createNewFile();
+			FileWriter writer = new FileWriter(file);
+			writer.write(header.toJSONString());
+			writer.flush();
+			writer.close();
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
     }
