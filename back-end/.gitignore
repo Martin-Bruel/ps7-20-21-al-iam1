@@ -1,3 +1,4 @@
+
 .metadata
 bin/
 *.class
@@ -62,3 +63,4 @@ local.properties
 
 #eclipse 
 .idea/
+/target/
