@@ -10,5 +10,9 @@ public class Main {
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(Main.class,args);
+
+		Shop testShop=new Shop(0,ShopType.COMMERCE, "name", "10 avenue Tour");
+		System.out.println(testShop.getID());
+
 	}
 }
