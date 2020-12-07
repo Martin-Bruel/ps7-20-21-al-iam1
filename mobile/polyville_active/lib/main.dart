@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-
-import 'package:polyville_active/src/ui/screens/notifications/notification_page.dart';
 import 'package:polyville_active/src/ui/screens/home/home_page.dart';
-import 'package:polyville_active/src/ui/screens/settings/settings_page.dart';
+import 'package:polyville_active/src/ui/screens/notifications/notification_page.dart';
+import 'package:polyville_active/src/ui/screens/search/search_page.dart';
+
+import 'src/ui/screens/settings/settings_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -37,6 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
     NotificationPage(),
     HomePage(),
     SettingsPage(),
+    SearchPage(),
   ];
 
   void onTabTapped(dynamic index) {
@@ -54,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: onTabTapped,
+        type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
@@ -65,7 +68,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: 'Paramètres',
+            label: "Paramètre",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Recherches',
           ),
         ],
       ),

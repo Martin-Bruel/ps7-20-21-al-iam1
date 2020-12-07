@@ -28,7 +28,7 @@ public class Shop { // on peut faire de l'héritage
         header.put("id",id);
         header.put("name",name);
         header.put("address",address);
-        header.put("type", shopType);
+        header.put("type", shopType.toString());
         return header.toJSONString();
     }
 
@@ -41,7 +41,7 @@ public class Shop { // on peut faire de l'héritage
         header.put("id",id);
         header.put("name",name);
         header.put("address",address);
-        header.put("type", shopType);
+        header.put("type", shopType.toString());
         
         try {
 			if (!file.exists())
