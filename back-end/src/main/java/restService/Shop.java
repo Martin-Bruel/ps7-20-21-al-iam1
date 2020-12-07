@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
 
 public class Shop { // on peut faire de l'héritage
     private final long id;
@@ -12,6 +13,11 @@ public class Shop { // on peut faire de l'héritage
     ShopType shopType;
     String contentJSON;
     File file;
+    JSONObject shop;
+    JSONObject header;
+    JSONArray publications;
+
+    
 
     Shop(long id, ShopType type, String name,String address){
         this.id=id;
@@ -24,12 +30,20 @@ public class Shop { // on peut faire de l'héritage
     }
     
     String getJSON(){
-        JSONObject header = new JSONObject();
+        header = new JSONObject();
+        shop = new JSONObject();
+        publications = new JSONArray();
         header.put("id",id);
         header.put("name",name);
         header.put("address",address);
-        header.put("type", shopType);
-        return header.toJSONString();
+        header.put("type", shopType.toString());
+        JSONObject publication = new JSONObject();
+        publication.put("title","tadaaaa");
+        publication.put("date","10/11/2202");
+        publications.add(publication);
+        shop.put("header",header);
+        shop.put("publications",publications);
+        return shop.toJSONString();
     }
 
     long getID(){
@@ -37,11 +51,11 @@ public class Shop { // on peut faire de l'héritage
     }
 
     void createJSON(){ 
-        JSONObject header = new JSONObject();
+        header = new JSONObject();
         header.put("id",id);
         header.put("name",name);
         header.put("address",address);
-        header.put("type", shopType);
+        header.put("type", shopType.toString());
         
         try {
 			if (!file.exists())
