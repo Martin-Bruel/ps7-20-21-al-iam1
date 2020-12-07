@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import org.json.simple.JSONObject;
 
-public class Shop {
+public class Shop { // on peut faire de l'héritage
     private final long id;
     private String name;
     private String address;
@@ -24,7 +24,7 @@ public class Shop {
         return id;
     }
 
-    void createJSON(){ // héritage plus tard
+    void createJSON(){ 
         JSONObject header = new JSONObject();
         header.put("id",id);
         header.put("name",name);
