@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:polyville_active/src/core/shop/Shop.dart';
 
 class SearchPage extends StatefulWidget {
@@ -10,13 +11,13 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  Shop shop;
+  List<Shop> shops = <Shop>[];
 
   void callApi(String v) {
-    setState(() {
-      print(v);
-      Shop.fetchShop().then((value) => shop = value);
-      print(shop.address);
+    Shop.fetchShop(int.parse(v)).then((value) {
+      value != null
+          ? setState(() => shops.add(value))
+          : print(v + ' not found');
     });
   }
 
@@ -33,6 +34,16 @@ class _SearchPageState extends State<SearchPage> {
             Text('Page de recherche'),
             TextFormField(
               onFieldSubmitted: (value) => callApi(value),
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: shops.length,
+                itemBuilder: (context, index) => Text(shops[index].name),
+              ),
             ),
           ],
         ),

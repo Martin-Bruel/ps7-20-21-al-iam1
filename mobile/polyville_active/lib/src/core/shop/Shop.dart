@@ -19,13 +19,15 @@ class Shop {
     );
   }
 
-  static Future<Shop> fetchShop() async {
-    final response = await http.get('http://10.0.2.2:8080/hello-world');
+  static Future<Shop> fetchShop(int id) async {
+    final response =
+        await http.get('http://10.0.2.2:8080/shop/' + id.toString());
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return Shop.fromJson(jsonDecode(response.body));
+      if (response.body.isEmpty) return null;
+      return Shop.fromJson(jsonDecode(response.body)['header']);
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
