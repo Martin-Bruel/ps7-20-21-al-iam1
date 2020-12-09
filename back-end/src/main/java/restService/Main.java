@@ -1,10 +1,10 @@
 package restService;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
 public class Main {
-	@RequestMapping("/")
 	String home() {
 		return "ok";
 	}
