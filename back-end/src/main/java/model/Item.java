@@ -4,7 +4,7 @@ public class Item {
 	
 	private float price;
 	
-	public Item(float pric) {
+	public Item(float price) {
 		this.price=price;
 	}
 	public float getPrice(){

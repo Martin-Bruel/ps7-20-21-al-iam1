@@ -10,7 +10,7 @@ public class Menu {
 	List<String> items;
 	
 	public Menu() {
-		items=new ArrayList();
-		menuItems = new HashMap();
+		items=new ArrayList<String>();
+		menuItems = new HashMap<String,Float>();
 	}
 }
