@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:polyville_active/src/ui/screens/home/home_page.dart';
 import 'package:polyville_active/src/ui/screens/notifications/notification_page.dart';
 import 'package:polyville_active/src/ui/screens/search/search_page.dart';
+import 'package:polyville_active/test_bluetooth/flutter_blue.dart';
+import 'package:polyville_active/test_bluetooth/flutter_blue_reactive.dart';
 
 import 'src/ui/screens/settings/settings_page.dart';
 
@@ -35,8 +37,10 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   static List<Widget> _pages = <Widget>[
-    NotificationPage(),
-    HomePage(),
+    FlutterBlueApp(),
+    // NotificationPage(),
+    FlutterBlueReactive(),
+    //HomePage(),
     SettingsPage(),
     SearchPage(),
   ];
@@ -59,16 +63,16 @@ class _MyHomePageState extends State<MyHomePage> {
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: "Notifications",
-          ),
+              icon: Icon(Icons.list),
+              //  label: 'Notifications',
+              label: 'flutter blue'),
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: "Accueil",
+            label: 'Accueil',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: "Paramètre",
+            label: 'Paramètre',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),

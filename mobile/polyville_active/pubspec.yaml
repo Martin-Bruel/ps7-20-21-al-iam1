@@ -22,6 +22,10 @@ environment:
 
 dependencies:
   http: 0.12.2
+  # dlna: ^0.0.5
+  # upnp: ^2.0.0+1
+  flutter_reactive_ble: ^2.7.1
+  flutter_blue: ^0.7.3
   flutter:
     sdk: flutter
 

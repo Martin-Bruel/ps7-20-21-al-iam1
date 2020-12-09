@@ -42,7 +42,7 @@ class _SearchPageState extends State<SearchPage> {
             Expanded(
               child: ListView.builder(
                 itemCount: shops.length,
-                itemBuilder: (context, index) => Text(shops[index].name),
+                itemBuilder: (context, index) => Text(shops[index].address),
               ),
             ),
           ],
