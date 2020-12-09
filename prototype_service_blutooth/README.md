@@ -1,3 +1,8 @@
+## Compilation
+
+### Compilation du programme
+`mvn clean package`
+
 ## Exécuter le prototype
 
 ### Lancer le client
