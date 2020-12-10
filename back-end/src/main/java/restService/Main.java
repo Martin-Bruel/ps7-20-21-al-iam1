@@ -1,6 +1,8 @@
 package restService;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.LocalDateTime;
 
 import model.*;
 
@@ -13,6 +15,6 @@ public class Main {
 		System.out.println("shop"+shop);
 		shop = JsonReader.read();
 		System.out.println("shop"+shop);
-		
+		System.out.println(LocalDateTime.now());
 	}
 }
