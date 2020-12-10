@@ -36,6 +36,9 @@ public abstract class Store {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
+	public String getName(){
+		return name;
+	}
 }
