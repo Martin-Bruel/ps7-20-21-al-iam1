@@ -38,7 +38,7 @@ public abstract class Store {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.NON_PRIVATE);
 		try{
-		objectMapper.writeValue(new File("src/main/java/restService/content/store.json"), this);			
+		objectMapper.writeValue(new File("src/main/java/dataBase/content/store.json"), this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
