@@ -11,63 +11,63 @@ import org.fourthline.cling.model.meta.*;
 import org.fourthline.cling.model.types.DeviceType;
 import org.fourthline.cling.model.types.UDADeviceType;
 import org.fourthline.cling.model.types.UDN;
-
-import java.io.IOException;
+import dataBase.JsonReader;
 
 public class Server {
 
-    final private String SERVER_NAME;
-    private final Store store;
 
+    public static final Store store = JsonReader.read();
+    final private String SERVER_NAME = "ServerStore"+store.getName();
+    final private String SCHEMA_NAME = "server";
+    final private String MANUFACTURE_NAME = "PS7-AL-IAM1";
 
-    public Server(Store store){
-        this.store = store;
-        SERVER_NAME = "Server store "+store.getName();
-    }
-
-    public void startServer() throws IOException, ValidationException {
+    /**
+     * Start server for the store
+     * @throws ValidationException if can't create services
+     */
+    public void startServer() throws ValidationException {
 
         //Creation d'un service UPNP
         final UpnpService upnpService = new UpnpServiceImpl();
-
-        //stop le serveur lors de l'arret de l'application
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
                 upnpService.shutdown();
             }
         });
-
         upnpService.getRegistry().addDevice(createDevice());
     }
 
 
-    LocalDevice createDevice() throws ValidationException, LocalServiceBindingException, IOException {
+    /**
+     * Create device server which can be use on upnp network
+     * @return device server
+     * @throws ValidationException if can't create services
+     * @throws LocalServiceBindingException if bad name on services method
+     */
+    LocalDevice createDevice() throws ValidationException, LocalServiceBindingException {
 
         DeviceIdentity identity = new DeviceIdentity(UDN.uniqueSystemIdentifier(SERVER_NAME));
-        DeviceType type =new UDADeviceType("store", 1);
+        DeviceType type =new UDADeviceType(SCHEMA_NAME, 1);
 
         DeviceDetails details =
                 new DeviceDetails(
                         SERVER_NAME,
-                        new ManufacturerDetails("ACME"),
+                        new ManufacturerDetails(MANUFACTURE_NAME),
                         new ModelDetails(
-                                "BinLight2000",
-                                "A demo light with on/off switch.",
+                                SCHEMA_NAME,
+                                "A store with details, service and subscribe.",
                                 "v1"
                         )
                 );
 
 
 
-        LocalService<SwitchPower> switchPowerService =
-                new AnnotationLocalServiceBinder().read(SwitchPower.class);
+        LocalService<StoreManager> storeService = new AnnotationLocalServiceBinder().read(StoreManager.class);
 
-        switchPowerService.setManager(
-                new DefaultServiceManager(switchPowerService, SwitchPower.class)
-        );
+        storeService.setManager(new DefaultServiceManager(storeService, StoreManager.class));
 
-        return new LocalDevice(identity, type, details, switchPowerService);
+        return new LocalDevice(identity, type, details, storeService);
 
     /* Several services can be bound to the same device:
     return new LocalDevice(

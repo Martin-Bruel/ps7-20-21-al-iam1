@@ -1,10 +1,8 @@
-package restService;
+package dataBase;
 
 import java.io.File;
 import java.io.IOException;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.Store;
@@ -15,7 +13,7 @@ public class JsonReader {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		try {
-			Store store = mapper.readValue(new File("src/main/java/restService/content/store.json"), Store.class);
+			Store store = mapper.readValue(new File("src/main/java/dataBase/content/store.json"), Store.class);
 			return store;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -1,20 +1,16 @@
 package upnpService;
 
-import model.Store;
 import org.fourthline.cling.model.ValidationException;
-import restService.JsonReader;
-
-import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException, ValidationException {
+    public static void main(String[] args) {
 
-
-        Store store = JsonReader.read();
-        Server server = new Server(store);
-        server.startServer();
-
-
+        try {
+            new Server().startServer();
+        } catch (ValidationException e) {
+            System.out.println("Server can't start...");
+            e.printStackTrace();
+        }
     }
 }
