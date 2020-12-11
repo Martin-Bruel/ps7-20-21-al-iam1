@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -64,9 +65,10 @@ public abstract class Store {
 
 	public String productsToJSON(){
 		ObjectMapper mapper = new ObjectMapper();
+		CollectionType productListType = mapper.getTypeFactory().constructCollectionType(List.class,Product.class);
 		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
 		try{
-			return mapper.writeValueAsString(products);
+			return mapper.writer().withType(productListType).writeValueAsString(products);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
