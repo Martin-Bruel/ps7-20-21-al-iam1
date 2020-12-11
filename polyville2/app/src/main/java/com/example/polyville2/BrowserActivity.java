@@ -56,7 +56,6 @@ import java.util.logging.Logger;
 
                 // Get ready for future device advertisements
                 upnpService.getRegistry().addListener(registryListener);
-
                 // Now add all devices to the list we already know about
                 for (Device device : upnpService.getRegistry().getDevices()) {
                     registryListener.deviceAdded(device);
@@ -183,7 +182,9 @@ import java.util.logging.Logger;
             /* Discovery performance optimization for very slow Android devices! */
             @Override
             public void remoteDeviceDiscoveryStarted(Registry registry, RemoteDevice device) {
-                deviceAdded(device);
+                if(device.getDetails().getModelDetails().getModelName().equals("server")){
+                    deviceAdded(device);
+                }
             }
 
             @Override
@@ -203,10 +204,12 @@ import java.util.logging.Logger;
             /* End of optimization, you can remove the whole block if your Android handset is fast (>= 600 Mhz) */
 
             @Override
-            public void remoteDeviceAdded(Registry registry, RemoteDevice device) {
-                deviceAdded(device);
-            }
+            public void remoteDeviceAdded(Registry registry, final RemoteDevice device) {
+                if(device.getDetails().getModelDetails().getModelName().equals("server")){
+                    deviceAdded(device);
+                }
 
+            }
             @Override
             public void remoteDeviceRemoved(Registry registry, RemoteDevice device) {
                 deviceRemoved(device);
@@ -253,6 +256,7 @@ import java.util.logging.Logger;
 
             public DeviceDisplay(Device device) {
                 this.device = device;
+
             }
 
             public Device getDevice() {
