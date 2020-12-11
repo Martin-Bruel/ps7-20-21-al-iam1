@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -33,14 +32,45 @@ public abstract class Store {
 		products.add(i);
 	}
 
-	public String toJson() throws JsonProcessingException {
+	public String toJSON() throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
-		return mapper.writeValueAsString(this);
+		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
+		try{
+			return mapper.writeValueAsString(this);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public String detailsToJSON(){
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
+		String result="";
+		try{
+			result=result+ mapper.writeValueAsString(name);
+			result=result+ mapper.writeValueAsString(id);
+			//result=result+ mapper.writeValueAsString();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	public String productsToJSON(){
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
+		try{
+			return mapper.writeValueAsString(products);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public void makeJSON(){
 		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.NON_PRIVATE);
 		try{
 		objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("src/main/java/dataBase/content/store.json"), this);
 		} catch (IOException e) {

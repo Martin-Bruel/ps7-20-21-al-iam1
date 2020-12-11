@@ -12,6 +12,8 @@ public class Main {
 		Store shop=new Shop(0,"truc2","adresse truc",null);
 		shop.addProduct(new Item("item1", 12));
 		shop.makeJSON();
+		System.out.println(shop.productsToJSON());
+		//System.out.println(shop.toJSON());
 		//shop.printJSON();
 		//shop = null;
 		//System.out.println("shop"+shop);

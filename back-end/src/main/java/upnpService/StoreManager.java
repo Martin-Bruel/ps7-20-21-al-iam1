@@ -11,7 +11,7 @@ import dataBase.JsonReader;
 public class StoreManager {
 
     @UpnpStateVariable(defaultValue = "0", sendEvents = false)
-    private String storeDetails = JsonReader.read().toJson();
+    private String storeDetails = Server.store.detailsToJSON();
 
     public StoreManager() throws JsonProcessingException {
     }
