@@ -10,9 +10,10 @@ public class Main {
 	public static void main(String[] args) {
 		
 		Store shop=new Shop(0,"truc2","adresse truc",null);
-		shop.addProduct(new Item("item1", 12));
+		shop.addProduct(new Item("item1", 13));
 		shop.makeJSON();
-		System.out.println(shop.productsToJSON());
+		//System.out.println(shop.detailsToJSON());
+		//System.out.println(shop.toJSON());
 		//System.out.println(shop.toJSON());
 		//shop.printJSON();
 		//shop = null;

@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 )
 @JsonTypeName("store")
 public abstract class Store {
-	long id;
+	int id;
 	String name;
 	String address;
 	protected List<Product> products;
@@ -32,12 +32,12 @@ public abstract class Store {
 		products.add(i);
 	}
 
-	public String toJSON() throws JsonProcessingException {
+	public String toJSON(){
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
+		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
 		try{
 			return mapper.writeValueAsString(this);
-		} catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -46,11 +46,15 @@ public abstract class Store {
 	public String detailsToJSON(){
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
-		String result="";
+		String result="";	
 		try{
-			result=result+ mapper.writeValueAsString(name);
-			result=result+ mapper.writeValueAsString(id);
-			//result=result+ mapper.writeValueAsString();
+			String s=this.getClass().getSimpleName();
+			s=s.replaceFirst(s.charAt(0)+"",(s.charAt(0)+"").toLowerCase());
+			result+="{\"type\":\""+s+"\"";
+			result+= ",\"id\":"+mapper.writeValueAsString(this.id);
+			result+= ",\"name\":"+mapper.writeValueAsString(this.name);
+			result+= ",\"address\":"+mapper.writeValueAsString(this.address)+"}";
+			return result;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -71,6 +75,7 @@ public abstract class Store {
 
 	public void makeJSON(){
 		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
 		try{
 		objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("src/main/java/dataBase/content/store.json"), this);
 		} catch (IOException e) {

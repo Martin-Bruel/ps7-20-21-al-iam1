@@ -25,6 +25,7 @@ public class Shop extends Store{
 		this.name=name;
 		this.products=new ArrayList<Product>();
 	}
+
 	public void addProduct(Product i) {
 		products.add(i);
 	}
