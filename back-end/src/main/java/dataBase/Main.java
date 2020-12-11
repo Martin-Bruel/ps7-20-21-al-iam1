@@ -1,19 +1,22 @@
 package dataBase;
 
-
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import model.*;
 
 
 public class Main {
 	public static void main(String[] args) {
-		Store shop=new Commerce("truc1","adresse truc");
+		
+		Store shop=new Shop(0,"truc2","adresse truc",null);
+		shop.addProduct(new Item("item1", 12));
 		shop.makeJSON();
-		shop = null;
-		System.out.println("shop"+shop);
-		shop = JsonReader.read();
-		System.out.println("shop"+shop);
-		System.out.println(LocalDateTime.now());
+		//shop.printJSON();
+		//shop = null;
+		//System.out.println("shop"+shop);
+		//shop = JsonReader.read();
+		//System.out.println("shop"+shop);
+		//System.out.println(LocalDateTime.now());
 	}
 }

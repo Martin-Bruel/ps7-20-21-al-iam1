@@ -1,1 +1,11 @@
-{"typ":"commerce","id":0,"name":"truc1","address":"adresse truc","product":[]}
+{
+  "type" : "shop",
+  "id" : 0,
+  "name" : "truc2",
+  "address" : "adresse truc",
+  "products" : [ {
+    "type" : "item",
+    "name" : "item1",
+    "price" : 12.0
+  } ]
+}

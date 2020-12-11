@@ -13,9 +13,9 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "typ")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = Commerce.class, name = "commerce"),
+    @JsonSubTypes.Type(value = Shop.class, name = "shop"),
 	}
 )
 @JsonTypeName("store")
@@ -23,10 +23,14 @@ public abstract class Store {
 	long id;
 	String name;
 	String address;
-	protected List<Product> product;
+	protected List<Product> products;
 	
-	public List<Product> getProduct(){
-		return product;
+	public List<Product> getProducts(){
+		return products;
+	}
+
+	public void addProduct(Product i) {
+		products.add(i);
 	}
 
 	public String toJson() throws JsonProcessingException {
@@ -38,7 +42,7 @@ public abstract class Store {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.NON_PRIVATE);
 		try{
-		objectMapper.writeValue(new File("src/main/java/dataBase/content/store.json"), this);
+		objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("src/main/java/dataBase/content/store.json"), this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
