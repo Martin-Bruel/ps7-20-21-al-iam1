@@ -75,17 +75,12 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
-        System.out.println("I'm here2");
         devicesList.add((RemoteDevice)o);
-
         runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
-
                 boutiquesAdapter.notifyDataSetChanged();
-                System.out.println(boutiquesAdapter.getCount());
-
             }
         });
     }

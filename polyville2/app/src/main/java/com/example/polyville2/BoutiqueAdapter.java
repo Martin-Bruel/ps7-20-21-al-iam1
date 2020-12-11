@@ -40,6 +40,6 @@ public class BoutiqueAdapter extends BaseAdapter{
         }
         TextView boutiqueTV = view.findViewById(R.id.boutique_tv);
         boutiqueTV.setText(devices.get(i).getDetails().getFriendlyName());
-        return null;
+        return view;
     }
 }
