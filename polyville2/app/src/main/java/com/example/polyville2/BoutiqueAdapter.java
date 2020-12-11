@@ -20,7 +20,7 @@ public class BoutiqueAdapter extends BaseAdapter{
     }
     @Override
     public int getCount() {
-        return 0;
+        return devices.size();
     }
 
     @Override

@@ -30,6 +30,8 @@ public class DiscoveryDevice extends Observable implements RegistryListener {
         System.out.println("service found"+device.getDetails().getModelDetails().getModelName() );
         if(device.getDetails().getModelDetails().getModelName().equals("server")){
             System.out.println("I'm here "+device.getDetails().getModelDetails().getModelName() );
+            System.out.println(countObservers());
+            setChanged();
             notifyObservers(device);
         }
     }

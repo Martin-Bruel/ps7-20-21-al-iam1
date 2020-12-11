@@ -28,7 +28,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Observer {
     private ListView boutiques;
     private List<RemoteDevice> devicesList = new ArrayList<>();
     private DiscoveryDevice registryListener ;
@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private AndroidUpnpService upnpService;
     private BaseAdapter boutiquesAdapter;
     private ServiceConnection serviceConnection;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,15 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         boutiques.setAdapter(boutiquesAdapter);
         registryListener = new DiscoveryDevice();
+        registryListener.addObserver(this);
 
-        this.registryListener.addObserver(new Observer() {
-            @Override
-            public void update(Observable observable, Object o) {
-                devicesList.add((RemoteDevice)o);
-                boutiquesAdapter.notifyDataSetChanged();
-                System.out.println("I'm here2");
-            }
-        });
         serviceConnection = new ServiceConnection() {
 
             public void onServiceConnected(ComponentName className, IBinder service) {
@@ -77,6 +71,22 @@ public class MainActivity extends AppCompatActivity {
                 Context.BIND_AUTO_CREATE
         );
 
+    }
 
+    @Override
+    public void update(Observable observable, Object o) {
+        System.out.println("I'm here2");
+        devicesList.add((RemoteDevice)o);
+
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+
+                boutiquesAdapter.notifyDataSetChanged();
+                System.out.println(boutiquesAdapter.getCount());
+
+            }
+        });
     }
 }
