@@ -22,4 +22,4 @@ jobs:
       with:
         java-version: 11
     - name: Build with Maven
-      run: mvn -B package --file sotre/pom.xml
+      run: mvn -B package --file store/pom.xml
