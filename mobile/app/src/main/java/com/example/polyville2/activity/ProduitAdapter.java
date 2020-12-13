@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.polyville2.R;
+import com.example.polyville2.model.Item;
 import com.example.polyville2.model.Store;
 
 import org.seamless.util.logging.SystemOutLoggingHandler;
@@ -41,6 +42,9 @@ public class ProduitAdapter extends BaseAdapter {
         }
         TextView produitTV = view.findViewById(R.id.produit_tv);
         produitTV.setText(store.getProducts().get(i).getName());
+
+        TextView priceTv = view.findViewById(R.id.price_textView);
+        priceTv.setText(((Item)store.getProducts().get(i)).getPrice()+"€");
         return view;
     }
 }
