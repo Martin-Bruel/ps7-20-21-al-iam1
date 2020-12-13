@@ -89,4 +89,8 @@ public abstract class Store {
 	public String getName(){
 		return name;
 	}
+
+	public int getId() {
+		return id;
+	}
 }

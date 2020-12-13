@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -45,8 +46,16 @@ public class Server {
     }
 
     @PostMapping("/traffic")
-    Traffic newTraffic(@RequestBody Traffic newTraffic) {
-        return trafficRepository.save(newTraffic);
+    Traffic addTraffic(@RequestBody Traffic newTraffic) {
+        Optional<Traffic> optT = trafficRepository.findAll().stream().filter((traffic) -> traffic.equals(newTraffic)).findFirst();
+        if (optT.isEmpty()) return trafficRepository.save(newTraffic);
+        optT.get().add(newTraffic.getNb());
+        return trafficRepository.save(optT.get());
+    }
+
+    @GetMapping("/traffic")
+    List<Traffic> allTraffic() {
+        return trafficRepository.findAll();
     }
 
 

@@ -64,12 +64,16 @@ public class Traffic {
         this.date = date;
     }
 
+    public void add(int i){
+        this.nb+=i;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Traffic traffic = (Traffic) o;
-        return nb == traffic.nb && Objects.equals(storeId, traffic.storeId) && Objects.equals(date, traffic.date) && Objects.equals(id, traffic.id);
+        return Objects.equals(date, traffic.date) && Objects.equals(storeId, traffic.storeId);
     }
 
     @Override
