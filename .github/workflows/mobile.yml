@@ -1,0 +1,18 @@
+# The name of our workflow
+name: Android
+
+on:
+  # Trigger on every pull request and on push
+  # to the `main` branch.
+  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+      - CI/android
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build the app
+        run: ./mobile/gradlew build
