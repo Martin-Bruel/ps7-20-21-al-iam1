@@ -2,12 +2,13 @@
 name: Android
 
 on:
-  # Trigger on every pull request and on push
-  # to the `main` branch.
   pull_request:
+      - master
+      - develop
+      - CI/android
   push:
     branches:
-      - main
+      - master
       - develop
       - CI/android
 jobs:
@@ -19,4 +20,4 @@ jobs:
 	with :
 	  java-version: 11
       - name: Build the app
-        run: ./mobile/gradlew build
+        run: mobile/gradlew build
