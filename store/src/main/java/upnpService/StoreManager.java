@@ -12,6 +12,8 @@ public class StoreManager {
 
     @UpnpStateVariable(defaultValue = "0", sendEvents = false)
     private String storeDetails = Server.store.detailsToJSON();
+    @UpnpStateVariable(defaultValue = "0", sendEvents = false)
+    private String storeProducts = Server.store.productsToJSON();
 
     public StoreManager() throws JsonProcessingException {
     }
@@ -19,5 +21,10 @@ public class StoreManager {
     @UpnpAction(out = @UpnpOutputArgument(name = "storeDetails"))
     public String getStoreDetails(){
         return storeDetails;
+    }
+
+    @UpnpAction(out = @UpnpOutputArgument(name = "storeProducts"))
+    public String getStoreProducts(){
+        return storeProducts;
     }
 }

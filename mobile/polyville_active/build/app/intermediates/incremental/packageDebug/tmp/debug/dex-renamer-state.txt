@@ -1,0 +1,4 @@
+#Tue Dec 08 15:23:15 CET 2020
+base.0=C\:\\Users\\flori\\OneDrive\\Bureau\\cours\\PS7\\ps7-20-21-al-iam1\\mobile\\polyville_active\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
