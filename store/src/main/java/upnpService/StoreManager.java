@@ -2,13 +2,16 @@ package upnpService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.fourthline.cling.binding.annotations.*;
-import dataBase.JsonReader;
+import org.fourthline.cling.model.profile.RemoteClientInfo;
+import traffic.TrafficManager;
 
 @UpnpService(
         serviceId = @UpnpServiceId("StoreManager"),
         serviceType = @UpnpServiceType(value = "StoreManager", version = 1)
 )
 public class StoreManager {
+
+    private TrafficManager trafficManager = new TrafficManager();
 
     @UpnpStateVariable(defaultValue = "0", sendEvents = false)
     private String storeDetails = Server.store.detailsToJSON();
@@ -19,7 +22,9 @@ public class StoreManager {
     }
 
     @UpnpAction(out = @UpnpOutputArgument(name = "storeDetails"))
-    public String getStoreDetails(){
+    public String getStoreDetails(RemoteClientInfo client){
+
+        trafficManager.addNewClient(client);
         return storeDetails;
     }
 
