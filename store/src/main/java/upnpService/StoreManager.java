@@ -22,9 +22,9 @@ public class StoreManager {
     }
 
     @UpnpAction(out = @UpnpOutputArgument(name = "storeDetails"))
-    public String getStoreDetails(RemoteClientInfo client){
+    public String getStoreDetails(){
 
-        trafficManager.addNewClient(client);
+        trafficManager.addNewClient();
         return storeDetails;
     }
 

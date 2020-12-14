@@ -33,9 +33,15 @@ public class TrafficManager {
      * Cette methode permet de déterminer l'adresse mac du client a partir de son adresse IP
      * @param client le client à ajouter
      */
-    public void addNewClient(RemoteClientInfo client) {
+    public void addNewClient() {
 
-        if (client != null) {
+        try {
+            updateServer();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /*if (client != null) {
 
             try {
                 InetAddress localIP = InetAddress.getByName(client.getConnection().getRemoteAddress().getHostAddress());
@@ -53,7 +59,7 @@ public class TrafficManager {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
     }
 
     /**
