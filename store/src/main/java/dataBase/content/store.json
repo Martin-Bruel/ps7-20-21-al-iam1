@@ -1,0 +1,11 @@
+{
+  "type" : "shop",
+  "id" : 0,
+  "name" : "truc2",
+  "address" : "adresse truc",
+  "products" : [ {
+    "type" : "item",
+    "name" : "item1",
+    "price" : 13.0
+  } ]
+}
