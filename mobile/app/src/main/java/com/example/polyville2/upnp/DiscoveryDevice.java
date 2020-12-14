@@ -1,4 +1,4 @@
-package com.example.polyville2;
+package com.example.polyville2.upnp;
 
 import android.widget.BaseAdapter;
 import android.widget.Toast;
@@ -29,7 +29,7 @@ public class DiscoveryDevice extends Observable implements RegistryListener {
     public void remoteDeviceAdded(Registry registry, RemoteDevice device) {
         System.out.println("service found"+device.getDetails().getModelDetails().getModelName() );
         if(device.getDetails().getModelDetails().getModelName().equals("server")){
-            System.out.println("I'm here "+device.getDetails().getModelDetails().getModelName() );
+            //System.out.println("I'm here "+device.getDetails().getModelDetails().getModelName() );
             System.out.println(countObservers());
             setChanged();
             notifyObservers(device);

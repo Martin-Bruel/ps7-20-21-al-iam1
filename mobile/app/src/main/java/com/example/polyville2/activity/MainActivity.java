@@ -1,4 +1,4 @@
-package com.example.polyville2;
+package com.example.polyville2.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,21 +6,19 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.example.polyville2.model.Store;
+import com.example.polyville2.upnp.CallActionDevice;
+import com.example.polyville2.upnp.DiscoveryDevice;
+import com.example.polyville2.R;
 
 import org.fourthline.cling.android.AndroidUpnpService;
 import org.fourthline.cling.android.AndroidUpnpServiceImpl;
-import org.fourthline.cling.model.meta.Device;
 import org.fourthline.cling.model.meta.RemoteDevice;
-import org.fourthline.cling.registry.RegistryListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,18 +29,24 @@ import java.util.Observer;
 public class MainActivity extends AppCompatActivity implements Observer {
     private ListView boutiques;
     private List<RemoteDevice> devicesList = new ArrayList<>();
+    private List<Store> storeList = new ArrayList<>();
     private DiscoveryDevice registryListener ;
-
     private AndroidUpnpService upnpService;
     private BaseAdapter boutiquesAdapter;
     private ServiceConnection serviceConnection;
+
+
+    public AndroidUpnpService getUpnpService() {
+        return upnpService;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         boutiques = findViewById(R.id.list_boutiques);
-        boutiquesAdapter = new BoutiqueAdapter(devicesList,this);
+        boutiquesAdapter = new BoutiqueAdapter(devicesList,storeList,this);
 
         boutiques.setAdapter(boutiquesAdapter);
         registryListener = new DiscoveryDevice();
@@ -75,7 +79,14 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
-        devicesList.add((RemoteDevice)o);
+        CallActionDevice callActionDevice = new CallActionDevice((RemoteDevice) o,upnpService);
+        callActionDevice.getStoredevice(this);
+
+    }
+
+    public void addStore(Store s,RemoteDevice device){
+        devicesList.add(device);
+        storeList.add(s);
         runOnUiThread(new Runnable() {
 
             @Override
@@ -83,5 +94,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
                 boutiquesAdapter.notifyDataSetChanged();
             }
         });
+
     }
 }
