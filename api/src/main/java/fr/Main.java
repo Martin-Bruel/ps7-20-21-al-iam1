@@ -18,7 +18,7 @@ public class Main {
     }
 
     @Bean
-    public Docket api() {
+    public Docket generateDoc() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage( "fr" ))
