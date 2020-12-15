@@ -1,4 +1,4 @@
-# Store
+# API
 
 ## Compile and run
 
