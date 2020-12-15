@@ -13,39 +13,27 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-public class Server {
+@RequestMapping("/traffic")
+public class TrafficApi {
 
     private final TrafficRepository trafficRepository;
-    private final StoreRepository storeRepository;
 
 
-    Server (TrafficRepository trafficRepository, StoreRepository storeRepository){
+    TrafficApi(TrafficRepository trafficRepository){
         this.trafficRepository = trafficRepository;
-        this.storeRepository = storeRepository;
     }
 
-
-    @RequestMapping("/")
-    public String index() {
-        return "Greetings from Spring Boot!";
-    }
-
-    @GetMapping("/traffic/date/{year}/{month}/{day}")
+    @GetMapping("/date/{year}/{month}/{day}")
     List<Traffic> trafficForDate(@PathVariable int year, @PathVariable int month, @PathVariable int day){
         return trafficRepository.findAll().stream().filter(traffic -> traffic.getDate().isEqual(LocalDate.of(year, month, day))).collect(Collectors.toList());
     }
 
-    @GetMapping("/traffic/store/{storeId}")
+    @GetMapping("/store/{storeId}")
     List<Traffic> trafficForStore(@PathVariable long storeId){
         return trafficRepository.findAll().stream().filter(traffic -> traffic.getStoreId()==storeId).collect(Collectors.toList());
     }
 
-    @GetMapping("/store")
-    List<Store> allStore(){
-        return storeRepository.findAll();
-    }
-
-    @PostMapping("/traffic")
+    @PostMapping("/")
     Traffic addTraffic(@RequestBody Traffic newTraffic) {
         Optional<Traffic> optT = trafficRepository.findAll().stream().filter((traffic) -> traffic.equals(newTraffic)).findFirst();
         if (optT.isEmpty()) return trafficRepository.save(newTraffic);
@@ -53,12 +41,8 @@ public class Server {
         return trafficRepository.save(optT.get());
     }
 
-    @GetMapping("/traffic")
+    @GetMapping("/")
     List<Traffic> allTraffic() {
         return trafficRepository.findAll();
     }
-
-
-
-
 }
