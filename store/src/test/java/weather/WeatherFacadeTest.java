@@ -3,9 +3,10 @@ package weather;
 import org.junit.jupiter.api.Test;
 
 import exceptions.IncorrectValuesTemperature;
+import exceptions.UndefinedWeatherAPIException;
 import model.Label;
 import model.TempLabel;
-import weather.model.WeatherAPI;
+import weather.model.WeatherAPIEnum;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,8 +17,8 @@ import static org.mockito.ArgumentMatchers.anyDouble;
 class WeatherFacadeTest {
 
     @Test
-    void callWeather() throws IOException {
-        ArrayList<Label> labels = WeatherFacade.getWeatherLabel(WeatherAPI.OPENWEATHER, anyDouble(), anyDouble(), "metric");
+    void callWeather() throws IOException, UndefinedWeatherAPIException {
+        ArrayList<Label> labels = WeatherFacade.getWeatherLabel(WeatherAPIEnum.OPENWEATHER, anyDouble(), anyDouble(), "metric");
         assertTrue(labels.get(0) != null);
         assertTrue(labels.get(1) != null);
         TempLabel templabel = TempLabel.CHILLY;

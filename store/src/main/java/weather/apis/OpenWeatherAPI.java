@@ -4,32 +4,37 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import model.Label;
 import model.TempLabel;
-import weather.model.WeatherAPI;
 
-public class OpenWeatherAPI {
+
+public class OpenWeatherAPI extends WeatherAPI {
+    String key;
+
+
+    public OpenWeatherAPI(String key) {
+        this.key = key;
+    }
 
     /**
      * 
      * make the call to OpenWeather API with given position and given units system.
-     * then abstract the data to exploitable datas for other classes 
-     * and return the corresponding labels
+     * then abstract the data to exploitable datas for other classes and return the
+     * corresponding labels
      * 
      * @param latitude
      * @param longitude
      * @param units
-     * @return
+     * @return ArrayList of labels
      * @throws IOException
      */
-    public static ArrayList<Label> callOpenWeatherAPI(double latitude, double longitude, String units) throws IOException {
+    @Override
+    public ArrayList<Label> callApi(double latitude, double longitude, String units) throws IOException {
         ArrayList<Label> res = new ArrayList<>();
-        WeatherAPI api = WeatherAPI.OPENWEATHER;
-        String urlStr = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&units="+ units +"&appid=" + api.key;
+        String urlStr = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&units="+ units +"&appid=" + this.key;
         URL url = new URL(urlStr);
         JSONTokener tokener = new JSONTokener(url.openStream()); 
         JSONObject response = new JSONObject(tokener);
@@ -45,7 +50,8 @@ public class OpenWeatherAPI {
      * @param response
      * @return
      */
-    private static ArrayList<Label> abstractGlobalWeather(JSONObject response) {
+    @Override
+    protected ArrayList<Label> abstractGlobalWeather(JSONObject response) {
         ArrayList<Label> res = new ArrayList<>();
         String mainWeather = getWeather(response);
         double temp = getTemp(response);
@@ -61,7 +67,8 @@ public class OpenWeatherAPI {
      * @param response
      * @return
      */
-    private static String getWeather(JSONObject response) {
+    @Override
+    protected String getWeather(JSONObject response) {
         return response.getJSONArray("weather").getJSONObject(0).getString("main"); // see https://openweathermap.org/current#parameter
     }
 
@@ -72,7 +79,8 @@ public class OpenWeatherAPI {
      * @param response
      * @return
      */
-    private static double getTemp(JSONObject response){
+    @Override
+    protected double getTemp(JSONObject response){
         return response.getJSONObject("main").getDouble("temp");
     }
 
@@ -83,7 +91,8 @@ public class OpenWeatherAPI {
      * @param weather
      * @return
      */
-    private static Label abstractWeather(String weather){
+    @Override
+    protected Label abstractWeather(String weather){
         Label res;
         switch(weather){
             case "Clear": 
@@ -115,7 +124,8 @@ public class OpenWeatherAPI {
      * @param temp
      * @return
      */
-    private static Label abstractTemp(double temp){
+    @Override
+    protected Label abstractTemp(double temp){
         Label res;
         TempLabel labeltemp = TempLabel.getLabel(temp);
         switch(labeltemp){
