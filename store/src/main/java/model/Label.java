@@ -7,11 +7,12 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonTypeName("label")
 
 public enum Label {
-    SUNNY,
-    CLOUDS,
+    STORM,
     RAIN,
     SNOW,
-    STORM,
+    MIST,
+    SUNNY,
+    CLOUDS,
     UNDEFINED,
     HOT,
     WARM,
