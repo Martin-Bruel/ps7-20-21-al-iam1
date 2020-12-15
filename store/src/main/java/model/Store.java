@@ -2,6 +2,8 @@ package model;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -12,6 +14,9 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+
+import javax.bluetooth.BluetoothStateException;
+import javax.bluetooth.LocalDevice;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
@@ -84,7 +89,17 @@ public abstract class Store {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public	String getBluetoothMac() {
+		LocalDevice local;
+		try {
+			local = LocalDevice.getLocalDevice();
+		return local.getBluetoothAddress();		} catch (BluetoothStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "";
+		}
+	}
 
 	public String getName(){
 		return name;

@@ -1,6 +1,11 @@
 package upnpService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+
 import org.fourthline.cling.binding.annotations.*;
 import org.fourthline.cling.model.profile.RemoteClientInfo;
 import traffic.TrafficManager;
@@ -17,6 +22,9 @@ public class StoreManager {
     private String storeDetails = Server.store.detailsToJSON();
     @UpnpStateVariable(defaultValue = "0", sendEvents = false)
     private String storeProducts = Server.store.productsToJSON();
+    
+    @UpnpStateVariable(defaultValue = "0", sendEvents = false)
+    private String MAC = Server.store.getBluetoothMac();
 
     public StoreManager() throws JsonProcessingException {
     }
@@ -31,5 +39,11 @@ public class StoreManager {
     @UpnpAction(out = @UpnpOutputArgument(name = "storeProducts"))
     public String getStoreProducts(){
         return storeProducts;
+    }
+    
+
+    @UpnpAction(out = @UpnpOutputArgument(name = "MAC"))
+    public String getMAC() {
+    	return MAC;
     }
 }
