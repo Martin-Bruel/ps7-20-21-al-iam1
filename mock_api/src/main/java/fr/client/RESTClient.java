@@ -9,7 +9,7 @@ import java.net.URL;
 
 public class RESTClient {
 
-    private final String URL = "http://localhost:8080";
+    public final String URL = "http://localhost:8080";
 
     public String sendRequest(String path) throws IOException {
 

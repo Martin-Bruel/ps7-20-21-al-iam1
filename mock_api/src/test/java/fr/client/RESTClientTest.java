@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.model.Traffic;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,7 +37,7 @@ class RESTClientTest {
     }
 
     @Test
-    void trafficForDate() throws IOException {
+    void trafficForDate()  {
         assertDoesNotThrow(()->client.sendRequest("/traffic/date/2020/1/1"));
     }
 

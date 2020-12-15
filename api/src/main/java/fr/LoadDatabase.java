@@ -26,7 +26,7 @@ public class LoadDatabase {
         return args -> {
 
             log.info("Preloading " + trafficRepository.save(new Traffic("Tout à 1 euros", 3, date.minusDays(2), 1)));
-            log.info("Preloading " + trafficRepository.save(new Traffic("Tout à 1 euros", 4, date.minusDays(1), 1)));
+            log.info("Preloading " + trafficRepository.save(new Traffic("Tout à 1 euros", 100, date.minusDays(1), 1)));
             log.info("Preloading " + trafficRepository.save(new Traffic("Tout à 1 euros", 0, date, 1)));
 
             log.info("Preloading " + trafficRepository.save(new Traffic("Gifi la mode", 8, date.minusDays(2), 2)));
