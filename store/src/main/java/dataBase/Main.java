@@ -17,7 +17,7 @@ public class Main {
 		shop.makeJSON();
 		//System.out.println(shop.detailsToJSON());
 		//System.out.println(shop.toJSON());
-		System.out.println(shop.publicationsToJSON());
+		//System.out.println(shop.publicationsToJSON());
 		//shop.printJSON();
 		//shop = null;
 		//System.out.println("shop"+shop);

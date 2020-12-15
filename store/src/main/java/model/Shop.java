@@ -21,12 +21,6 @@ public class Shop extends Store{
 		if (publications!=null)this.publications=publications;
 		else this.publications=new ArrayList<Publication>();
 	}
-	
-	public Shop(String name,String address) {
-		this.address=address;
-		this.name=name;
-		this.products=new ArrayList<Product>();
-	}
 
 	public void addProduct(Product i) {
 		products.add(i);
