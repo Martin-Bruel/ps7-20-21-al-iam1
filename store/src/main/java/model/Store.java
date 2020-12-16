@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
+import com.fasterxml.jackson.datatype.jsr310.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -24,6 +25,7 @@ public abstract class Store {
 	String address;
 	protected List<Product> products;
 	List<Publication> publications;
+	OpeningHours openingHours;
 	
 	public List<Product> getProducts(){
 		return products;
@@ -41,6 +43,14 @@ public abstract class Store {
 		publications.add(i);
 	}	
 
+	public OpeningHours getOpeningHours(){
+		return openingHours;
+	}
+
+	public void setOpeningHours(OpeningHours openingHours) {
+		this.openingHours = openingHours;
+	}
+
 	public String toJSON(){
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
@@ -54,6 +64,7 @@ public abstract class Store {
 
 	public String detailsToJSON(){
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.registerModule(new JavaTimeModule());
 		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
 		String result="";	
 		try{
@@ -62,7 +73,8 @@ public abstract class Store {
 			result+="{\"type\":\""+s+"\"";
 			result+= ",\"id\":"+mapper.writeValueAsString(this.id);
 			result+= ",\"name\":"+mapper.writeValueAsString(this.name);
-			result+= ",\"address\":"+mapper.writeValueAsString(this.address)+"}";
+			result+= ",\"address\":"+mapper.writeValueAsString(this.address);
+			result+= ","+mapper.writeValueAsString(this.openingHours)+"}";
 			return result;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -97,6 +109,10 @@ public abstract class Store {
 
 	public void makeJSON(){
 		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
+		//.registerModule(new ParameterNamesModule())
+		//.registerModule(new Jdk8Module())
+		//.registerModule(new JavaTimeModule());
 		objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
 		try{
 		objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("src/main/java/dataBase/content/store.json"), this);

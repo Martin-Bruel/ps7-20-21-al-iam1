@@ -26,7 +26,7 @@ public class StoreManager {
     @UpnpAction(out = @UpnpOutputArgument(name = "storeDetails"))
     public String getStoreDetails(){
 
-        trafficManager.addNewClient();
+        //trafficManager.addNewClient();
         return storeDetails;
     }
 

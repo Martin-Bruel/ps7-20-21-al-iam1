@@ -12,7 +12,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeName("shop")
 public class Shop extends Store{
 	@JsonCreator
-	public Shop(@JsonProperty("id") int id,@JsonProperty("name") String name,@JsonProperty("address") String address, @JsonProperty("products") List<Product> products, @JsonProperty("publications") List<Publication> publications) {
+	public Shop(@JsonProperty("id") int id,@JsonProperty("name") String name,@JsonProperty("address") String address, 
+	@JsonProperty("products") List<Product> products, @JsonProperty("publications") List<Publication> publications
+	, @JsonProperty("openingHours") OpeningHours hours) {
 		this.id=id;
 		this.address=address;
 		this.name=name;
@@ -20,6 +22,7 @@ public class Shop extends Store{
 		else this.products=new ArrayList<Product>();
 		if (publications!=null)this.publications=publications;
 		else this.publications=new ArrayList<Publication>();
+		openingHours=hours;
 	}
 
 	public void addProduct(Product i) {

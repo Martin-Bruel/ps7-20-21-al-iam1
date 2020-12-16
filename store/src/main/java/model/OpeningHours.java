@@ -1,0 +1,109 @@
+package model;
+
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonTypeName("openingHours")
+public class OpeningHours {
+
+    @JsonProperty("Monday")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    List<LocalTime> monday=new ArrayList<>();
+
+    @JsonProperty("Tuesday")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    List<LocalTime> tuesday=new ArrayList<>();
+
+    @JsonProperty("Wednesday")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    List<LocalTime> wednesday=new ArrayList<>();
+
+    @JsonProperty("Thursday")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    List<LocalTime> thursday=new ArrayList<>();
+
+    @JsonProperty("Friday")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    List<LocalTime> friday=new ArrayList<>();
+
+    @JsonProperty("Saturday")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    List<LocalTime> saturday=new ArrayList<>();
+
+    @JsonProperty("Sunday")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    List<LocalTime> sunday=new ArrayList<>();
+
+    @JsonCreator
+    public OpeningHours(@JsonProperty("Monday") List<LocalTime>monday, @JsonProperty("Tuesday") List<LocalTime>tuesday, 
+                        @JsonProperty("Wednesday") List<LocalTime>wednesday, @JsonProperty("Thursday") List<LocalTime>thursday,
+                        @JsonProperty("Friday") List<LocalTime>friday, @JsonProperty("Saturday") List<LocalTime>saturday,
+                        @JsonProperty("Sunday") List<LocalTime>sunday){
+        setMonday(friday);
+        setTuesday(tuesday);
+        setWednesday(wednesday);
+        setThursday(thursday);
+        setFriday(friday);
+        setSaturday(saturday);
+        setSunday(sunday);
+    }
+
+    void setMonday(List<LocalTime>monday){
+        if(monday.size()%2==0)this.monday=monday;
+    }
+    void setTuesday(List<LocalTime>tuesday){
+        if(tuesday.size()%2==0)this.tuesday=tuesday;
+    }
+    void setWednesday(List<LocalTime>wednesday){
+        if(wednesday.size()%2==0)this.wednesday=wednesday;
+    }
+    void setThursday(List<LocalTime>thursday){
+        if(thursday.size()%2==0)this.thursday=thursday;
+    }
+    void setFriday(List<LocalTime>friday){
+        if(friday.size()%2==0)this.friday=friday;
+    }
+    void setSaturday(List<LocalTime>saturday){
+        if(saturday.size()%2==0)this.saturday=saturday;
+    }
+    void setSunday(List<LocalTime>sunday){
+        if(sunday.size()%2==0)this.sunday=sunday;
+    }
+
+
+    private boolean isOpen(){
+        Calendar c = Calendar.getInstance();
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        List<LocalTime> today;
+        switch(dayOfWeek){
+            default:today=monday;
+            case 1:today=sunday;
+            case 2:today=monday;
+            case 3:today=tuesday;
+            case 4:today=wednesday;
+            case 5:today=thursday;
+            case 6:today=friday;
+            case 7:today=saturday;
+        }
+        for(int i=0;i<today.size();i+=2){
+            int start = today.get(i).getHour()*60+today.get(i).getMinute();
+            int end = today.get(i+1).getHour()*60+today.get(i+1).getMinute();
+            int now = LocalTime.now().getHour()*60+LocalTime.now().getMinute();
+            if (start<=now && now<end){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+
+}
