@@ -20,8 +20,6 @@ class WeatherFacadeTest {
     void callOpenWeatherAPI() throws IOException, UndefinedWeatherAPIException {
         OpenWeatherAPI api = new OpenWeatherAPI();
         ArrayList<Label> labels = api.callApi(anyDouble(), anyDouble(), "metric");
-        System.out.println(labels.get(0).toString());
-        System.out.println(labels.get(1).toString());
         assertTrue(labels.get(0) != null);
         assertTrue(labels.get(1) != null);
     }
@@ -30,8 +28,6 @@ class WeatherFacadeTest {
     void callWeatherBit() throws IOException, UndefinedWeatherAPIException{
         WeatherBitAPI api = new WeatherBitAPI();
         ArrayList<Label> labels = api.callApi(anyDouble(), anyDouble());
-        System.out.println(labels.get(0).toString());
-        System.out.println(labels.get(1).toString());
         assertTrue(labels.get(0) != null);
         assertTrue(labels.get(1) != null);
     }
