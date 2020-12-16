@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import weather.apis.OpenWeatherAPI;
 import weather.apis.WeatherAPI;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
@@ -61,8 +62,8 @@ public abstract class Store {
 		return this.allPublications;
 	}
 
-	public void setAllPublications(List<Publication> publis) {
-		this.allPublications = publis;
+	public void setAllPublications(List<Publication> allPublications) {
+		this.allPublications = allPublications;
 	}
 
 	public void addPublication(Publication i) {
@@ -80,6 +81,22 @@ public abstract class Store {
 
 	public void setOpeningHours(OpeningHours openingHours) {
 		this.openingHours = openingHours;
+	}
+
+	public WeatherAPI getApi(){
+		return this.api;
+	}
+
+	public void setApi(WeatherAPI api){
+		this.api = api;
+	}
+
+	public List<Label> getWeather(){
+		return this.weather;
+	}
+
+	public void setWeather(List<Label> weather){
+		this.weather = weather;
 	}
 
 	public String toJSON(){
@@ -181,6 +198,7 @@ public abstract class Store {
 	}
 
 	public void setWeatherLabel(){
+		if(this.api == null) this.api = new OpenWeatherAPI();
 		this.weather = this.api.callApi(this.address.get(0), this.address.get(1), "metric");
 	}
 

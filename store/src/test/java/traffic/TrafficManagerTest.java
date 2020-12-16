@@ -2,9 +2,6 @@ package traffic;
 
 import org.junit.jupiter.api.Test;
 
-import dataBase.JsonReader;
-import model.Store;
-
 import java.io.IOException;
 import java.time.Clock;
 
@@ -18,13 +15,11 @@ class TrafficManagerTest {
     @Test
     void addNewClient() throws IOException {
 
-        Store store = JsonReader.read();
-        assertTrue(store == null);
-        // RESTClient restClientMock = mock(RESTClient.class);
-        // when(restClientMock.sendRequest(anyString(), anyString())).thenReturn(true);
+        RESTClient restClientMock = mock(RESTClient.class);
+        when(restClientMock.sendRequest(anyString(), anyString())).thenReturn(true);
 
-        // TrafficManager trafficManager = new TrafficManager(Clock.systemUTC(), restClientMock);
-        // assertTrue(trafficManager.addNewClient("1"));
+        TrafficManager trafficManager = new TrafficManager(Clock.systemUTC(), restClientMock);
+        assertTrue(trafficManager.addNewClient("1"));
     }
 
 }

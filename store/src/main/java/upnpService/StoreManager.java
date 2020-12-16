@@ -44,4 +44,9 @@ public class StoreManager {
     public String getStorePublications(){
         return storePublications;
     }
+
+    @UpnpAction(out = @UpnpOutputArgument(name = "storeContextPublications"))
+    public String getStoreContextPublications(){
+        return storeContextPublications;
+    }
 }
