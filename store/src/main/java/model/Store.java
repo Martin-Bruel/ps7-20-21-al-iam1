@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import com.fasterxml.jackson.datatype.jsr310.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -26,12 +27,12 @@ public abstract class Store {
 	protected List<Product> products;
 	List<Publication> allPublications;
 	List<Publication> contextPublications;
-	private List<Label> weather;
+	OpeningHours openingHours;
 	private WeatherAPI api;
-
-
-	public List<Product> getProducts() {
-		return this.products;
+	private List<Label> weather;
+	
+	public List<Product> getProducts(){
+		return products;
 	}
 
 	public void addProduct(Product i) {
@@ -47,7 +48,15 @@ public abstract class Store {
 		this.setContextPublication();
 	}	
 
-	public String toJSON() {
+	public OpeningHours getOpeningHours(){
+		return openingHours;
+	}
+
+	public void setOpeningHours(OpeningHours openingHours) {
+		this.openingHours = openingHours;
+	}
+
+	public String toJSON(){
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
 		try {
@@ -60,15 +69,17 @@ public abstract class Store {
 
 	public String detailsToJSON() {
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.registerModule(new JavaTimeModule());
 		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
-		String result = "";
-		try {
-			String s = this.getClass().getSimpleName();
-			s = s.replaceFirst(s.charAt(0) + "", (s.charAt(0) + "").toLowerCase());
-			result += "{\"type\":\"" + s + "\"";
-			result += ",\"id\":" + mapper.writeValueAsString(this.id);
-			result += ",\"name\":" + mapper.writeValueAsString(this.name);
-			result += ",\"address\":" + mapper.writeValueAsString(this.address) + "}";
+		String result="";	
+		try{
+			String s=this.getClass().getSimpleName();
+			s=s.replaceFirst(s.charAt(0)+"",(s.charAt(0)+"").toLowerCase());
+			result+="{\"type\":\""+s+"\"";
+			result+= ",\"id\":"+mapper.writeValueAsString(this.id);
+			result+= ",\"name\":"+mapper.writeValueAsString(this.name);
+			result+= ",\"address\":"+mapper.writeValueAsString(this.address);
+			result+= ","+mapper.writeValueAsString(this.openingHours)+"}";
 			return result;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -117,6 +128,10 @@ public abstract class Store {
 
 	public void makeJSON() {
 		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
+		//.registerModule(new ParameterNamesModule())
+		//.registerModule(new Jdk8Module())
+		//.registerModule(new JavaTimeModule());
 		objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
 		try {
 			objectMapper.writerWithDefaultPrettyPrinter()

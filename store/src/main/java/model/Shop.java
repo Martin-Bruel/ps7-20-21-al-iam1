@@ -14,20 +14,17 @@ public class Shop extends Store{
 
 
 	@JsonCreator
-	public Shop(@JsonProperty("id") int id,@JsonProperty("name") String name,@JsonProperty("address") List<Double> address, @JsonProperty("products") List<Product> products, @JsonProperty("all_publications") List<Publication> allPublications) {
-		this.id = id;
+	public Shop(@JsonProperty("id") int id,@JsonProperty("name") String name,@JsonProperty("address") List<Double> address, 
+	@JsonProperty("products") List<Product> products, @JsonProperty("publications") List<Publication> publications
+	, @JsonProperty("openingHours") OpeningHours hours) {
+		this.id=id;
 		this.address = address;
-		this.name = name;
-		if (products != null) this.products = products;
-		else this.products = new ArrayList<Product>();
-		if (allPublications != null) {
-			this.allPublications = allPublications;
-			this.setContextPublication();
-		}
-		else {
-			this.allPublications = new ArrayList<Publication>();
-			this.contextPublications = new ArrayList<Publication>();
-		}
+		this.name=name;
+		if (products!=null)this.products=products;
+		else this.products=new ArrayList<Product>();
+		if (publications!=null)this.allPublications=publications;
+		else this.allPublications=new ArrayList<Publication>();
+		openingHours=hours;
 	}
 
 	public void addProduct(Product i) {

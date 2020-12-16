@@ -2,7 +2,10 @@ package dataBase;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+import java.time.LocalTime;
 
 import model.*;
 import weather.apis.OpenWeatherAPI;
@@ -27,6 +30,13 @@ public class Main {
 		// p2.addLabel(Label.COLD);
 		// shop.addPublication(p2);
 
+		List<LocalTime>hours=new ArrayList<>();
+		hours.add(LocalTime.now().withHour(8).withMinute(0));
+		hours.add(LocalTime.now().withHour(12).withMinute(0));
+		hours.add(LocalTime.now().withHour(14).withMinute(0));
+		hours.add(LocalTime.now().withHour(15).withMinute(25));
+		OpeningHours openingHours=new OpeningHours(hours,hours,hours,hours,hours,hours,hours);
+		shop.setOpeningHours(openingHours);
 		shop.makeJSON();
 		//System.out.println(shop.detailsToJSON());
 		//System.out.println(shop.toJSON());
