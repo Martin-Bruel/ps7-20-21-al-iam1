@@ -3,7 +3,6 @@ package weather;
 import org.junit.jupiter.api.Test;
 
 import exceptions.IncorrectValuesTemperature;
-import exceptions.UndefinedWeatherAPIException;
 import model.Label;
 import model.TempLabel;
 import weather.apis.*;
@@ -17,7 +16,7 @@ import static org.mockito.ArgumentMatchers.anyDouble;
 class WeatherFacadeTest {
 
     @Test
-    void callOpenWeatherAPI() throws IOException, UndefinedWeatherAPIException {
+    void callOpenWeatherAPI() throws IOException {
         OpenWeatherAPI api = new OpenWeatherAPI();
         ArrayList<Label> labels = api.callApi(anyDouble(), anyDouble(), "metric");
         assertTrue(labels.get(0) != null);
@@ -25,7 +24,7 @@ class WeatherFacadeTest {
     }
 
     @Test
-    void callWeatherBit() throws IOException, UndefinedWeatherAPIException{
+    void callWeatherBit() throws IOException {
         WeatherBitAPI api = new WeatherBitAPI();
         ArrayList<Label> labels = api.callApi(anyDouble(), anyDouble());
         assertTrue(labels.get(0) != null);
@@ -33,10 +32,13 @@ class WeatherFacadeTest {
     }
 
     @Test
-    void setTemp(){
+    void setTemp() throws IncorrectValuesTemperature {
         TempLabel templabel = TempLabel.CHILLY;
         double[] range = {30, 21};
         assertThrows(IncorrectValuesTemperature.class, () -> templabel.setRange(range));
+        double[] range2 = {10, 15};
+        templabel.setRange(range2);
+        assertTrue(templabel.range == range2);
     }
 
     
