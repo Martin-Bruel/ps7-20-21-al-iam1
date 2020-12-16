@@ -33,9 +33,9 @@ public class LoadDatabase {
             log.info("Preloading " + trafficRepository.save(new Traffic("Gifi la mode", 15, date.minusDays(1), 2)));
             log.info("Preloading " + trafficRepository.save(new Traffic("Gifi la mode", 36, date, 2)));
 
-            log.info("Preloading " + trafficRepository.save(new Traffic("Les fleurs de la cabane au fond du jardin", 0, date.minusDays(2), 3)));
-            log.info("Preloading " + trafficRepository.save(new Traffic("Les fleurs de la cabane au fond du jardin", 0, date.minusDays(1), 3)));
-            log.info("Preloading " + trafficRepository.save(new Traffic("Les fleurs de la cabane au fond du jardin", 1, date, 3)));
+            log.info("Preloading " + trafficRepository.save(new Traffic("Les fleurs de la cabane au fond du jardin", 4, date.minusDays(2), 3)));
+            log.info("Preloading " + trafficRepository.save(new Traffic("Les fleurs de la cabane au fond du jardin", 2, date.minusDays(1), 3)));
+            log.info("Preloading " + trafficRepository.save(new Traffic("Les fleurs de la cabane au fond du jardin", 5, date, 3)));
 
             log.info("Preloading " + storeRepository.save(new Store(1234,"Tout à 1 euros")));
             log.info("Preloading " + storeRepository.save(new Store(1235,"Gifi la mode")));
