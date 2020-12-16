@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -24,6 +23,7 @@ public abstract class Store {
 	String name;
 	String address;
 	protected List<Product> products;
+	List<Publication> publications;
 	
 	public List<Product> getProducts(){
 		return products;
@@ -32,6 +32,14 @@ public abstract class Store {
 	public void addProduct(Product i) {
 		products.add(i);
 	}
+
+	public List<Publication> getPublications(){
+		return publications;
+	}
+
+	public void addPublication(Publication i) {
+		publications.add(i);
+	}	
 
 	public String toJSON(){
 		ObjectMapper mapper = new ObjectMapper();
@@ -69,6 +77,18 @@ public abstract class Store {
 		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
 		try{
 			return mapper.writer().withType(productListType).writeValueAsString(products);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public String publicationsToJSON(){
+		ObjectMapper mapper = new ObjectMapper();
+		//CollectionType publicationListType = mapper.getTypeFactory().constructCollectionType(List.class,Publication.class);
+		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+		try{
+			return mapper.writer().writeValueAsString(publications);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

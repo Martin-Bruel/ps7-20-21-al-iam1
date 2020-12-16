@@ -7,5 +7,11 @@
     "type" : "item",
     "name" : "item1",
     "price" : 13.0
+  } ],
+  "publications" : [ {
+    "type" : "Publication",
+    "title" : "Vente de parapluie",
+    "labels" : [ "BAD_WEATHER" ],
+    "description" : "Aujourd'hui il pleut, si tu as besoin d'un parapluie n'hésite pas à passer à notre magasin. MagasinPluie"
   } ]
 }
