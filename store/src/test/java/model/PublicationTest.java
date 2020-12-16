@@ -2,11 +2,14 @@ package model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyDouble;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
+import weather.apis.OpenWeatherAPI;
 
 class PublicationTest {
     Publication p1;
@@ -33,5 +36,30 @@ class PublicationTest {
         assertEquals(labels.size(), p1.labels.size());
         for (int i = 0; i < p1.labels.size(); i++)
             assertEquals(p1.labels.get(i), labels.get(i));
+    }
+
+    @Test
+    public void contextPublications(){
+        OpenWeatherAPI api = new OpenWeatherAPI();
+        ArrayList<Double> address = new ArrayList<>();
+		address.add(43.61563752169879);
+		address.add(7.071778197708522);
+        List<Label> currentWeather = api.callApi(address.get(0), address.get(1), "metric");
+        p1 = new Publication("titre exemple", "description", currentWeather);
+        Store shop = new Shop(0, "Magasin", address, null, null, null, null, api);
+        shop.addPublication(p1);
+        assertTrue(shop.getContextPublications().contains(p1));
+    }
+
+    @Test
+    public void addPublicationToShop(){
+        OpenWeatherAPI api = new OpenWeatherAPI();
+        ArrayList<Double> address = new ArrayList<>();
+        address.add(43.61563752169879);
+        address.add(7.071778197708522);
+        p1 = new Publication("titre exemple", "description", null);
+        Store shop = new Shop(0, "Magasin", address, null, null, null, null, api);
+        shop.addPublication(p1);
+        assertTrue(shop.getAllPublications().contains(p1));
     }
 }
