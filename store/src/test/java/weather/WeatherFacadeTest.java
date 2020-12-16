@@ -2,6 +2,7 @@ package weather;
 
 import org.junit.jupiter.api.Test;
 
+import exceptions.IncorrectUnitWeatherAPIException;
 import exceptions.IncorrectValuesTemperature;
 import model.Label;
 import weather.utils.TempLabel;
@@ -16,16 +17,16 @@ import static org.mockito.ArgumentMatchers.anyDouble;
 class WeatherFacadeTest {
 
     @Test
-    void callOpenWeatherAPI() throws IOException {
-        OpenWeatherAPI api = new OpenWeatherAPI();
-        ArrayList<Label> labels = api.callApi(anyDouble(), anyDouble(), "metric");
+    void callOpenWeatherAPI() throws IOException, IncorrectUnitWeatherAPIException {
+        OpenWeatherAPI api = new OpenWeatherAPI("metric");
+        ArrayList<Label> labels = api.callApi(anyDouble(), anyDouble());
         assertTrue(labels.get(0) != null);
         assertTrue(labels.get(1) != null);
     }
 
     @Test
-    void callWeatherBit() throws IOException {
-        WeatherBitAPI api = new WeatherBitAPI();
+    void callWeatherBit() throws IOException, IncorrectUnitWeatherAPIException {
+        WeatherBitAPI api = new WeatherBitAPI("M");
         ArrayList<Label> labels = api.callApi(anyDouble(), anyDouble());
         assertTrue(labels.get(0) != null);
         assertTrue(labels.get(1) != null);
@@ -34,11 +35,15 @@ class WeatherFacadeTest {
     @Test
     void setTemp() throws IncorrectValuesTemperature {
         TempLabel templabel = TempLabel.CHILLY;
-        double[] range = {30, 21};
-        assertThrows(IncorrectValuesTemperature.class, () -> templabel.setRange(range));
-        double[] range2 = {10, 15};
-        templabel.setRange(range2);
-        assertTrue(templabel.range == range2);
+        double[] range1 = {10, 15};
+        templabel.setRange(range1);
+        assertTrue(templabel.range == range1);
+    }
+
+    @Test
+    void throwError(){
+        assertThrows(IncorrectUnitWeatherAPIException.class, () -> new OpenWeatherAPI("meter"));
+        assertThrows(IncorrectUnitWeatherAPIException.class, () -> new WeatherBitAPI("meter"));
     }
 
     

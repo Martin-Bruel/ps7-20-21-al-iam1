@@ -5,8 +5,11 @@ package exceptions;
  */
 public class IncorrectValuesTemperature extends Exception {
 
-    public IncorrectValuesTemperature(String errorMessage){
+    private static final long serialVersionUID = -1166332606496322412L;
+
+    public IncorrectValuesTemperature(String errorMessage) {
         super(errorMessage);
+        System.exit(1);
     }
     
 }

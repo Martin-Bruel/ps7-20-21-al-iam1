@@ -29,20 +29,8 @@ public abstract class WeatherAPI {
      * @return ArrayList of labels
      * @throws IOException
      */
-    public abstract ArrayList<Label> callApi(double latitude, double longitude, String units);
+    public abstract ArrayList<Label> callApi(double latitude, double longitude);
 
-    /**
-     * 
-     * method auxiliaire if units is not given
-     * 
-     * @param latitude
-     * @param longitude
-     * @return ArrayList of labels
-     * @throws IOException
-     */
-    public ArrayList<Label> callApi(double latitude, double longitude) throws IOException{
-        return callApi(latitude, longitude, "");
-    }
     
 
     /**

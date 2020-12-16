@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import exceptions.IncorrectUnitWeatherAPIException;
 import model.Label;
 import weather.urlbuilder.StringUrl;
 import weather.urlbuilder.StringUrlBuilder;
@@ -15,8 +16,9 @@ import weather.urlbuilder.StringUrlBuilder;
 public class OpenWeatherAPI extends WeatherAPI {
     String key;
     StringUrl stringURL;
+    String units;
 
-    public OpenWeatherAPI() {
+    public OpenWeatherAPI(String units) throws IncorrectUnitWeatherAPIException {
         this.key = "b7a405fea8328d8c19c034d9a8b673aa";
         this.stringURL = new StringUrlBuilder().withRoot("https://api.openweathermap.org/data/2.5/weather?")
                                                 .withLat("lat=")
@@ -24,13 +26,18 @@ public class OpenWeatherAPI extends WeatherAPI {
                                                 .withUnits("&units=")
                                                 .withKey("&appid=")
                                                 .build();
+        if(this.units != "" && units != "standard" && units != "metric" & units != "imperial"){
+            throw new IncorrectUnitWeatherAPIException(
+                    "Error units format for OpenWeather API. Units should be one of these : \"standard\", \"metric\", \"imperial\". If none is precised, standard (temperature in Kelvin) is used.");
+        }
+        this.units = units;
     }
 
     @Override
-    public ArrayList<Label> callApi(double latitude, double longitude, String units){
+    public ArrayList<Label> callApi(double latitude, double longitude){
         ArrayList<Label> res = new ArrayList<>();
         try{
-            URL url = buildURL(latitude, longitude, units);
+            URL url = buildURL(latitude, longitude, this.units);
             JSONTokener tokener = new JSONTokener(url.openStream());
             JSONObject response = new JSONObject(tokener);
             res = abstractGlobalWeather(response);

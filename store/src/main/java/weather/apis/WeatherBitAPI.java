@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import exceptions.IncorrectUnitWeatherAPIException;
 import model.Label;
 import weather.urlbuilder.StringUrl;
 import weather.urlbuilder.StringUrlBuilder;
@@ -16,8 +17,9 @@ import weather.urlbuilder.StringUrlBuilder;
 public class WeatherBitAPI extends WeatherAPI {
     String key;
     StringUrl stringURL;
+    String units;
 
-    public WeatherBitAPI() {
+    public WeatherBitAPI(String units) throws IncorrectUnitWeatherAPIException {
         this.key = "50b12870871b4b03b6d77bea032c508c";
         this.stringURL = new StringUrlBuilder()
             .withRoot("https://api.weatherbit.io/v2.0/current?")
@@ -26,13 +28,27 @@ public class WeatherBitAPI extends WeatherAPI {
             .withUnits("&units=")
             .withKey("&key=")
             .build();
+
+        if(units != "" && units != "M" && units != "S" && units != "I"){
+            throw new IncorrectUnitWeatherAPIException(
+                    "Error units format for WeatherBit API. Units should be one of these : \"M\", \"S\", \"I\". If none is precised, default M (temperature in Celcius) is used.");
+        }
+        this.units = units;
     }
 
     @Override
-    public ArrayList<Label> callApi(double latitude, double longitude, String units){
+    public ArrayList<Label> callApi(double latitude, double longitude){
+        try {
+            if(units != "" && units != "M" && units != "S" && units != "I"){
+                throw new IncorrectUnitWeatherAPIException(
+                        "Error units format for WeatherBit API. Units should be one of these : \"M\", \"S\", \"I\". If none is precised, default M (temperature in Celcius) is used.");
+            }
+        } catch (IncorrectUnitWeatherAPIException e) {
+            e.printStackTrace();
+        }
         ArrayList<Label> res = new ArrayList<>();
         try {
-            URL url = buildURL(latitude, longitude, units);
+            URL url = buildURL(latitude, longitude, this.units);
             JSONTokener tokener = new JSONTokener(url.openStream()); 
             JSONObject response = new JSONObject(tokener);
             res = abstractGlobalWeather(response);

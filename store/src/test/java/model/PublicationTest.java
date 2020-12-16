@@ -2,21 +2,21 @@ package model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyDouble;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import exceptions.IncorrectUnitWeatherAPIException;
 import weather.apis.OpenWeatherAPI;
 
 class PublicationTest {
     Publication p1;
 
     @Test
-    public void addLabelInConstructorTest(){
-        p1=new Publication("title", "description", null);
+    public void addLabelInConstructorTest() {
+        p1 = new Publication("title", "description", null);
         p1.addLabel(Label.RAIN);
         p1.addLabel(Label.FOOD);
         List<Label> labels = new ArrayList<Label>();
@@ -27,7 +27,7 @@ class PublicationTest {
     }
 
     @Test
-    public void cantAddTheSameLabelTwice(){
+    public void cantAddTheSameLabelTwice() {
         List<Label> labels = new ArrayList<Label>();
         labels.add(Label.RAIN);
         labels.add(Label.FOOD);
@@ -39,12 +39,12 @@ class PublicationTest {
     }
 
     @Test
-    public void contextPublications(){
-        OpenWeatherAPI api = new OpenWeatherAPI();
+    public void contextPublications() throws IncorrectUnitWeatherAPIException {
+        OpenWeatherAPI api = new OpenWeatherAPI("metric");
         ArrayList<Double> address = new ArrayList<>();
 		address.add(43.61563752169879);
 		address.add(7.071778197708522);
-        List<Label> currentWeather = api.callApi(address.get(0), address.get(1), "metric");
+        List<Label> currentWeather = api.callApi(address.get(0), address.get(1));
         p1 = new Publication("titre exemple", "description", currentWeather);
         Store shop = new Shop(0, "Magasin", address, null, null, null, null, api);
         shop.addPublication(p1);
@@ -52,8 +52,8 @@ class PublicationTest {
     }
 
     @Test
-    public void addPublicationToShop(){
-        OpenWeatherAPI api = new OpenWeatherAPI();
+    public void addPublicationToShop() throws IncorrectUnitWeatherAPIException {
+        OpenWeatherAPI api = new OpenWeatherAPI("metric");
         ArrayList<Double> address = new ArrayList<>();
         address.add(43.61563752169879);
         address.add(7.071778197708522);

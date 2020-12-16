@@ -8,25 +8,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import exceptions.IncorrectUnitWeatherAPIException;
 import weather.apis.WeatherAPI;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonTypeName("shop")
-@JsonIgnoreProperties(value = {"api", "weather"})
-public class Shop extends Store{
-
+@JsonIgnoreProperties(value = { "api", "weather" })
+public class Shop extends Store {
 
 	@JsonCreator
-	public Shop(@JsonProperty("id") int id, 
-	@JsonProperty("name") String name,
-	@JsonProperty("address") List<Double> address, 
-	@JsonProperty("products") List<Product> products, 
-	@JsonProperty("openingHours") OpeningHours hours, 
-	@JsonProperty("allPublications") List<Publication> allPublications, 
-	@JsonProperty("contextPublications") List<Publication>  contextPublications, 
-	@JsonProperty("api") WeatherAPI api) {
+	public Shop(@JsonProperty("id") int id, @JsonProperty("name") String name,
+			@JsonProperty("address") List<Double> address, @JsonProperty("products") List<Product> products,
+			@JsonProperty("openingHours") OpeningHours hours,
+			@JsonProperty("allPublications") List<Publication> allPublications,
+			@JsonProperty("contextPublications") List<Publication> contextPublications,
+			@JsonProperty("api") WeatherAPI api) throws IncorrectUnitWeatherAPIException {
 		this.id = id;
 		this.address = address;
 		this.name = name;

@@ -2,7 +2,6 @@ package model;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -11,6 +10,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import com.fasterxml.jackson.datatype.jsr310.*;
+
+import exceptions.IncorrectUnitWeatherAPIException;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -22,7 +24,7 @@ import weather.apis.WeatherAPI;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({ @JsonSubTypes.Type(value = Shop.class, name = "shop"), })
 @JsonTypeName("store")
-@JsonIgnoreProperties(value = {"api", "weather"})
+@JsonIgnoreProperties(value = { "api", "weather" })
 public abstract class Store {
 	int id;
 	String name;
@@ -33,16 +35,16 @@ public abstract class Store {
 	List<Publication> contextPublications;
 	protected WeatherAPI api;
 	protected List<Label> weather;
-	
-	public List<Double> getAddress(){
+
+	public List<Double> getAddress() {
 		return this.address;
 	}
 
-	public void setAddress(List<Double> position){
+	public void setAddress(List<Double> position) {
 		this.address = position;
 	}
 
-	public List<Product> getProducts(){
+	public List<Product> getProducts() {
 		return products;
 	}
 
@@ -50,11 +52,11 @@ public abstract class Store {
 		this.products.add(i);
 	}
 
-	public List<Publication> getContextPublications(){
+	public List<Publication> getContextPublications() {
 		return this.contextPublications;
 	}
 
-	public void setContextPublications(List<Publication> publis){
+	public void setContextPublications(List<Publication> publis) {
 		this.contextPublications = publis;
 	}
 
@@ -68,14 +70,14 @@ public abstract class Store {
 
 	public void addPublication(Publication i) {
 		allPublications.add(i);
-		for(Label label: i.labels){
-			if(this.weather.contains(label)){
+		for (Label label : i.labels) {
+			if (this.weather.contains(label)) {
 				this.contextPublications.add(i);
 			}
 		}
-	}	
+	}
 
-	public OpeningHours getOpeningHours(){
+	public OpeningHours getOpeningHours() {
 		return openingHours;
 	}
 
@@ -83,26 +85,26 @@ public abstract class Store {
 		this.openingHours = openingHours;
 	}
 
-	public WeatherAPI getApi(){
+	public WeatherAPI getApi() {
 		return this.api;
 	}
 
-	public void setApi(WeatherAPI api){
+	public void setApi(WeatherAPI api) {
 		this.api = api;
 	}
 
-	public List<Label> getWeather(){
+	public List<Label> getWeather() {
 		return this.weather;
 	}
 
-	public void setWeather(List<Label> weather){
+	public void setWeather(List<Label> weather) {
 		this.weather = weather;
 	}
 
-	public String toJSON(){
+	public String toJSON() {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
-		try{
+		try {
 			return mapper.writeValueAsString(this);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -114,16 +116,16 @@ public abstract class Store {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.registerModule(new JavaTimeModule());
 		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
-		String result="";	
-		try{
-			String s=this.getClass().getSimpleName();
-			s=s.replaceFirst(s.charAt(0)+"",(s.charAt(0)+"").toLowerCase());
-			result+="{\"type\":\""+s+"\"";
-			result+= ",\"id\":"+mapper.writeValueAsString(this.id);
-			result+= ",\"name\":"+mapper.writeValueAsString(this.name);
-			result+= ",\"address\":"+mapper.writeValueAsString(this.address);
-			result+= ",\"open\":"+mapper.writeValueAsString(this.openingHours.isOpen());
-			result+= ","+mapper.writeValueAsString(this.openingHours)+"}";
+		String result = "";
+		try {
+			String s = this.getClass().getSimpleName();
+			s = s.replaceFirst(s.charAt(0) + "", (s.charAt(0) + "").toLowerCase());
+			result += "{\"type\":\"" + s + "\"";
+			result += ",\"id\":" + mapper.writeValueAsString(this.id);
+			result += ",\"name\":" + mapper.writeValueAsString(this.name);
+			result += ",\"address\":" + mapper.writeValueAsString(this.address);
+			result += ",\"open\":" + mapper.writeValueAsString(this.openingHours.isOpen());
+			result += "," + mapper.writeValueAsString(this.openingHours) + "}";
 			return result;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -157,7 +159,7 @@ public abstract class Store {
 		return null;
 	}
 
-	public String contextPublicationsToJSON(){
+	public String contextPublicationsToJSON() {
 		ObjectMapper mapper = new ObjectMapper();
 		// CollectionType publicationListType =
 		// mapper.getTypeFactory().constructCollectionType(List.class,Publication.class);
@@ -174,16 +176,15 @@ public abstract class Store {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.registerModule(new JavaTimeModule());
 		objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.NON_PRIVATE);
-		try{
-		objectMapper.writerWithDefaultPrettyPrinter()
-			.writeValue(new File("src/main/java/dataBase/content/store.json"), this);
+		try {
+			objectMapper.writerWithDefaultPrettyPrinter()
+					.writeValue(new File("src/main/java/dataBase/content/store.json"), this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	
-	public String getName(){
+	public String getName() {
 		return name;
 	}
 
@@ -191,16 +192,16 @@ public abstract class Store {
 		return id;
 	}
 
-	public void setWeatherAPI(WeatherAPI api){
+	public void setWeatherAPI(WeatherAPI api) {
 		this.api = api;
 	}
 
-	public void setWeatherLabel(){
-		if(this.api == null) this.api = new OpenWeatherAPI();
-		this.weather = this.api.callApi(this.address.get(0), this.address.get(1), "metric");
+	public void setWeatherLabel() throws IncorrectUnitWeatherAPIException {
+		if(this.api == null) this.api = new OpenWeatherAPI("metric");
+		this.weather = this.api.callApi(this.address.get(0), this.address.get(1));
 	}
 
-	public void setContextPublication(){
+	public void setContextPublication() throws IncorrectUnitWeatherAPIException {
 		if(this.contextPublications != null) this.contextPublications.clear();
 		setWeatherLabel();
 		List<Label> weatherLabels = this.weather;

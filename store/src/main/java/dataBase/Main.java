@@ -1,21 +1,22 @@
 package dataBase;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-//import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import exceptions.IncorrectUnitWeatherAPIException;
+
 import java.time.LocalTime;
 
 import model.*;
 import weather.apis.OpenWeatherAPI;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, IncorrectUnitWeatherAPIException {
 		ArrayList<Double> address = new ArrayList<>();
 		address.add(43.61563752169879);
 		address.add(7.071778197708522);
-		OpenWeatherAPI api = new OpenWeatherAPI();
+		OpenWeatherAPI api = new OpenWeatherAPI("metric");
 		Store shop = new Shop(0, "truc2", address, null, null, null, null, api);
 	
 		shop.addProduct(new Item("item1", 13));
