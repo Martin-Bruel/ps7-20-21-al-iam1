@@ -41,6 +41,8 @@ jobs:
     - name: Build with Maven
       run: |
           mvn -B package --file api/pom.xml
-          mvn exec:java -Dexec.mainClass="fr.Main" --file api/pom.xml
+          mvn exec:java -Dexec.mainClass="fr.Main" --file api/pom.xml &
+          sleep 30
           mvn -B package --file mock_api/pom.xml
+          
 
