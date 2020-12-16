@@ -5,14 +5,17 @@ import fr.client.RESTClient;
 import fr.model.Traffic;
 import io.cucumber.java8.En;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TrafficStepdef implements En {
 
     RESTClient client;
+    String path;
     String reponse;
     ObjectMapper mapper = new ObjectMapper();
     List<Traffic> traffics;
@@ -50,6 +53,11 @@ public class TrafficStepdef implements En {
 
         //Determiner la date avec le plus d'influence pour un magasin
         When("J'envoie une requete GET sur {string} + {int}", (String path, Integer storeId) -> reponse = client.sendRequest(path + storeId));
+
+
+        //Realiser une requete innexistante
+        When("Je créer une requete GET sur {string}", (String path) -> this.path = path);
+        Then("L'envoie  créer une erreure", () -> assertThrows(IOException.class, ()->client.sendRequest(path)));
     }
 
     public void storeWithHigherTraffic(List<Traffic> traffics){
