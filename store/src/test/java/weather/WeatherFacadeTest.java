@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.IncorrectValuesTemperature;
 import model.Label;
-import model.TempLabel;
+import weather.utils.TempLabel;
 import weather.apis.*;
 
 import java.io.IOException;

@@ -2,16 +2,33 @@
   "type" : "shop",
   "id" : 0,
   "name" : "truc2",
-  "address" : "adresse truc",
+  "address" : [ 43.61563752169879, 7.071778197708522 ],
   "products" : [ {
     "type" : "item",
     "name" : "item1",
     "price" : 13.0
   } ],
-  "publications" : [ {
+  "allPublications" : [ {
     "type" : "Publication",
     "title" : "Vente de parapluie",
     "labels" : [ "RAIN" ],
     "description" : "Aujourd'hui il pleut, si tu as besoin d'un parapluie n'hésite pas à passer à notre magasin. MagasinPluie"
-  } ]
+  } ],
+  "contextPublications" : [ {
+    "type" : "Publication",
+    "title" : "Vente de parapluie",
+    "labels" : [ "RAIN" ],
+    "description" : "Aujourd'hui il pleut, si tu as besoin d'un parapluie n'hésite pas à passer à notre magasin. MagasinPluie"
+  } ],
+  "weather" : [ "CLOUDS", "CHILLY" ],
+  "api" : {
+    "key" : "b7a405fea8328d8c19c034d9a8b673aa",
+    "stringURL" : {
+      "root" : "https://api.openweathermap.org/data/2.5/weather?",
+      "key" : "&appid=",
+      "lat" : "lat=",
+      "lon" : "&lon=",
+      "units" : "&units="
+    }
+  }
 }

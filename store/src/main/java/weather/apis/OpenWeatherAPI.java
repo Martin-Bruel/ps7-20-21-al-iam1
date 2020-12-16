@@ -27,13 +27,19 @@ public class OpenWeatherAPI extends WeatherAPI {
     }
 
     @Override
-    public ArrayList<Label> callApi(double latitude, double longitude, String units) throws IOException {
+    public ArrayList<Label> callApi(double latitude, double longitude, String units){
         ArrayList<Label> res = new ArrayList<>();
-        URL url = buildURL(latitude, longitude, units);
-        JSONTokener tokener = new JSONTokener(url.openStream());
-        JSONObject response = new JSONObject(tokener);
-        res = abstractGlobalWeather(response);
-        return res;
+        try{
+            URL url = buildURL(latitude, longitude, units);
+            JSONTokener tokener = new JSONTokener(url.openStream());
+            JSONObject response = new JSONObject(tokener);
+            res = abstractGlobalWeather(response);
+            return res;
+        } catch( IOException e){
+            System.err.println("An error occured while makin API call : ");
+            e.printStackTrace();
+            return null;
+        }
     }
     
     @Override

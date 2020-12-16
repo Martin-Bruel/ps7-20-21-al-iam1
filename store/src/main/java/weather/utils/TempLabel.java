@@ -1,4 +1,4 @@
-package model;
+package weather.utils;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;

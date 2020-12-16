@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import org.json.JSONObject;
 
 import model.Label;
-import model.TempLabel;
+import weather.utils.TempLabel;
 import weather.urlbuilder.StringUrl;
 
 
@@ -29,7 +29,7 @@ public abstract class WeatherAPI {
      * @return ArrayList of labels
      * @throws IOException
      */
-    public abstract ArrayList<Label> callApi(double latitude, double longitude, String units) throws IOException;
+    public abstract ArrayList<Label> callApi(double latitude, double longitude, String units);
 
     /**
      * 
