@@ -53,7 +53,7 @@ public abstract class Store {
 
 	public String toJSON(){
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
 		try{
 			return mapper.writeValueAsString(this);
 		} catch (IOException e) {
@@ -74,6 +74,7 @@ public abstract class Store {
 			result+= ",\"id\":"+mapper.writeValueAsString(this.id);
 			result+= ",\"name\":"+mapper.writeValueAsString(this.name);
 			result+= ",\"address\":"+mapper.writeValueAsString(this.address);
+			result+= ",\"open\":"+mapper.writeValueAsString(this.openingHours.isOpen());
 			result+= ","+mapper.writeValueAsString(this.openingHours)+"}";
 			return result;
 		} catch (IOException e) {
@@ -97,7 +98,6 @@ public abstract class Store {
 
 	public String publicationsToJSON(){
 		ObjectMapper mapper = new ObjectMapper();
-		//CollectionType publicationListType = mapper.getTypeFactory().constructCollectionType(List.class,Publication.class);
 		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
 		try{
 			return mapper.writer().writeValueAsString(publications);
@@ -110,10 +110,7 @@ public abstract class Store {
 	public void makeJSON(){
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.registerModule(new JavaTimeModule());
-		//.registerModule(new ParameterNamesModule())
-		//.registerModule(new Jdk8Module())
-		//.registerModule(new JavaTimeModule());
-		objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+		objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.NON_PRIVATE);
 		try{
 		objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("src/main/java/dataBase/content/store.json"), this);
 		} catch (IOException e) {
@@ -129,4 +126,5 @@ public abstract class Store {
 	public int getId() {
 		return id;
 	}
+
 }

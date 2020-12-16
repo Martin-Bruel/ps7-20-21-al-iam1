@@ -58,29 +58,29 @@ public class OpeningHours {
     }
 
     void setMonday(List<LocalTime>monday){
-        if(monday.size()%2==0)this.monday=monday;
+        if(monday!=null && monday.size()%2==0)this.monday=monday;
     }
     void setTuesday(List<LocalTime>tuesday){
-        if(tuesday.size()%2==0)this.tuesday=tuesday;
+        if(tuesday!=null && tuesday.size()%2==0)this.tuesday=tuesday;
     }
     void setWednesday(List<LocalTime>wednesday){
-        if(wednesday.size()%2==0)this.wednesday=wednesday;
+        if(wednesday!=null && wednesday.size()%2==0)this.wednesday=wednesday;
     }
     void setThursday(List<LocalTime>thursday){
-        if(thursday.size()%2==0)this.thursday=thursday;
+        if(thursday!=null && thursday.size()%2==0)this.thursday=thursday;
     }
     void setFriday(List<LocalTime>friday){
-        if(friday.size()%2==0)this.friday=friday;
+        if(friday!=null && friday.size()%2==0)this.friday=friday;
     }
     void setSaturday(List<LocalTime>saturday){
-        if(saturday.size()%2==0)this.saturday=saturday;
+        if(saturday!=null && saturday.size()%2==0)this.saturday=saturday;
     }
     void setSunday(List<LocalTime>sunday){
-        if(sunday.size()%2==0)this.sunday=sunday;
+        if(sunday!=null && sunday.size()%2==0)this.sunday=sunday;
     }
 
 
-    private boolean isOpen(){
+    boolean isOpen(){
         Calendar c = Calendar.getInstance();
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
         List<LocalTime> today;
