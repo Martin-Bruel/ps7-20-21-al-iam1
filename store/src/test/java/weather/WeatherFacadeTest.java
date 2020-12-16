@@ -6,7 +6,7 @@ import exceptions.IncorrectValuesTemperature;
 import exceptions.UndefinedWeatherAPIException;
 import model.Label;
 import model.TempLabel;
-import weather.model.WeatherAPIEnum;
+import weather.apis.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,14 +18,20 @@ class WeatherFacadeTest {
 
     @Test
     void callOpenWeatherAPI() throws IOException, UndefinedWeatherAPIException {
-        ArrayList<Label> labels = WeatherFacade.getWeatherLabel(WeatherAPIEnum.OPENWEATHER, anyDouble(), anyDouble(), "metric");
+        OpenWeatherAPI api = new OpenWeatherAPI();
+        ArrayList<Label> labels = api.callApi(anyDouble(), anyDouble(), "metric");
+        System.out.println(labels.get(0).toString());
+        System.out.println(labels.get(1).toString());
         assertTrue(labels.get(0) != null);
         assertTrue(labels.get(1) != null);
     }
 
     @Test
     void callWeatherBit() throws IOException, UndefinedWeatherAPIException{
-        ArrayList<Label> labels = WeatherFacade.getWeatherLabel(WeatherAPIEnum.WEATHERBIT, anyDouble(), anyDouble(), "S");
+        WeatherBitAPI api = new WeatherBitAPI();
+        ArrayList<Label> labels = api.callApi(anyDouble(), anyDouble());
+        System.out.println(labels.get(0).toString());
+        System.out.println(labels.get(1).toString());
         assertTrue(labels.get(0) != null);
         assertTrue(labels.get(1) != null);
     }

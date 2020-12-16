@@ -21,7 +21,8 @@ public enum TempLabel {
     MILD(16, 23),
     CHILLY(5,16),
     COLD(-5, 5),
-    FREEZE(-30, -5);
+    FREEZE(-30, -5),
+    OTHER(-100, -30);
 
     public double[] range = new double[2];
 
@@ -59,6 +60,6 @@ public enum TempLabel {
                 return label;
             }
         }
-        return null;
+        return OTHER;
     }
 }

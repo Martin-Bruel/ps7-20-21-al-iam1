@@ -1,15 +1,21 @@
 package weather.apis;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import org.json.JSONObject;
 
 import model.Label;
 import model.TempLabel;
+import weather.urlbuilder.StringUrl;
 
 
 public abstract class WeatherAPI {
+    String key;
+    StringUrl stringURL;
+
 
     /**
      * 
@@ -24,7 +30,34 @@ public abstract class WeatherAPI {
      * @throws IOException
      */
     public abstract ArrayList<Label> callApi(double latitude, double longitude, String units) throws IOException;
+
+    /**
+     * 
+     * method auxiliaire if units is not given
+     * 
+     * @param latitude
+     * @param longitude
+     * @return ArrayList of labels
+     * @throws IOException
+     */
+    public ArrayList<Label> callApi(double latitude, double longitude) throws IOException{
+        return callApi(latitude, longitude, "");
+    }
     
+
+    /**
+     * 
+     * Construct the URL to call
+     * 
+     * @param latitude
+     * @param longitude
+     * @param units
+     * @return valid URL to API
+     * @throws MalformedURLException
+     */
+    public abstract URL buildURL(double latitude, double longitude, String units) throws MalformedURLException;
+
+
     /**
      * 
      * return labels according to weather/temperature retrieved from API call
@@ -104,6 +137,7 @@ public abstract class WeatherAPI {
                 break;
             case FREEZE:
                 res = Label.FREEZE;
+                break;
             default:
                 res = Label.UNDEFINED;
 				break;
