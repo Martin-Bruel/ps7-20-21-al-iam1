@@ -16,8 +16,7 @@ public class Main {
 		address.add(43.61563752169879);
 		address.add(7.071778197708522);
 		OpenWeatherAPI api = new OpenWeatherAPI();
-		Shop shop = new Shop(0, "truc2", address, null, null);
-		shop.setWeatherAPI(api);
+		Store shop = new Shop(0, "truc2", address, null, null, null, null, api);
 	
 		shop.addProduct(new Item("item1", 13));
 
@@ -25,10 +24,10 @@ public class Main {
 		p1.addLabel(Label.RAIN);
 		shop.addPublication(p1);
 
-		// Publication p2 = new Publication("Chocolat chaud", "Vous avez un peu froid ? N'hésitez pas à venir vous réchauffer auprès d'un chocolat chaud chez nous ! MagasinPluie", null);
-		// p2.addLabel(Label.CHILLY);
-		// p2.addLabel(Label.COLD);
-		// shop.addPublication(p2);
+		Publication p2 = new Publication("Chocolat chaud", "Vous avez un peu froid ? N'hésitez pas à venir vous réchauffer auprès d'un chocolat chaud chez nous ! MagasinPluie", null);
+		p2.addLabel(Label.CHILLY);
+		p2.addLabel(Label.COLD);
+		shop.addPublication(p2);
 
 		List<LocalTime>hours=new ArrayList<>();
 		hours.add(LocalTime.now().withHour(8).withMinute(0));

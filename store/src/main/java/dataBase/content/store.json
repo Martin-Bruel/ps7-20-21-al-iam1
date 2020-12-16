@@ -8,29 +8,6 @@
     "name" : "item1",
     "price" : 13.0
   } ],
-  "allPublications" : [ {
-    "type" : "Publication",
-    "title" : "Vente de parapluie",
-    "labels" : [ "RAIN" ],
-    "description" : "Aujourd'hui il pleut, si tu as besoin d'un parapluie n'hésite pas à passer à notre magasin. MagasinPluie"
-  } ],
-  "contextPublications" : [ {
-    "type" : "Publication",
-    "title" : "Vente de parapluie",
-    "labels" : [ "RAIN" ],
-    "description" : "Aujourd'hui il pleut, si tu as besoin d'un parapluie n'hésite pas à passer à notre magasin. MagasinPluie"
-  } ],
-  "weather" : [ "CLOUDS", "CHILLY" ],
-  "api" : {
-    "key" : "b7a405fea8328d8c19c034d9a8b673aa",
-    "stringURL" : {
-      "root" : "https://api.openweathermap.org/data/2.5/weather?",
-      "key" : "&appid=",
-      "lat" : "lat=",
-      "lon" : "&lon=",
-      "units" : "&units="
-    }
-  },
   "openingHours" : {
     "type" : "openingHours",
     "Monday" : [ "08:00", "12:00", "14:00", "15:25" ],
@@ -40,5 +17,22 @@
     "Friday" : [ "08:00", "12:00", "14:00", "15:25" ],
     "Saturday" : [ "08:00", "12:00", "14:00", "15:25" ],
     "Sunday" : [ "08:00", "12:00", "14:00", "15:25" ]
-  }
+  },
+  "allPublications" : [ {
+    "type" : "Publication",
+    "title" : "Vente de parapluie",
+    "labels" : [ "RAIN" ],
+    "description" : "Aujourd'hui il pleut, si tu as besoin d'un parapluie n'hésite pas à passer à notre magasin. MagasinPluie"
+  }, {
+    "type" : "Publication",
+    "title" : "Chocolat chaud",
+    "labels" : [ "CHILLY", "COLD" ],
+    "description" : "Vous avez un peu froid ? N'hésitez pas à venir vous réchauffer auprès d'un chocolat chaud chez nous ! MagasinPluie"
+  } ],
+  "contextPublications" : [ {
+    "type" : "Publication",
+    "title" : "Chocolat chaud",
+    "labels" : [ "CHILLY", "COLD" ],
+    "description" : "Vous avez un peu froid ? N'hésitez pas à venir vous réchauffer auprès d'un chocolat chaud chez nous ! MagasinPluie"
+  } ]
 }

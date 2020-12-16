@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import com.fasterxml.jackson.datatype.jsr310.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -20,6 +21,7 @@ import weather.apis.WeatherAPI;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({ @JsonSubTypes.Type(value = Shop.class, name = "shop"), })
 @JsonTypeName("store")
+@JsonIgnoreProperties(value = {"api", "weather"})
 public abstract class Store {
 	int id;
 	String name;
@@ -28,8 +30,8 @@ public abstract class Store {
 	List<Publication> allPublications;
 	List<Publication> contextPublications;
 	OpeningHours openingHours;
-	private WeatherAPI api;
-	private List<Label> weather;
+	protected WeatherAPI api;
+	protected List<Label> weather;
 	
 	public List<Product> getProducts(){
 		return products;
@@ -45,7 +47,11 @@ public abstract class Store {
 
 	public void addPublication(Publication i) {
 		allPublications.add(i);
-		this.setContextPublication();
+		for(Label label: i.labels){
+			if(this.weather.contains(label)){
+				this.contextPublications.add(i);
+			}
+		}
 	}	
 
 	public OpeningHours getOpeningHours(){
@@ -58,7 +64,7 @@ public abstract class Store {
 
 	public String toJSON(){
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
 		try {
 			return mapper.writeValueAsString(this);
 		} catch (IOException e) {
@@ -104,7 +110,7 @@ public abstract class Store {
 		ObjectMapper mapper = new ObjectMapper();
 		// CollectionType publicationListType =
 		// mapper.getTypeFactory().constructCollectionType(List.class,Publication.class);
-		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
 		try {
 			return mapper.writer().writeValueAsString(allPublications);
 		} catch (IOException e) {
@@ -117,7 +123,7 @@ public abstract class Store {
 		ObjectMapper mapper = new ObjectMapper();
 		// CollectionType publicationListType =
 		// mapper.getTypeFactory().constructCollectionType(List.class,Publication.class);
-		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
 		try {
 			return mapper.writer().writeValueAsString(contextPublications);
 		} catch (IOException e) {
@@ -132,7 +138,7 @@ public abstract class Store {
 		//.registerModule(new ParameterNamesModule())
 		//.registerModule(new Jdk8Module())
 		//.registerModule(new JavaTimeModule());
-		objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+		objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.NON_PRIVATE);
 		try {
 			objectMapper.writerWithDefaultPrettyPrinter()
 					.writeValue(new File("src/main/java/dataBase/content/store.json"), this);
