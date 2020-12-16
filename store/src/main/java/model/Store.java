@@ -27,12 +27,20 @@ public abstract class Store {
 	String name;
 	List<Double> address;
 	protected List<Product> products;
+	OpeningHours openingHours;
 	List<Publication> allPublications;
 	List<Publication> contextPublications;
-	OpeningHours openingHours;
 	protected WeatherAPI api;
 	protected List<Label> weather;
 	
+	public List<Double> getAddress(){
+		return this.address;
+	}
+
+	public void setAddress(List<Double> position){
+		this.address = position;
+	}
+
 	public List<Product> getProducts(){
 		return products;
 	}
@@ -41,8 +49,20 @@ public abstract class Store {
 		this.products.add(i);
 	}
 
+	public List<Publication> getContextPublications(){
+		return this.contextPublications;
+	}
+
+	public void setContextPublications(List<Publication> publis){
+		this.contextPublications = publis;
+	}
+
 	public List<Publication> getAllPublications() {
 		return this.allPublications;
+	}
+
+	public void setAllPublications(List<Publication> publis) {
+		this.allPublications = publis;
 	}
 
 	public void addPublication(Publication i) {
