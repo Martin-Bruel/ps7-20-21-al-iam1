@@ -12,7 +12,7 @@ public class Main {
 		Store shop=new Shop(0,"truc2","adresse truc",null,null);
 		shop.addProduct(new Item("item1", 13));
 		Publication p1=new Publication("Vente de parapluie","Aujourd'hui il pleut, si tu as besoin d'un parapluie n'hésite pas à passer à notre magasin. MagasinPluie",null);
-		p1.addLabel(Label.BAD_WEATHER);
+		p1.addLabel(Label.RAIN);
 		shop.addPublication(p1);
 		shop.makeJSON();
 		//System.out.println(shop.detailsToJSON());

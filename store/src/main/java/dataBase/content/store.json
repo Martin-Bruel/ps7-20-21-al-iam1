@@ -11,7 +11,7 @@
   "publications" : [ {
     "type" : "Publication",
     "title" : "Vente de parapluie",
-    "labels" : [ "BAD_WEATHER" ],
+    "labels" : [ "RAIN" ],
     "description" : "Aujourd'hui il pleut, si tu as besoin d'un parapluie n'hésite pas à passer à notre magasin. MagasinPluie"
   } ]
 }
