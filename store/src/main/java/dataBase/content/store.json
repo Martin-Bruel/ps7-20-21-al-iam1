@@ -17,5 +17,21 @@
     "type" : "item",
     "name" : "K-way",
     "price" : 13.0
-  } ]
+  } ],
+  "publications" : [ {
+    "type" : "Publication",
+    "title" : "Vente de parapluie",
+    "labels" : [ "BAD_WEATHER" ],
+    "description" : "Aujourd'hui il pleut, si tu as besoin d'un parapluie n'hésite pas à passer à notre magasin. MagasinPluie"
+  } ],
+  "openingHours" : {
+    "type" : "openingHours",
+    "Monday" : [ "08:00", "12:00", "14:00", "15:25" ],
+    "Tuesday" : [ "08:00", "12:00", "14:00", "15:25" ],
+    "Wednesday" : [ "08:00", "12:00", "14:00", "15:25" ],
+    "Thursday" : [ "08:00", "12:00", "14:00", "15:25" ],
+    "Friday" : [ "08:00", "12:00", "14:00", "15:25" ],
+    "Saturday" : [ "08:00", "12:00", "14:00", "15:25" ],
+    "Sunday" : [ "08:00", "12:00", "14:00", "15:25" ]
+  }
 }

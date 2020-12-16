@@ -6,9 +6,9 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
+import com.fasterxml.jackson.datatype.jsr310.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -24,6 +24,8 @@ public abstract class Store {
 	String name;
 	String address;
 	protected List<Product> products;
+	List<Publication> publications;
+	OpeningHours openingHours;
 	
 	public List<Product> getProducts(){
 		return products;
@@ -33,9 +35,25 @@ public abstract class Store {
 		products.add(i);
 	}
 
+	public List<Publication> getPublications(){
+		return publications;
+	}
+
+	public void addPublication(Publication i) {
+		publications.add(i);
+	}	
+
+	public OpeningHours getOpeningHours(){
+		return openingHours;
+	}
+
+	public void setOpeningHours(OpeningHours openingHours) {
+		this.openingHours = openingHours;
+	}
+
 	public String toJSON(){
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
 		try{
 			return mapper.writeValueAsString(this);
 		} catch (IOException e) {
@@ -46,6 +64,7 @@ public abstract class Store {
 
 	public String detailsToJSON(){
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.registerModule(new JavaTimeModule());
 		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
 		String result="";	
 		try{
@@ -54,7 +73,9 @@ public abstract class Store {
 			result+="{\"type\":\""+s+"\"";
 			result+= ",\"id\":"+mapper.writeValueAsString(this.id);
 			result+= ",\"name\":"+mapper.writeValueAsString(this.name);
-			result+= ",\"address\":"+mapper.writeValueAsString(this.address)+"}";
+			result+= ",\"address\":"+mapper.writeValueAsString(this.address);
+			result+= ",\"open\":"+mapper.writeValueAsString(this.openingHours.isOpen());
+			result+= ","+mapper.writeValueAsString(this.openingHours)+"}";
 			return result;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -75,9 +96,21 @@ public abstract class Store {
 		return null;
 	}
 
+	public String publicationsToJSON(){
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+		try{
+			return mapper.writer().writeValueAsString(publications);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public void makeJSON(){
 		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+		objectMapper.registerModule(new JavaTimeModule());
+		objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.NON_PRIVATE);
 		try{
 		objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("src/main/java/dataBase/content/store.json"), this);
 		} catch (IOException e) {
@@ -93,4 +126,5 @@ public abstract class Store {
 	public int getId() {
 		return id;
 	}
+
 }
