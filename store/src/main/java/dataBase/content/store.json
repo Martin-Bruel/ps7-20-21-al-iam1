@@ -1,11 +1,21 @@
 {
   "type" : "shop",
   "id" : 0,
-  "name" : "truc2",
+  "name" : "AuPaysPluvieux",
   "address" : "adresse truc",
   "products" : [ {
     "type" : "item",
-    "name" : "item1",
+    "name" : "Parka",
+    "price" : 13.0
+  },
+  {
+    "type" : "item",
+    "name" : "Parapluie",
+    "price" : 13.0
+  },
+  {
+    "type" : "item",
+    "name" : "K-way",
     "price" : 13.0
   } ]
 }
