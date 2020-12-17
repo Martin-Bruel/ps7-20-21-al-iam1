@@ -20,11 +20,18 @@ public class StoreManager {
 
     @UpnpStateVariable(defaultValue = "0", sendEvents = false)
     private String storeDetails = Server.store.detailsToJSON();
+    
     @UpnpStateVariable(defaultValue = "0", sendEvents = false)
     private String storeProducts = Server.store.productsToJSON();
     
     @UpnpStateVariable(defaultValue = "0", sendEvents = false)
     private String MAC = Server.store.getBluetoothMac();
+
+    @UpnpStateVariable(defaultValue = "0", sendEvents = false)
+    private String storePublications = Server.store.allPublicationsToJSON();
+
+    @UpnpStateVariable(defaultValue = "0", sendEvents = false)
+    private String storeContextPublications = Server.store.contextPublicationsToJSON();
 
     public StoreManager() throws JsonProcessingException {
     }
@@ -32,7 +39,7 @@ public class StoreManager {
     @UpnpAction(out = @UpnpOutputArgument(name = "storeDetails"))
     public String getStoreDetails(){
 
-        trafficManager.addNewClient();
+        //trafficManager.addNewClient();
         return storeDetails;
     }
 
@@ -45,5 +52,15 @@ public class StoreManager {
     @UpnpAction(out = @UpnpOutputArgument(name = "MAC"))
     public String getMAC() {
     	return MAC;
+    }
+
+    @UpnpAction(out = @UpnpOutputArgument(name = "storePublications"))
+    public String getStorePublications(){
+        return storePublications;
+    }
+
+    @UpnpAction(out = @UpnpOutputArgument(name = "storeContextPublications"))
+    public String getStoreContextPublications(){
+        return storeContextPublications;
     }
 }
