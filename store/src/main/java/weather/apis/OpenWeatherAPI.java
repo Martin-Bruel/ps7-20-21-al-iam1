@@ -33,6 +33,17 @@ public class OpenWeatherAPI extends WeatherAPI {
         this.units = units;
     }
 
+    public OpenWeatherAPI(){
+        this.key = "b7a405fea8328d8c19c034d9a8b673aa";
+        this.stringURL = new StringUrlBuilder().withRoot("https://api.openweathermap.org/data/2.5/weather?")
+                                                .withLat("lat=")
+                                                .withLon("&lon=")
+                                                .withUnits("&units=")
+                                                .withKey("&appid=")
+                                                .build();
+        this.units = "metric";
+    }
+
     @Override
     public ArrayList<Label> callApi(double latitude, double longitude){
         ArrayList<Label> res = new ArrayList<>();
@@ -71,6 +82,14 @@ public class OpenWeatherAPI extends WeatherAPI {
         return response.getJSONObject("main").getDouble("temp");
     }
 
+
+    public String getUnits(){
+        return this.units;
+    }
+
+    public void setUnits(String unit){
+        this.units = unit;
+    }
 
 
 

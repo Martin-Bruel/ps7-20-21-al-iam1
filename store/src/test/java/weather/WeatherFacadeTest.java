@@ -46,5 +46,13 @@ class WeatherFacadeTest {
         assertThrows(IncorrectUnitWeatherAPIException.class, () -> new WeatherBitAPI("meter"));
     }
 
+    @Test
+    void constructorWithoutUnit(){
+        WeatherBitAPI api = new WeatherBitAPI();
+        assertEquals(api.getUnits(), "M");
+        OpenWeatherAPI api2 = new OpenWeatherAPI();
+        assertEquals(api2.getUnits(), "metric");
+    }
+
     
 }

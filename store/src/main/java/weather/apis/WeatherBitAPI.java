@@ -36,6 +36,18 @@ public class WeatherBitAPI extends WeatherAPI {
         this.units = units;
     }
 
+    public WeatherBitAPI(){
+        this.key = "50b12870871b4b03b6d77bea032c508c";
+        this.stringURL = new StringUrlBuilder()
+            .withRoot("https://api.weatherbit.io/v2.0/current?")
+            .withLat("lat=")
+            .withLon("&lon=")
+            .withUnits("&units=")
+            .withKey("&key=")
+            .build();
+        this.units = "M";
+    }
+
     @Override
     public ArrayList<Label> callApi(double latitude, double longitude){
         try {
@@ -79,6 +91,13 @@ public class WeatherBitAPI extends WeatherAPI {
         return response.getJSONArray("data").getJSONObject(0).getDouble("temp"); // see https://www.weatherbit.io/api/swaggerui/weather-api-v2#/
     }
 
+    public String getUnits(){
+        return this.units;
+    }
 
+    public void setUnits(String unit){
+        this.units = unit;
+    }
     
+
 }
