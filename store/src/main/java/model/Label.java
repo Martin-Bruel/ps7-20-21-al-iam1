@@ -5,5 +5,19 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonTypeName("label")
 
 public enum Label {
-    GOOD_WEATHER, BAD_WEATHER, FOOD
+    STORM,
+    RAIN,
+    SNOW,
+    MIST,
+    SUNNY,
+    CLOUDS,
+    UNDEFINED,
+    HOT,
+    WARM,
+    MILD,
+    CHILLY,
+    COLD,
+    FREEZE,
+    FOOD
 }
+

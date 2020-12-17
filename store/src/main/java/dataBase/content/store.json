@@ -2,7 +2,7 @@
   "type" : "shop",
   "id" : 0,
   "name" : "AuPaysPluvieux",
-  "address" : "adresse truc",
+  "address" : [ 43.61563752169879, 7.071778197708522 ],
   "products" : [ {
     "type" : "item",
     "name" : "Parka",
@@ -18,12 +18,6 @@
     "name" : "K-way",
     "price" : 13.0
   } ],
-  "publications" : [ {
-    "type" : "Publication",
-    "title" : "Vente de parapluie",
-    "labels" : [ "BAD_WEATHER" ],
-    "description" : "Aujourd'hui il pleut, si tu as besoin d'un parapluie n'hésite pas à passer à notre magasin. MagasinPluie"
-  } ],
   "openingHours" : {
     "type" : "openingHours",
     "Monday" : [ "08:00", "12:00", "14:00", "15:25" ],
@@ -33,5 +27,22 @@
     "Friday" : [ "08:00", "12:00", "14:00", "15:25" ],
     "Saturday" : [ "08:00", "12:00", "14:00", "15:25" ],
     "Sunday" : [ "08:00", "12:00", "14:00", "15:25" ]
-  }
+  },
+  "allPublications" : [ {
+    "type" : "Publication",
+    "title" : "Vente de parapluie",
+    "labels" : [ "RAIN" ],
+    "description" : "Aujourd'hui il pleut, si tu as besoin d'un parapluie n'hésite pas à passer à notre magasin. MagasinPluie"
+  }, {
+    "type" : "Publication",
+    "title" : "Chocolat chaud",
+    "labels" : [ "CHILLY", "COLD" ],
+    "description" : "Vous avez un peu froid ? N'hésitez pas à venir vous réchauffer auprès d'un chocolat chaud chez nous ! MagasinPluie"
+  } ],
+  "contextPublications" : [ {
+    "type" : "Publication",
+    "title" : "Chocolat chaud",
+    "labels" : [ "CHILLY", "COLD" ],
+    "description" : "Vous avez un peu froid ? N'hésitez pas à venir vous réchauffer auprès d'un chocolat chaud chez nous ! MagasinPluie"
+  } ]
 }

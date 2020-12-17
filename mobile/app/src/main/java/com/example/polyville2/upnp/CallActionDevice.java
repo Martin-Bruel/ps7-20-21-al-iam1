@@ -21,6 +21,11 @@ import java.io.IOException;
 import java.util.List;
 
 public class CallActionDevice {
+    public final int STOREPOS = 1;
+    public final int MACPOS=0;
+    public final int PRODUCTPOS=2;
+
+
     RemoteDevice device;
     AndroidUpnpService upnpservice;
 
@@ -30,7 +35,7 @@ public class CallActionDevice {
     }
     public void getStoredevice(final Context context){
         Service service = device.getServices()[0];
-        Action statusAction = service.getActions()[0];
+        Action statusAction = service.getActions()[STOREPOS];
 
         ActionInvocation invocation = new ActionInvocation(statusAction);
         ActionCallback callback= new ActionCallback(invocation) {
@@ -55,7 +60,7 @@ public class CallActionDevice {
 
     public void getProductsOfDevice(final Context context, final Store store){
         Service service = device.getServices()[0];
-        Action statusAction = service.getActions()[1];
+        Action statusAction = service.getActions()[PRODUCTPOS];
 
         ActionInvocation invocation = new ActionInvocation(statusAction);
         final ActionCallback callback= new ActionCallback(invocation) {
@@ -80,4 +85,25 @@ public class CallActionDevice {
         };
         upnpservice.getControlPoint().execute(callback);
     }
+
+
+    public void getMACOfDevice(final Context context){
+        Service service = device.getServices()[0];
+        Action statusAction = service.getActions()[MACPOS];
+
+        ActionInvocation invocation = new ActionInvocation(statusAction);
+        final ActionCallback callback= new ActionCallback(invocation) {
+            @Override
+            public void success(ActionInvocation invocation) {
+                ((MainActivity)context).linkMacAndDevice((String)invocation.getOutput()[0].getValue(),device);
+            }
+
+            @Override
+            public void failure(ActionInvocation invocation, UpnpResponse operation, String defaultMsg) {
+
+            }
+        };
+        upnpservice.getControlPoint().execute(callback);
+    }
+
 }

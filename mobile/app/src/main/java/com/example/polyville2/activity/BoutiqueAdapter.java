@@ -27,16 +27,14 @@ import java.util.List;
 
 public class BoutiqueAdapter extends BaseAdapter{
     private List<Store> stores;
-    private List<RemoteDevice> devices;
     private Context context;
-    public BoutiqueAdapter(List<RemoteDevice> devices, List<Store>stores,Context context){
-        this.devices=devices;
+    public BoutiqueAdapter(List<Store>stores,Context context){
         this.context=context;
         this.stores=stores;
     }
     @Override
     public int getCount() {
-        return devices.size();
+        return stores.size();
     }
 
     @Override
