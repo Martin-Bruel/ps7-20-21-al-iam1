@@ -72,7 +72,7 @@ public class CallActionDevice {
                     for(Product p:products) {
                         store.addProduct(p);
                     }
-                    ((MainActivity)context).addStore(store);
+                    ((MainActivity)context).addStore(store,device);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
