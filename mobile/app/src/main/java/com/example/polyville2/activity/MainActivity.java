@@ -23,7 +23,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.polyville2.bluetooth.BluetoothSearcher;
-import com.example.polyville2.bluetooth.BluetoothService;
 import com.example.polyville2.model.Store;
 import com.example.polyville2.upnp.CallActionDevice;
 import com.example.polyville2.upnp.DiscoveryDevice;
@@ -34,7 +33,9 @@ import org.fourthline.cling.android.AndroidUpnpServiceImpl;
 import org.fourthline.cling.model.meta.RemoteDevice;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -133,8 +134,8 @@ public class MainActivity extends AppCompatActivity implements Observer {
             callActionDevice.getMACOfDevice(this);
         }else{
             List<RemoteDevice> currentSeeDevice = (List<RemoteDevice>)o;
-            System.out.println("ici"+currentSeeDevice);
-            Set<RemoteDevice> olderDevices = linkIOTAndStore.keySet();
+            System.out.println("ici mainactivity detect : "+currentSeeDevice);
+            Set<RemoteDevice> olderDevices = new HashSet<>(linkIOTAndStore.keySet());
                 olderDevices.removeAll(currentSeeDevice);
                 for(RemoteDevice toDelete:olderDevices){
                     removeStore(toDelete);
