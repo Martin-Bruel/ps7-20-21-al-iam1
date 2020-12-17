@@ -171,10 +171,12 @@ public abstract class Store {
 		LocalDevice local;
 		try {
 			local = LocalDevice.getLocalDevice();
-		return local.getBluetoothAddress();		} catch (BluetoothStateException e) {
+		return local.getBluetoothAddress();		
+	} catch (BluetoothStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "";
+		}
+		return "";
     }
 
 	public String contextPublicationsToJSON() {
