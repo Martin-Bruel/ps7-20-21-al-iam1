@@ -28,5 +28,5 @@ Feature: Traffic
     Then La date avec le plus d'influence est aujourd'hui - 0 avec 5 personnes
 
   Scenario: Realiser une requete innexistante
-    When Je créer une requete GET sur "/avenger/"
-    Then L'envoie  créer une erreure
+    When Je creer une requete GET sur "/avenger/"
+    Then L'envoie creer une erreure

@@ -13,7 +13,7 @@ public class StoreManager {
 
     private TrafficManager trafficManager = new TrafficManager();
 
-    @UpnpStateVariable(defaultValue = "0", sendEvents = false)
+    @UpnpStateVariable(defaultValue = "0", sendEvents = true)
     private String storeDetails = Server.store.detailsToJSON();
     @UpnpStateVariable(defaultValue = "0", sendEvents = false)
     private String storeProducts = Server.store.productsToJSON();

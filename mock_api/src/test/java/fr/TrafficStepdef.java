@@ -56,8 +56,8 @@ public class TrafficStepdef implements En {
 
 
         //Realiser une requete innexistante
-        When("Je créer une requete GET sur {string}", (String path) -> this.path = path);
-        Then("L'envoie  créer une erreure", () -> assertThrows(IOException.class, ()->client.sendRequest(path)));
+        When("Je creer une requete GET sur {string}", (String path) -> this.path = path);
+        Then("L'envoie creer une erreure", () -> assertThrows(IOException.class, ()->client.sendRequest(path)));
     }
 
     public void storeWithHigherTraffic(List<Traffic> traffics){
