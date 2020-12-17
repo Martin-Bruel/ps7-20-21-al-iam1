@@ -2,6 +2,8 @@ package model;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -18,8 +20,13 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+
+import javax.bluetooth.BluetoothStateException;
+import javax.bluetooth.LocalDevice;
+
 import weather.apis.OpenWeatherAPI;
 import weather.apis.WeatherAPI;
+
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({ @JsonSubTypes.Type(value = Shop.class, name = "shop"), })
@@ -159,6 +166,19 @@ public abstract class Store {
 		return null;
 	}
 
+	
+	public	String getBluetoothMac() {
+		LocalDevice local;
+		try {
+			local = LocalDevice.getLocalDevice();
+		return local.getBluetoothAddress();		
+	} catch (BluetoothStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+    }
+
 	public String contextPublicationsToJSON() {
 		ObjectMapper mapper = new ObjectMapper();
 		// CollectionType publicationListType =
@@ -181,6 +201,7 @@ public abstract class Store {
 					.writeValue(new File("src/main/java/dataBase/content/store.json"), this);
 		} catch (IOException e) {
 			e.printStackTrace();
+
 		}
 	}
 

@@ -102,11 +102,15 @@
 		</dependency>
 
 		<dependency>
+            <groupId>io.ultreia</groupId>
+            <artifactId>bluecove</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20190722</version>
 		</dependency>
-
 
 	</dependencies>
 
