@@ -15,6 +15,7 @@ import com.fasterxml.jackson.datatype.jsr310.*;
 
 import exceptions.IncorrectUnitWeatherAPIException;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -166,8 +167,8 @@ public abstract class Store {
 		return null;
 	}
 
-	
-	public	String getBluetoothMac() {
+	@JsonIgnore
+	public String getBluetoothMac() {
 		LocalDevice local;
 		try {
 			local = LocalDevice.getLocalDevice();
