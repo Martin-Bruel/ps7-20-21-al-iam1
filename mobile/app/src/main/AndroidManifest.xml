@@ -18,9 +18,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service android:name=".bluetooth.BluetoothService"/>
+        <activity android:name=".activity.BoutiqueActivity"></activity>
+        <activity android:name=".activity.ListPublicationActivity" />
 
-        <activity android:name=".activity.BoutiqueActivity" />
+        <activity android:name=".activity.ListProduitActivity" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
