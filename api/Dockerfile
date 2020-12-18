@@ -18,7 +18,11 @@ ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 COPY src /home/app/src
 COPY pom.xml /home/app/pom.xml
 
-RUN mvn -f /home/app/pom.xml clean package
+RUN mvn -f /home/app/pom.xml clean install
 
-#ENTRYPOINT ["mvn", "-f", "/home/app/pom.xml", "exec:java", "-Dexec.mainClass=\"fr.Main\""]
-ENTRYPOINT ["ls", "/home/app/src/main/java/fr"]
+EXPOSE 8080
+
+ENTRYPOINT ["mvn", "-f", "/home/app/pom.xml", "exec:java"]
+#ENTRYPOINT ["java","-jar", "/home/app/target/api-1.0-SNAPSHOT.jar"]
+#ENTRYPOINT ["whoami"]
+#ENTRYPOINT ["ls", "/home/app/target/classes/fr"]
