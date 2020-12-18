@@ -1,8 +1,5 @@
 package com.example.polyville2.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -18,8 +15,8 @@ public class Item extends Product{
 	
 	@JsonCreator
 	public Item(@JsonProperty("name") String name,@JsonProperty("price") float price) {
-		this.price=price;
-		this.name=name;
+		this.price = price;
+		this.name = name;
 	}
 
 	//public Item(String name,float price) {
@@ -29,5 +26,5 @@ public class Item extends Product{
 	public float getPrice(){
 		return price;
 	}
-
+	
 }

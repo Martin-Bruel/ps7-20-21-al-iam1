@@ -1,13 +1,8 @@
 package com.example.polyville2.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
-import java.io.Serializable;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
@@ -15,14 +10,10 @@ import java.io.Serializable;
 	}
 )
 @JsonTypeName("product")
-public abstract class Product implements  Serializable {
-
+public abstract class Product {
 	String name;
 	
 	public String getName() {
 		return name;
 	}
-
-
-
 }

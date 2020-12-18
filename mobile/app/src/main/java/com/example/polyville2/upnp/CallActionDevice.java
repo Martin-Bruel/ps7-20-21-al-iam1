@@ -5,8 +5,7 @@ import android.widget.BaseAdapter;
 
 
 import com.example.polyville2.activity.MainActivity;
-import com.example.polyville2.model.Product;
-import com.example.polyville2.model.Store;
+import com.example.polyville2.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.fourthline.cling.android.AndroidUpnpService;
@@ -21,10 +20,10 @@ import java.io.IOException;
 import java.util.List;
 
 public class CallActionDevice {
-    public final int STOREPOS = 1;
+    public final int STOREPOS = 2;
     public final int MACPOS=0;
-    public final int PRODUCTPOS=2;
-
+    public final int PRODUCTPOS=3;
+    public final int PUBLICATIONPOS=3;
 
     RemoteDevice device;
     AndroidUpnpService upnpservice;
@@ -71,6 +70,34 @@ public class CallActionDevice {
                     Product[] products = mapper.readValue((String)invocation.getOutput()[0].getValue(),Product[].class);
                     for(Product p:products) {
                         store.addProduct(p);
+                    }
+                    ((MainActivity)context).addStore(store,device);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void failure(ActionInvocation invocation, UpnpResponse operation, String defaultMsg) {
+
+            }
+        };
+        upnpservice.getControlPoint().execute(callback);
+    }
+
+    public void getPublicationsOfDevice(final Context context, final Store store){
+        Service service = device.getServices()[0];
+        Action statusAction = service.getActions()[PUBLICATIONPOS];
+
+        ActionInvocation invocation = new ActionInvocation(statusAction);
+        final ActionCallback callback= new ActionCallback(invocation) {
+            @Override
+            public void success(ActionInvocation invocation) {
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                    Publication[] publications = mapper.readValue((String)invocation.getOutput()[0].getValue(),Publication[].class);
+                    for(Publication p:publications) {
+                        store.addPublication(p);
                     }
                     ((MainActivity)context).addStore(store,device);
                 } catch (IOException e) {

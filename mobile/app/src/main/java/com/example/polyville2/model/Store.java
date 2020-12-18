@@ -1,5 +1,16 @@
 package com.example.polyville2.model;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
+
 import android.os.Parcelable;
 
 import java.io.File;
@@ -15,73 +26,136 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = Shop.class, name = "shop"),
-	}
-)
+@JsonSubTypes({ @JsonSubTypes.Type(value = Shop.class, name = "shop"), })
 @JsonTypeName("store")
-public abstract class Store implements  Serializable {
-	long id;
+public abstract class Store {
+	int id;
 	String name;
-	String address;
+	List<Double> address;
 	protected List<Product> products;
-	
-	public List<Product> getProducts(){
+	OpeningHours openingHours;
+	List<Publication> allPublications;
+	List<Publication> contextPublications;
+	protected List<Label> weather;
+
+	public List<Double> getAddress() {
+		return this.address;
+	}
+
+	public void setAddress(List<Double> position) {
+		this.address = position;
+	}
+
+	public List<Product> getProducts() {
 		return products;
 	}
 
 	public void addProduct(Product i) {
-		products.add(i);
+		this.products.add(i);
 	}
-	public String toJSON() throws JsonProcessingException {
+
+	public List<Publication> getContextPublications() {
+		return this.contextPublications;
+	}
+
+	public void setContextPublications(List<Publication> publis) {
+		this.contextPublications = publis;
+	}
+
+	public List<Publication> getAllPublications() {
+		return this.allPublications;
+	}
+
+	public void setAllPublications(List<Publication> allPublications) {
+		this.allPublications = allPublications;
+	}
+
+	public void addPublication(Publication i) {
+		allPublications.add(i);
+		for (Label label : i.labels) {
+			if (this.weather.contains(label)) {
+				this.contextPublications.add(i);
+			}
+		}
+	}
+
+	public OpeningHours getOpeningHours() {
+		return openingHours;
+	}
+
+	public void setOpeningHours(OpeningHours openingHours) {
+		this.openingHours = openingHours;
+	}
+
+	public List<Label> getWeather() {
+		return this.weather;
+	}
+
+	public void setWeather(List<Label> weather) {
+		this.weather = weather;
+	}
+
+	public String toJSON() {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
-		try{
+		try {
 			return mapper.writeValueAsString(this);
-		} catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public String detailsToJSON(){
+
+	public String productsToJSON() {
 		ObjectMapper mapper = new ObjectMapper();
+		CollectionType productListType = mapper.getTypeFactory().constructCollectionType(List.class, Product.class);
 		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
-		String result="";
-		try{
-			result=result+ mapper.writeValueAsString(name);
-			result=result+ mapper.writeValueAsString(id);
-			//result=result+ mapper.writeValueAsString();
+		try {
+			return mapper.writer().withType(productListType).writeValueAsString(products);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return null;
-
 	}
 
-	public String productsToJSON(){
+	public String allPublicationsToJSON() {
 		ObjectMapper mapper = new ObjectMapper();
+		// CollectionType publicationListType =
+		// mapper.getTypeFactory().constructCollectionType(List.class,Publication.class);
 		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
-		try{
-			return mapper.writeValueAsString(products);
+		try {
+			return mapper.writer().writeValueAsString(allPublications);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public void makeJSON(){
-		ObjectMapper objectMapper = new ObjectMapper();
-		try{
-		objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("src/main/java/dataBase/content/store.json"), this);
+
+	public String contextPublicationsToJSON() {
+		ObjectMapper mapper = new ObjectMapper();
+		// CollectionType publicationListType =
+		// mapper.getTypeFactory().constructCollectionType(List.class,Publication.class);
+		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
+		try {
+			return mapper.writer().writeValueAsString(contextPublications);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 
-	public String getName(){
+	public String getName() {
 		return name;
 	}
+
+	public int getId() {
+		return id;
+	}
+
 }

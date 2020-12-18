@@ -86,12 +86,12 @@ public class OpeningHours {
         List<LocalTime> today;
         switch(dayOfWeek){
             default:today=monday;
-            case 1:today=sunday;
-            case 2:today=monday;
-            case 3:today=tuesday;
-            case 4:today=wednesday;
-            case 5:today=thursday;
-            case 6:today=friday;
+            case 1:today=sunday;break;
+            case 2:today=monday;break;
+            case 3:today=tuesday;break;
+            case 4:today=wednesday;break;
+            case 5:today=thursday;break;
+            case 6:today=friday;break;
             case 7:today=saturday;
         }
         for(int i=0;i<today.size();i+=2){
