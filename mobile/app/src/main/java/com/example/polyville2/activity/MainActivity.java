@@ -117,10 +117,10 @@ public class MainActivity extends AppCompatActivity implements Observer {
             //Intent i = new Intent(this, BluetoothService.class);
             //startService(i);
         */
-        BluetoothSearcher bluetoothSearcher= new BluetoothSearcher(this);
+        /*BluetoothSearcher bluetoothSearcher= new BluetoothSearcher(this);
         bluetoothSearcher.addObserver(this);
         verifyBluetoothActivation(bluetoothSearcher.getAdapter());
-        bluetoothSearcher.bluetoothResearch(macOfDevice,upnpService);
+        bluetoothSearcher.bluetoothResearch(macOfDevice,upnpService);*/
 
     }
 
@@ -130,8 +130,10 @@ public class MainActivity extends AppCompatActivity implements Observer {
             RemoteDevice device = (RemoteDevice) o;
             devicesList.add(device);
             //bluetoothResearch();
-            CallActionDevice callActionDevice = new CallActionDevice((RemoteDevice) o, upnpService);
-            callActionDevice.getMACOfDevice(this);
+            //CallActionDevice callActionDevice = new CallActionDevice((RemoteDevice) o, upnpService);
+           // callActionDevice.getMACOfDevice(this);
+            CallActionDevice callActionDevice = new CallActionDevice((RemoteDevice)o, upnpService);
+            callActionDevice.getStoredevice(context);
         }else{
             List<RemoteDevice> currentSeeDevice = (List<RemoteDevice>)o;
             System.out.println("ici mainactivity detect : "+currentSeeDevice);
