@@ -132,8 +132,8 @@ public abstract class Store {
 			result += ",\"id\":" + mapper.writeValueAsString(this.id);
 			result += ",\"name\":" + mapper.writeValueAsString(this.name);
 			result += ",\"address\":" + mapper.writeValueAsString(this.address);
-			result += ",\"open\":" + mapper.writeValueAsString(this.openingHours.isOpen());
-			result += "," + mapper.writeValueAsString(this.openingHours) + "}";
+			//result += ",\"open\":" + mapper.writeValueAsString(this.openingHours.isOpen());
+			result += ",\"openingHours\":" + mapper.writeValueAsString(this.openingHours) + "}";
 			return result;
 		} catch (IOException e) {
 			e.printStackTrace();

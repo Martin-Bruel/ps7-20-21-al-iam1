@@ -1,7 +1,5 @@
 package com.example.polyville2.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +8,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
-import exceptions.IncorrectUnitWeatherAPIException;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 

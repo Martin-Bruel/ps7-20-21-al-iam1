@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import com.example.polyville2.activity.MainActivity;
 import com.example.polyville2.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import org.fourthline.cling.android.AndroidUpnpService;
 import org.fourthline.cling.controlpoint.ActionCallback;
@@ -17,6 +18,7 @@ import org.fourthline.cling.model.meta.RemoteDevice;
 import org.fourthline.cling.model.meta.Service;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class CallActionDevice {
@@ -41,6 +43,7 @@ public class CallActionDevice {
             @Override
             public void success(ActionInvocation invocation) {
                 ObjectMapper mapper = new ObjectMapper();
+                mapper.registerModule(new JavaTimeModule());
                 try {
                     Store s = mapper.readValue((String)invocation.getOutput()[0].getValue(),Store.class);
                     getProductsOfDevice(context,s);
