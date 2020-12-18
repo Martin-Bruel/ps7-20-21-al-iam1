@@ -1,4 +1,5 @@
 package com.example.polyville2.model;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 
-public class Publication {
+public class Publication implements Serializable {
     String title;
     String description; 
     List<Label> labels;

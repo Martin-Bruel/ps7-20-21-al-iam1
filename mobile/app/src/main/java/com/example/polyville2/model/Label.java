@@ -2,9 +2,11 @@ package com.example.polyville2.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import java.io.Serializable;
+
 @JsonTypeName("label")
 
-public enum Label {
+public enum Label implements Serializable {
     STORM,
     RAIN,
     SNOW,

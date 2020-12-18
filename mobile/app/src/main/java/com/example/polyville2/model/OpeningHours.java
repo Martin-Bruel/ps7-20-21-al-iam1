@@ -1,5 +1,6 @@
 package com.example.polyville2.model;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonTypeName("openingHours")
-public class OpeningHours {
+public class OpeningHours implements Serializable {
 
     @JsonProperty("Monday")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
