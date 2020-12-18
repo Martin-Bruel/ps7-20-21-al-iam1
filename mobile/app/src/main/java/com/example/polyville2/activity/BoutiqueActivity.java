@@ -38,10 +38,9 @@ public class BoutiqueActivity extends AppCompatActivity {
         bt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO afficher les publications
-                Intent intent = new Intent(context,BoutiqueActivity.class);
-                intent.putExtra("store", (Serializable) stores.get(i));
-                context.startActivity(intent);
+                Intent intent = new Intent(v.getContext(),ListPublicationActivity.class);
+                intent.putExtra("publications", (Serializable) s.getContextPublications());
+                startActivity(intent);
             }
         });
 
@@ -49,9 +48,9 @@ public class BoutiqueActivity extends AppCompatActivity {
         bt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,BoutiqueActivity.class);
-                intent.putExtra("store", (Serializable) stores.get(i));
-                context.startActivity(intent);
+                Intent intent = new Intent(v.getContext(),BoutiqueActivity.class);
+                intent.putExtra("products", (Serializable) s.getProducts());
+                startActivity(intent);
             }
         });
 
