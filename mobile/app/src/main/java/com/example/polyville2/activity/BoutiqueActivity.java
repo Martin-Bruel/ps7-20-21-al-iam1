@@ -2,6 +2,7 @@ package com.example.polyville2.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import com.example.polyville2.R;
 import com.example.polyville2.model.Store;
+
+import java.io.Serializable;
 
 public class BoutiqueActivity extends AppCompatActivity {
 
@@ -36,6 +39,9 @@ public class BoutiqueActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO afficher les publications
+                Intent intent = new Intent(context,BoutiqueActivity.class);
+                intent.putExtra("store", (Serializable) stores.get(i));
+                context.startActivity(intent);
             }
         });
 
@@ -43,7 +49,9 @@ public class BoutiqueActivity extends AppCompatActivity {
         bt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO afficher les produits
+                Intent intent = new Intent(context,BoutiqueActivity.class);
+                intent.putExtra("store", (Serializable) stores.get(i));
+                context.startActivity(intent);
             }
         });
 
