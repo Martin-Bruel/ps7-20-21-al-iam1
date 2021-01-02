@@ -169,15 +169,14 @@ public abstract class Store {
 
 	@JsonIgnore
 	public String getBluetoothMac() {
-		//LocalDevice local;
-		//try {
-		//	local = LocalDevice.getLocalDevice();
-		//return local.getBluetoothAddress();		
-//	} catch (BluetoothStateException e) {
-			// TODO Auto-generated catch block
-	//		e.printStackTrace();
-		//}
-		return "";
+		String mac = null;
+		try {
+			mac = LocalDevice.getLocalDevice().getBluetoothAddress();
+		} catch (BluetoothStateException e) {
+			mac = "";
+		}
+
+		return mac;
     }
 
 	public String contextPublicationsToJSON() {
