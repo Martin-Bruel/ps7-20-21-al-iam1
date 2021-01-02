@@ -48,7 +48,7 @@ public class OpeningHours {
                         @JsonProperty("Wednesday") List<LocalTime>wednesday, @JsonProperty("Thursday") List<LocalTime>thursday,
                         @JsonProperty("Friday") List<LocalTime>friday, @JsonProperty("Saturday") List<LocalTime>saturday,
                         @JsonProperty("Sunday") List<LocalTime>sunday){
-        setMonday(friday);
+        setMonday(monday);
         setTuesday(tuesday);
         setWednesday(wednesday);
         setThursday(thursday);

@@ -25,7 +25,7 @@ public class CallActionDevice {
     public final int STOREPOS = 2;
     public final int MACPOS=0;
     public final int PRODUCTPOS=3;
-    public final int PUBLICATIONPOS=3;
+    public final int PUBLICATIONPOS=4;
 
     RemoteDevice device;
     AndroidUpnpService upnpservice;
