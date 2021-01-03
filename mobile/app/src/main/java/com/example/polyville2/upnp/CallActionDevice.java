@@ -25,7 +25,7 @@ public class CallActionDevice {
     public final int STOREPOS = 2;
     public final int MACPOS=0;
     public final int PRODUCTPOS=3;
-    public final int PUBLICATIONPOS=4;
+    public final int PUBLICATIONPOS=1;
 
     RemoteDevice device;
     AndroidUpnpService upnpservice;
@@ -47,6 +47,7 @@ public class CallActionDevice {
                 try {
                     Store s = mapper.readValue((String)invocation.getOutput()[0].getValue(),Store.class);
                     getProductsOfDevice(context,s);
+                    getPublicationsOfDevice(context,s);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
