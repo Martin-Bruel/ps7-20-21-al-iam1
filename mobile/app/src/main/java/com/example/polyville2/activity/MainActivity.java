@@ -30,12 +30,10 @@ import org.fourthline.cling.model.meta.RemoteDevice;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Set;
 
 
 public class MainActivity extends AppCompatActivity implements Observer {
@@ -125,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
                 RemoteDevice d = macOfDevice.get(mac);
                 Store s = linkIOTAndStore.get(macOfDevice.get(mac));
                 CallActionDevice callActionDevice = new CallActionDevice(d, upnpService);
-                callActionDevice.getPublicationsNotifiableOfDevice(context, s);
+                callActionDevice.getContextPublicationsOfDevice(context, s);
                 scanner.getBluetoothManager().knownDevices.add(mac);
                 System.out.println(mac + " is known.");
             }

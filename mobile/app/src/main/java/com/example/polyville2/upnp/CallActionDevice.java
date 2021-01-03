@@ -26,6 +26,7 @@ public class CallActionDevice {
     public final int MACPOS=0;
     public final int PRODUCTPOS=3;
     public final int PUBLICATIONPOS=4;
+    public final int CONTEXTPUBPOS=1;
 
     RemoteDevice device;
     AndroidUpnpService upnpservice;
@@ -137,9 +138,9 @@ public class CallActionDevice {
     }
 
 
-    public void getPublicationsNotifiableOfDevice(final Context context, final Store store){
+    public void getContextPublicationsOfDevice(final Context context, final Store store){
         Service service = device.getServices()[0];
-        Action statusAction = service.getActions()[PUBLICATIONPOS];
+        Action statusAction = service.getActions()[CONTEXTPUBPOS];
 
         ActionInvocation invocation = new ActionInvocation(statusAction);
         final ActionCallback callback= new ActionCallback(invocation) {
