@@ -1,20 +1,14 @@
 package com.example.polyville2.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -22,8 +16,10 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.polyville2.bluetooth.BluetoothSearcher;
+import com.example.polyville2.model.Publication;
 import com.example.polyville2.model.Store;
+import com.example.polyville2.service.BluetoothScanner;
+import com.example.polyville2.service.BluetoothService;
 import com.example.polyville2.upnp.CallActionDevice;
 import com.example.polyville2.upnp.DiscoveryDevice;
 import com.example.polyville2.R;
@@ -33,7 +29,6 @@ import org.fourthline.cling.android.AndroidUpnpServiceImpl;
 import org.fourthline.cling.model.meta.RemoteDevice;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -54,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
     private BaseAdapter boutiquesAdapter;
     private ServiceConnection serviceConnection;
     private Context context=this;
+    private PublicaitonNotification publicaitonNotification;
 
     public AndroidUpnpService getUpnpService() {
         return upnpService;
@@ -95,33 +91,22 @@ public class MainActivity extends AppCompatActivity implements Observer {
         );
 
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        filter.addAction(BluetoothDevice.ACTION_FOUND);
 
-            // Permission is not granted
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION)) {
+        BluetoothScanner scanner = new BluetoothScanner();
+        scanner.getBluetoothManager().addObserver(this);
 
-                // Not to annoy user.
-                Toast.makeText(this, "Permission must be granted to use the app.", Toast.LENGTH_SHORT).show();
-            } else {
+        registerReceiver(scanner, filter);
 
-                // Request permission.
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-            }
+        Intent intent = new Intent(this, BluetoothService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
         }
 
-        /* BLUETOOTH SERVICE
-            //Intent i = new Intent(this, BluetoothService.class);
-            //startService(i);
-        */
-        /*BluetoothSearcher bluetoothSearcher= new BluetoothSearcher(this);
-        bluetoothSearcher.addObserver(this);
-        verifyBluetoothActivation(bluetoothSearcher.getAdapter());
-        bluetoothSearcher.bluetoothResearch(macOfDevice,upnpService);*/
-
+        publicaitonNotification = new PublicaitonNotification(context);
     }
 
     @Override
@@ -129,28 +114,19 @@ public class MainActivity extends AppCompatActivity implements Observer {
         if(observable.equals(registryListener)) {
             RemoteDevice device = (RemoteDevice) o;
             devicesList.add(device);
-            //bluetoothResearch();
-            //CallActionDevice callActionDevice = new CallActionDevice((RemoteDevice) o, upnpService);
-           // callActionDevice.getMACOfDevice(this);
             CallActionDevice callActionDevice = new CallActionDevice((RemoteDevice)o, upnpService);
             callActionDevice.getStoredevice(context);
-        }else{
-            List<RemoteDevice> currentSeeDevice = (List<RemoteDevice>)o;
-            System.out.println("ici mainactivity detect : "+currentSeeDevice);
-            Set<RemoteDevice> olderDevices = new HashSet<>(linkIOTAndStore.keySet());
-                olderDevices.removeAll(currentSeeDevice);
-                for(RemoteDevice toDelete:olderDevices){
-                    removeStore(toDelete);
-                }
-                for(RemoteDevice currentDevice:currentSeeDevice){
-                    System.out.println("ici"+linkIOTAndStore.get(currentDevice));
-                        if(!linkIOTAndStore.keySet().contains(currentDevice)) {
-
-                        CallActionDevice callActionDevice = new CallActionDevice(currentDevice, upnpService);
-                        callActionDevice.getStoredevice(context);
-                    }
-                }
-                //System.out.println("ici new size"+newStoreDevice);
+            callActionDevice.getMACOfDevice(context);
+        }
+        else{
+            String mac = (String) o;
+            if(macOfDevice.containsKey(mac)){
+                RemoteDevice d = macOfDevice.get(mac);
+                Store s = linkIOTAndStore.get(macOfDevice.get(mac));
+                //CallActionDevice callActionDevice = new CallActionDevice(d, upnpService);
+                //callActionDevice.getPublicationsOfDevice(context, s);
+                notifyPublication(new Publication(s.getName(), "Il y a du nouveau", new ArrayList<>()));
+            }
         }
     }
 
@@ -188,5 +164,9 @@ public class MainActivity extends AppCompatActivity implements Observer {
                 Intent enabledIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enabledIntent, 11);
             }
+    }
+
+    public void notifyPublication(Publication pub){
+        publicaitonNotification.sendNotificaiton(pub.getTitle(), pub.getDescription());
     }
 }
