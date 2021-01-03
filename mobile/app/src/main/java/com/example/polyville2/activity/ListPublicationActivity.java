@@ -17,6 +17,7 @@ public class ListPublicationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_publication);
         ListView lv = findViewById(R.id.list_view_publication);
+
         List<Publication> publications= (List<Publication>)  getIntent().getSerializableExtra("publications");
         PublicationAdapter publicationAdapter = new PublicationAdapter(publications,this);
         lv.setAdapter(publicationAdapter);

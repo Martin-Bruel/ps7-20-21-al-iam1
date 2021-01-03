@@ -87,14 +87,14 @@ public class BluetoothService extends Service implements Runnable {
         System.out.println("STARTING THREAD");
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(8000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        System.out.println("Start thread");
         while (true){
             try {
-                System.out.println("TRY TO START SCAN");
+
                 bluetoothAdapter.startDiscovery();
                 Thread.sleep(15000);
             } catch (InterruptedException e) {
