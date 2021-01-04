@@ -14,10 +14,15 @@ import weather.urlbuilder.StringUrl;
 import weather.urlbuilder.StringUrlBuilder;
 
 public class OpenWeatherAPI extends WeatherAPI {
+	
     String key;
     StringUrl stringURL;
     String units;
-
+    /**
+     * 
+     * @param units
+     * @throws IncorrectUnitWeatherAPIException
+     */
     public OpenWeatherAPI(String units) throws IncorrectUnitWeatherAPIException {
         this.key = "b7a405fea8328d8c19c034d9a8b673aa";
         this.stringURL = new StringUrlBuilder().withRoot("https://api.openweathermap.org/data/2.5/weather?")
@@ -43,7 +48,7 @@ public class OpenWeatherAPI extends WeatherAPI {
                                                 .build();
         this.units = "metric";
     }
-
+    
     @Override
     public ArrayList<Label> callApi(double latitude, double longitude){
         ArrayList<Label> res = new ArrayList<>();
