@@ -54,6 +54,7 @@ public class StoreManager {
 
     @UpnpAction(out = @UpnpOutputArgument(name = "storeContextPublications"))
     public String getStoreContextPublications(){
+        trafficManager.addNewClient();
         return storeContextPublications;
     }
 }

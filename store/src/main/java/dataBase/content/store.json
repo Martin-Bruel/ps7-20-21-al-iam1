@@ -1,7 +1,7 @@
 {
   "type" : "shop",
   "id" : 0,
-  "name" : "Café & Shop",
+  "name" : "Coffee and Shop",
   "address" : [ 43.61563752169879, 7.071778197708522 ],
   "products" : [ {
     "type" : "item",

@@ -40,7 +40,7 @@ public class LoadDatabase {
             log.info("Preloading " + storeRepository.save(new Store(1234,"Tout a 1 euros")));
             log.info("Preloading " + storeRepository.save(new Store(1235,"Gifi la mode")));
             log.info("Preloading " + storeRepository.save(new Store(1236,"Les fleurs de la cabane au fond du jardin")));
-            log.info("Preloading " + storeRepository.save(new Store(0,"Café & Shop")));
+            log.info("Preloading " + storeRepository.save(new Store(0,"Coffee and Shop")));
 
         };
     }

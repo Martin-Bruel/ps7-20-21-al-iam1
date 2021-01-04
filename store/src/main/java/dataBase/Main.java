@@ -18,7 +18,7 @@ public class Main {
 		address.add(43.61563752169879);
 		address.add(7.071778197708522);
 		OpenWeatherAPI api = new OpenWeatherAPI("metric");
-		Store shop = new Shop(0, "Café & Shop", address, null, null, null, null, api);
+		Store shop = new Shop(0, "Coffee and Shop", address, null, null, null, null, api);
 	
 		shop.addProduct(new Item("item1", 13));
 
