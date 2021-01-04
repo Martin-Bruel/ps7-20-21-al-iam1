@@ -42,6 +42,8 @@ public class PublicationAdapter extends BaseAdapter {
         }
         TextView title_pub = view.findViewById(R.id.publication_tv);
         title_pub.setText(publications.get(i).getTitle());
+        TextView description_pub = view.findViewById(R.id.publication_tv2);
+        description_pub.setText(publications.get(i).getDescription());
         return view;
     }
 }
