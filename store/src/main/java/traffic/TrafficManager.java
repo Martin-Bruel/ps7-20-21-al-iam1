@@ -85,6 +85,8 @@ public class TrafficManager {
      */
     private boolean updateServer() throws IOException {
 
+        System.out.println(Server.store.getName());
+
         String json = "{\n" +
                 "    \"storeId\": "+Server.store.getId()+",\n" +
                 "    \"nb\": 1,\n" +

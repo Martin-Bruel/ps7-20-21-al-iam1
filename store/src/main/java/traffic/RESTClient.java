@@ -13,7 +13,7 @@ public class RESTClient {
 
     public boolean sendRequest(String method, String json) throws IOException {
 
-        java.net.URL url = new URL(URL+"/traffic");
+        java.net.URL url = new URL(URL+"/traffic/");
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod(method);

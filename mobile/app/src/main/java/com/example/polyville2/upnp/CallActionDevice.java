@@ -5,9 +5,9 @@ import android.widget.BaseAdapter;
 
 
 import com.example.polyville2.activity.MainActivity;
-import com.example.polyville2.model.Product;
-import com.example.polyville2.model.Store;
+import com.example.polyville2.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import org.fourthline.cling.android.AndroidUpnpService;
 import org.fourthline.cling.controlpoint.ActionCallback;
@@ -18,9 +18,16 @@ import org.fourthline.cling.model.meta.RemoteDevice;
 import org.fourthline.cling.model.meta.Service;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class CallActionDevice {
+    public final int STOREPOS = 2;
+    public final int MACPOS=0;
+    public final int PRODUCTPOS=3;
+    public final int PUBLICATIONPOS=4;
+    public final int CONTEXTPUBPOS=1;
+
     RemoteDevice device;
     AndroidUpnpService upnpservice;
 
@@ -30,13 +37,14 @@ public class CallActionDevice {
     }
     public void getStoredevice(final Context context){
         Service service = device.getServices()[0];
-        Action statusAction = service.getActions()[0];
+        Action statusAction = service.getActions()[STOREPOS];
 
         ActionInvocation invocation = new ActionInvocation(statusAction);
         ActionCallback callback= new ActionCallback(invocation) {
             @Override
             public void success(ActionInvocation invocation) {
                 ObjectMapper mapper = new ObjectMapper();
+                mapper.registerModule(new JavaTimeModule());
                 try {
                     Store s = mapper.readValue((String)invocation.getOutput()[0].getValue(),Store.class);
                     getProductsOfDevice(context,s);
@@ -55,7 +63,7 @@ public class CallActionDevice {
 
     public void getProductsOfDevice(final Context context, final Store store){
         Service service = device.getServices()[0];
-        Action statusAction = service.getActions()[1];
+        Action statusAction = service.getActions()[PRODUCTPOS];
 
         ActionInvocation invocation = new ActionInvocation(statusAction);
         final ActionCallback callback= new ActionCallback(invocation) {
@@ -66,6 +74,34 @@ public class CallActionDevice {
                     Product[] products = mapper.readValue((String)invocation.getOutput()[0].getValue(),Product[].class);
                     for(Product p:products) {
                         store.addProduct(p);
+                    }
+                    getPublicationsOfDevice(context,store);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void failure(ActionInvocation invocation, UpnpResponse operation, String defaultMsg) {
+
+            }
+        };
+        upnpservice.getControlPoint().execute(callback);
+    }
+
+    public void getPublicationsOfDevice(final Context context, final Store store){
+        Service service = device.getServices()[0];
+        Action statusAction = service.getActions()[PUBLICATIONPOS];
+
+        ActionInvocation invocation = new ActionInvocation(statusAction);
+        final ActionCallback callback= new ActionCallback(invocation) {
+            @Override
+            public void success(ActionInvocation invocation) {
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                    Publication[] publications = mapper.readValue((String)invocation.getOutput()[0].getValue(),Publication[].class);
+                    for(Publication p:publications) {
+                        store.addPublication(p);
                     }
                     ((MainActivity)context).addStore(store,device);
                 } catch (IOException e) {
@@ -80,4 +116,53 @@ public class CallActionDevice {
         };
         upnpservice.getControlPoint().execute(callback);
     }
+
+
+    public void getMACOfDevice(final Context context){
+        Service service = device.getServices()[0];
+        Action statusAction = service.getActions()[MACPOS];
+
+        ActionInvocation invocation = new ActionInvocation(statusAction);
+        final ActionCallback callback= new ActionCallback(invocation) {
+            @Override
+            public void success(ActionInvocation invocation) {
+                ((MainActivity)context).linkMacAndDevice((String)invocation.getOutput()[0].getValue(),device);
+            }
+
+            @Override
+            public void failure(ActionInvocation invocation, UpnpResponse operation, String defaultMsg) {
+
+            }
+        };
+        upnpservice.getControlPoint().execute(callback);
+    }
+
+
+    public void getContextPublicationsOfDevice(final Context context, final Store store){
+        Service service = device.getServices()[0];
+        Action statusAction = service.getActions()[CONTEXTPUBPOS];
+
+        ActionInvocation invocation = new ActionInvocation(statusAction);
+        final ActionCallback callback= new ActionCallback(invocation) {
+            @Override
+            public void success(ActionInvocation invocation) {
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                    Publication[] publications = mapper.readValue((String)invocation.getOutput()[0].getValue(),Publication[].class);
+                    for(Publication p:publications) {
+                        ((MainActivity)context).notifyPublication(p);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void failure(ActionInvocation invocation, UpnpResponse operation, String defaultMsg) {
+
+            }
+        };
+        upnpservice.getControlPoint().execute(callback);
+    }
+
 }

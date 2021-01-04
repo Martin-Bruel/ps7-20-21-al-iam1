@@ -1,11 +1,53 @@
 {
   "type" : "shop",
   "id" : 0,
-  "name" : "truc2",
-  "address" : "adresse truc",
+  "name" : "Coffee and Shop",
+  "address" : [ 43.61563752169879, 7.071778197708522 ],
   "products" : [ {
     "type" : "item",
     "name" : "item1",
     "price" : 13.0
+  } ],
+  "openingHours" : {
+    "type" : "openingHours",
+    "Monday" : [ "08:00", "12:00", "14:00", "15:25" ],
+    "Tuesday" : [ "08:00", "12:00", "14:00", "15:25" ],
+    "Wednesday" : [ "08:00", "12:00", "14:00", "15:25" ],
+    "Thursday" : [ "08:00", "12:00", "14:00", "15:25" ],
+    "Friday" : [ "08:00", "12:00", "14:00", "15:25" ],
+    "Saturday" : [ "08:00", "12:00", "14:00", "15:25" ],
+    "Sunday" : [ "08:00", "12:00", "14:00", "15:25" ]
+  },
+  "allPublications" : [ {
+    "type" : "Publication",
+    "title" : "Vente de parapluie",
+    "labels" : [ "RAIN" ],
+    "description" : "Aujourd'hui il pleut, si tu as besoin d'un parapluie n'hésite pas à passer à notre magasin. MagasinPluie"
+  }, {
+    "type" : "Publication",
+    "title" : "Chocolat chaud",
+    "labels" : [ "CHILLY", "COLD" ],
+    "description" : "Vous avez un peu froid ? N'hésitez pas à venir vous réchauffer auprès d'un chocolat chaud chez nous ! MagasinPluie"
+  }, {
+    "type" : "Publication",
+    "title" : "Lunettes de soleil",
+    "labels" : [ "SUNNY" ],
+    "description" : "Trop de soleil, ça pique les yeux ! N'hésitez pas à passer pour prendre des lunettes et contrer cette luminosité ! "
+  }, {
+    "type" : "Publication",
+    "title" : "Nuages : prévoyez ! ",
+    "labels" : [ "CLOUDS" ],
+    "description" : "Avant que l'averse se déclenche n'hésitez pas à venir chercher votre parapluie !"
+  } ],
+  "contextPublications" : [ {
+    "type" : "Publication",
+    "title" : "Chocolat chaud",
+    "labels" : [ "CHILLY", "COLD" ],
+    "description" : "Vous avez un peu froid ? N'hésitez pas à venir vous réchauffer auprès d'un chocolat chaud chez nous ! MagasinPluie"
+  }, {
+    "type" : "Publication",
+    "title" : "Nuages : prévoyez ! ",
+    "labels" : [ "CLOUDS" ],
+    "description" : "Avant que l'averse se déclenche n'hésitez pas à venir chercher votre parapluie !"
   } ]
 }

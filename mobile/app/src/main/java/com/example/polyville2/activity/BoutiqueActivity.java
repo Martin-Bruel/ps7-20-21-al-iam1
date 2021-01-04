@@ -4,22 +4,55 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.polyville2.R;
-import com.example.polyville2.model.Product;
 import com.example.polyville2.model.Store;
+
+import java.io.Serializable;
 
 public class BoutiqueActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_produit);
+
+        setContentView(R.layout.activity_boutique);
         Store s = (Store) getIntent().getSerializableExtra("store");
-        ListView lv = findViewById(R.id.list_view_produit);
-        ProduitAdapter p = new ProduitAdapter(s,this);
-        lv.setAdapter(p);
+
+        //TextView tvAddress = findViewById(R.id.tv_address);
+        //tvAddress.setText(s.getAddress());
+        TextView tv_name = findViewById(R.id.tv_name);
+        tv_name.setText(s.getName());
+
+
+        ListView days = findViewById(R.id.lv_days); // ne s'affiche que si la liste n'est pas vide
+        DayAdapter Days = new DayAdapter(s.getOpeningHours(), this);
+        days.setAdapter(Days);
+
+
+        Button bt1 = findViewById(R.id.buttonPublications);
+        bt1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),ListPublicationActivity.class);
+                intent.putExtra("publications", (Serializable) s.getAllPublications());
+                startActivity(intent);
+            }
+        });
+
+        Button bt2 = findViewById(R.id.buttonProduits);
+        bt2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),ListProduitActivity.class);
+                intent.putExtra("products", (Serializable) s.getProducts());
+                startActivity(intent);
+            }
+        });
 
     }
 }
