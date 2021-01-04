@@ -2,12 +2,7 @@ package upnpService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-
 import org.fourthline.cling.binding.annotations.*;
-import org.fourthline.cling.model.profile.RemoteClientInfo;
 import traffic.TrafficManager;
 
 @UpnpService(
@@ -38,8 +33,6 @@ public class StoreManager {
 
     @UpnpAction(out = @UpnpOutputArgument(name = "storeDetails"))
     public String getStoreDetails(){
-
-        //trafficManager.addNewClient();
         return storeDetails;
     }
 
@@ -61,6 +54,7 @@ public class StoreManager {
 
     @UpnpAction(out = @UpnpOutputArgument(name = "storeContextPublications"))
     public String getStoreContextPublications(){
+        trafficManager.addNewClient();
         return storeContextPublications;
     }
 }

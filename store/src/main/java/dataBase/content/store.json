@@ -1,7 +1,7 @@
 {
   "type" : "shop",
   "id" : 0,
-  "name" : "truc2",
+  "name" : "Coffee and Shop",
   "address" : [ 43.61563752169879, 7.071778197708522 ],
   "products" : [ {
     "type" : "item",
@@ -28,11 +28,26 @@
     "title" : "Chocolat chaud",
     "labels" : [ "CHILLY", "COLD" ],
     "description" : "Vous avez un peu froid ? N'hésitez pas à venir vous réchauffer auprès d'un chocolat chaud chez nous ! MagasinPluie"
+  }, {
+    "type" : "Publication",
+    "title" : "Lunettes de soleil",
+    "labels" : [ "SUNNY" ],
+    "description" : "Trop de soleil, ça pique les yeux ! N'hésitez pas à passer pour prendre des lunettes et contrer cette luminosité ! "
+  }, {
+    "type" : "Publication",
+    "title" : "Nuages : prévoyez ! ",
+    "labels" : [ "CLOUDS" ],
+    "description" : "Avant que l'averse se déclenche n'hésitez pas à venir chercher votre parapluie !"
   } ],
   "contextPublications" : [ {
     "type" : "Publication",
     "title" : "Chocolat chaud",
     "labels" : [ "CHILLY", "COLD" ],
     "description" : "Vous avez un peu froid ? N'hésitez pas à venir vous réchauffer auprès d'un chocolat chaud chez nous ! MagasinPluie"
+  }, {
+    "type" : "Publication",
+    "title" : "Nuages : prévoyez ! ",
+    "labels" : [ "CLOUDS" ],
+    "description" : "Avant que l'averse se déclenche n'hésitez pas à venir chercher votre parapluie !"
   } ]
 }

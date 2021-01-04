@@ -13,6 +13,9 @@ import org.fourthline.cling.model.types.UDADeviceType;
 import org.fourthline.cling.model.types.UDN;
 import dataBase.JsonReader;
 
+import javax.bluetooth.BluetoothStateException;
+import javax.bluetooth.DiscoveryAgent;
+
 public class Server {
 
 
@@ -24,9 +27,11 @@ public class Server {
     /**
      * Start server for the store
      * @throws ValidationException if can't create services
+     * @throws BluetoothStateException if can't access to bluetooth
      */
-    public void startServer() throws ValidationException {
+    public void startServer() throws ValidationException, BluetoothStateException {
 
+        javax.bluetooth.LocalDevice.getLocalDevice().setDiscoverable(DiscoveryAgent.GIAC);
         //Creation d'un service UPNP
         final UpnpService upnpService = new UpnpServiceImpl();
         Runtime.getRuntime().addShutdownHook(new Thread() {

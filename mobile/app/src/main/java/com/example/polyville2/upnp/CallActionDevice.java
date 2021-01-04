@@ -25,7 +25,8 @@ public class CallActionDevice {
     public final int STOREPOS = 2;
     public final int MACPOS=0;
     public final int PRODUCTPOS=3;
-    public final int PUBLICATIONPOS=3;
+    public final int PUBLICATIONPOS=4;
+    public final int CONTEXTPUBPOS=1;
 
     RemoteDevice device;
     AndroidUpnpService upnpservice;
@@ -74,7 +75,7 @@ public class CallActionDevice {
                     for(Product p:products) {
                         store.addProduct(p);
                     }
-                    ((MainActivity)context).addStore(store,device);
+                    getPublicationsOfDevice(context,store);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -126,6 +127,34 @@ public class CallActionDevice {
             @Override
             public void success(ActionInvocation invocation) {
                 ((MainActivity)context).linkMacAndDevice((String)invocation.getOutput()[0].getValue(),device);
+            }
+
+            @Override
+            public void failure(ActionInvocation invocation, UpnpResponse operation, String defaultMsg) {
+
+            }
+        };
+        upnpservice.getControlPoint().execute(callback);
+    }
+
+
+    public void getContextPublicationsOfDevice(final Context context, final Store store){
+        Service service = device.getServices()[0];
+        Action statusAction = service.getActions()[CONTEXTPUBPOS];
+
+        ActionInvocation invocation = new ActionInvocation(statusAction);
+        final ActionCallback callback= new ActionCallback(invocation) {
+            @Override
+            public void success(ActionInvocation invocation) {
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                    Publication[] publications = mapper.readValue((String)invocation.getOutput()[0].getValue(),Publication[].class);
+                    for(Publication p:publications) {
+                        ((MainActivity)context).notifyPublication(p);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

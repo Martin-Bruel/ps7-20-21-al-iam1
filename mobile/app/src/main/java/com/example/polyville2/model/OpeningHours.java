@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -15,6 +16,34 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonTypeName("openingHours")
 public class OpeningHours implements Serializable {
+    @JsonIgnore
+    public List<LocalTime> getMonday() {
+        return monday;
+    }
+    @JsonIgnore
+    public List<LocalTime> getTuesday() {
+        return tuesday;
+    }
+    @JsonIgnore
+    public List<LocalTime> getWednesday() {
+        return wednesday;
+    }
+    @JsonIgnore
+    public List<LocalTime> getThursday() {
+        return thursday;
+    }
+    @JsonIgnore
+    public List<LocalTime> getFriday() {
+        return friday;
+    }
+    @JsonIgnore
+    public List<LocalTime> getSaturday() {
+        return saturday;
+    }
+    @JsonIgnore
+    public List<LocalTime> getSunday() {
+        return sunday;
+    }
 
     @JsonProperty("Monday")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
@@ -49,7 +78,7 @@ public class OpeningHours implements Serializable {
                         @JsonProperty("Wednesday") List<LocalTime>wednesday, @JsonProperty("Thursday") List<LocalTime>thursday,
                         @JsonProperty("Friday") List<LocalTime>friday, @JsonProperty("Saturday") List<LocalTime>saturday,
                         @JsonProperty("Sunday") List<LocalTime>sunday){
-        setMonday(friday);
+        setMonday(monday);
         setTuesday(tuesday);
         setWednesday(wednesday);
         setThursday(thursday);
@@ -81,6 +110,8 @@ public class OpeningHours implements Serializable {
     }
 
 
+
+
     boolean isOpen(){
         Calendar c = Calendar.getInstance();
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
@@ -105,6 +136,33 @@ public class OpeningHours implements Serializable {
         }
         return false;
     }
-    
+
+    @JsonIgnore
+    public String getDay(int i){
+        switch(i+1){
+            default:return "";
+            case 1: return "Monday";
+            case 2: return "Tuesday";
+            case 3:return "Wednesday";
+            case 4:return "Thursday";
+            case 5:return "Friday";
+            case 6:return "Saturday";
+            case 7:return "Sunday";
+        }
+    }
+
+    @JsonIgnore
+    public List<LocalTime> getLocalTimeByDay(int i){
+        switch(i+1){
+            default:return null;
+            case 1: return monday;
+            case 2: return tuesday;
+            case 3:return wednesday;
+            case 4:return thursday;
+            case 5:return friday;
+            case 6:return saturday;
+            case 7:return sunday;
+        }
+    }
 
 }

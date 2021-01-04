@@ -2,8 +2,6 @@ package model;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -73,7 +71,7 @@ public abstract class Store {
 	}
 
 	public void setAllPublications(List<Publication> allPublications) {
-		this.allPublications = allPublications;
+		this.allPublications = allPublications;			//result += ",\"open\":" + mapper.writeValueAsString(this.openingHours.isOpen());
 	}
 
 	public void addPublication(Publication i) {
@@ -132,7 +130,6 @@ public abstract class Store {
 			result += ",\"id\":" + mapper.writeValueAsString(this.id);
 			result += ",\"name\":" + mapper.writeValueAsString(this.name);
 			result += ",\"address\":" + mapper.writeValueAsString(this.address);
-			//result += ",\"open\":" + mapper.writeValueAsString(this.openingHours.isOpen());
 			result += ",\"openingHours\":" + mapper.writeValueAsString(this.openingHours) + "}";
 			return result;
 		} catch (IOException e) {
@@ -156,8 +153,6 @@ public abstract class Store {
 
 	public String allPublicationsToJSON() {
 		ObjectMapper mapper = new ObjectMapper();
-		// CollectionType publicationListType =
-		// mapper.getTypeFactory().constructCollectionType(List.class,Publication.class);
 		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
 		try {
 			return mapper.writer().writeValueAsString(allPublications);
@@ -169,21 +164,23 @@ public abstract class Store {
 
 	@JsonIgnore
 	public String getBluetoothMac() {
-		LocalDevice local;
+		String mac = null;
 		try {
-			local = LocalDevice.getLocalDevice();
-		return local.getBluetoothAddress();		
-	} catch (BluetoothStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			mac = LocalDevice.getLocalDevice().getBluetoothAddress();
+		} catch (BluetoothStateException e) {
+			mac = "";
 		}
-		return "";
+
+		return mac;
     }
 
 	public String contextPublicationsToJSON() {
+		try {
+			this.setContextPublication();
+		} catch (IncorrectUnitWeatherAPIException e1) {
+			e1.printStackTrace();
+		}
 		ObjectMapper mapper = new ObjectMapper();
-		// CollectionType publicationListType =
-		// mapper.getTypeFactory().constructCollectionType(List.class,Publication.class);
 		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
 		try {
 			return mapper.writer().writeValueAsString(contextPublications);
