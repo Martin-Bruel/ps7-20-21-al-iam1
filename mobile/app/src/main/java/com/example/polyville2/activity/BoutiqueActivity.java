@@ -39,16 +39,16 @@ public class BoutiqueActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(),ListPublicationActivity.class);
-                intent.putExtra("publications", (Serializable) s.getContextPublications());
+                intent.putExtra("publications", (Serializable) s.getAllPublications());
                 startActivity(intent);
             }
         });
 
         Button bt2 = findViewById(R.id.buttonProduits);
-        bt1.setOnClickListener(new View.OnClickListener() {
+        bt2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(),BoutiqueActivity.class);
+                Intent intent = new Intent(v.getContext(),ListProduitActivity.class);
                 intent.putExtra("products", (Serializable) s.getProducts());
                 startActivity(intent);
             }

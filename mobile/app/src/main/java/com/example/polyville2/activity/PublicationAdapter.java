@@ -18,7 +18,7 @@ public class PublicationAdapter extends BaseAdapter {
 
     public PublicationAdapter(List<Publication> publications,Context c){
         this.publications=publications;
-        this.context=context;
+        this.context=c;
     }
     @Override
     public int getCount() {

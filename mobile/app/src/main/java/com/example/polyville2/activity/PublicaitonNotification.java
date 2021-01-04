@@ -57,8 +57,6 @@ public class PublicaitonNotification {
 
     public void sendNotificaiton(String title, String content){
 
-        System.out.println("LA LA NOTIF DOIT ETRE ENVOYE WESH");
-
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(notificationId++, createNotification(title,content).build());
     }

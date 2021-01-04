@@ -30,12 +30,10 @@ import org.fourthline.cling.model.meta.RemoteDevice;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Set;
 
 
 public class MainActivity extends AppCompatActivity implements Observer {
@@ -50,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
     private ServiceConnection serviceConnection;
     private Context context=this;
     private PublicaitonNotification publicaitonNotification;
+    private BluetoothScanner scanner;
 
     public AndroidUpnpService getUpnpService() {
         return upnpService;
@@ -96,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         filter.addAction(BluetoothDevice.ACTION_FOUND);
 
-        BluetoothScanner scanner = new BluetoothScanner();
+        scanner = new BluetoothScanner();
         scanner.getBluetoothManager().addObserver(this);
 
         registerReceiver(scanner, filter);
@@ -123,9 +122,10 @@ public class MainActivity extends AppCompatActivity implements Observer {
             if(macOfDevice.containsKey(mac)){
                 RemoteDevice d = macOfDevice.get(mac);
                 Store s = linkIOTAndStore.get(macOfDevice.get(mac));
-                //CallActionDevice callActionDevice = new CallActionDevice(d, upnpService);
-                //callActionDevice.getPublicationsOfDevice(context, s);
-                notifyPublication(new Publication(s.getName(), "Il y a du nouveau", new ArrayList<>()));
+                CallActionDevice callActionDevice = new CallActionDevice(d, upnpService);
+                callActionDevice.getContextPublicationsOfDevice(context, s);
+                scanner.getBluetoothManager().knownDevices.add(mac);
+                System.out.println(mac + " is known.");
             }
         }
     }
@@ -156,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
     }
     public void linkMacAndDevice(String s, RemoteDevice device){
         macOfDevice.put(s,device);
+        scanner.getBluetoothManager().discover(s);
     }
 
     public void verifyBluetoothActivation(BluetoothAdapter adapter){
