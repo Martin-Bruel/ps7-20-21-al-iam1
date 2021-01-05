@@ -17,7 +17,7 @@ public class Account {
 	private String username;
 	private String password;
 	private String cardNumber;
-	private String balanceAccount;
+	private double balanceAccount;
 	
 	public Account() {
 		
@@ -26,7 +26,7 @@ public class Account {
 		this.username = username;
 		this.password = password;
 		this.cardNumber = "none";
-		this.balanceAccount = "0";
+		this.balanceAccount = 0;
 	}
 	
 	public String getUsername() {
@@ -37,7 +37,7 @@ public class Account {
 		return id;
 	}
 
-	public String getBalanceAccount(){
+	public double getBalanceAccount(){
 		return this.balanceAccount;
 	}
 
@@ -49,5 +49,12 @@ public class Account {
 		return passwordType.equals(password);
 	}
 	
+	public void setBalanceAccount(double amount){
+		this.balanceAccount = amount;
+	}
+
+	public void creditBalanceAccount(double amount){
+		this.balanceAccount += amount;
+	}
 	
 }

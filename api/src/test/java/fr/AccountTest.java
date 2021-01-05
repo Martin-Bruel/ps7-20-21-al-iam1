@@ -54,7 +54,7 @@ class AccountTest {
         assertTrue(accountApi.createAccount("toto", "toto"));
         this.mockMvc.perform(get("/users/"))
             .andExpect(content().string(containsString("toto")))
-            .andExpect(content().string(containsString("\"balanceAccount\":\"0\"")));
+            .andExpect(content().string(containsString("\"balanceAccount\":0")));
     }
 
     @Test
@@ -74,4 +74,15 @@ class AccountTest {
     public void connectionFailed(){
         assertEquals(accountApi.connection("doesntexist","nopaswd"), null);
     }
+
+    @Test
+    public void balanceAccountTest(){
+        String username = "testBalance";
+        String password = "abcde";
+        accountApi.createAccount(username, password);
+        assertEquals(accountApi.getBalanceAccount(username, password), 0);
+        double amountToAdd = 30;
+        assertEquals(accountApi.incrementBalanceAccount(amountToAdd, username, password), amountToAdd);
+    }
+
 }

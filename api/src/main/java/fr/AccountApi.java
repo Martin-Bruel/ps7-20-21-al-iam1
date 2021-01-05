@@ -43,6 +43,28 @@ public class AccountApi {
 		return optT.get().getID();
 	}
 
+	@GetMapping("/{username}/{password}/balance")
+	Double getBalanceAccount(@PathVariable String username, @PathVariable String password){
+		System.out.println(username+" requires balance");
+		Optional<Account> opt = accountRepository.findAll().stream().filter((account) -> account.getUsername().equals(username) && account.isGoodPasword(password)).findFirst();
+		if(opt.isEmpty()){
+			return null;
+		}
+		return opt.get().getBalanceAccount();
+	}
+
+	@PostMapping("/{username}/{password}/balance")
+	Double incrementBalanceAccount(@RequestBody double amountToAdd, @PathVariable String username, @PathVariable String password){
+		System.out.println(username+" increments balance bt "+amountToAdd);
+		Optional<Account> opt = accountRepository.findAll().stream().filter((account) -> account.getUsername().equals(username) && account.isGoodPasword(password)).findFirst();
+        if (opt.isEmpty()) {
+			return null;
+		}
+		opt.get().creditBalanceAccount(amountToAdd);
+		accountRepository.save(opt.get());
+        return opt.get().getBalanceAccount();
+	}
+
 	
     @GetMapping("/")
 	List<Account> allAccount(){
