@@ -37,6 +37,7 @@ public class Shop extends Store {
 		openingHours = hours;
 		this.api = api;
 		this.setWeatherLabel();
+		this.localCurrencies=new ArrayList<Currency>();
 	}
 
 	public void addProduct(Product i) {

@@ -35,6 +35,7 @@ public abstract class Store implements Serializable{
 	int id;
 	String name;
 	List<Double> address;
+	List<Currency> localCurrencies;
 	protected List<Product> products;
 	OpeningHours openingHours;
 	List<Publication> allPublications;
@@ -80,6 +81,10 @@ public abstract class Store implements Serializable{
 				this.contextPublications.add(i);
 			}
 		}
+	}
+
+	public void addCurrency(Currency currency){
+		localCurrencies.add(currency);
 	}
 
 	public OpeningHours getOpeningHours() {

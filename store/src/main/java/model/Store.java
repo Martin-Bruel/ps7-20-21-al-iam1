@@ -35,12 +35,14 @@ public abstract class Store {
 	int id;
 	String name;
 	List<Double> address;
+	List<Currency> localCurrencies;	
 	protected List<Product> products;
 	OpeningHours openingHours;
 	List<Publication> allPublications;
 	List<Publication> contextPublications;
 	protected WeatherAPI api;
 	protected List<Label> weather;
+
 
 	public List<Double> getAddress() {
 		return this.address;
@@ -81,6 +83,10 @@ public abstract class Store {
 				this.contextPublications.add(i);
 			}
 		}
+	}
+
+	public void addCurrency(Currency currency){
+		localCurrencies.add(currency);
 	}
 
 	public OpeningHours getOpeningHours() {
@@ -130,7 +136,8 @@ public abstract class Store {
 			result += ",\"id\":" + mapper.writeValueAsString(this.id);
 			result += ",\"name\":" + mapper.writeValueAsString(this.name);
 			result += ",\"address\":" + mapper.writeValueAsString(this.address);
-			result += ",\"openingHours\":" + mapper.writeValueAsString(this.openingHours) + "}";
+			result += ",\"openingHours\":" + mapper.writeValueAsString(this.openingHours);
+			result += ",\"localCurrencies\":" + mapper.writeValueAsString(this.localCurrencies) +"}";
 			return result;
 		} catch (IOException e) {
 			e.printStackTrace();
