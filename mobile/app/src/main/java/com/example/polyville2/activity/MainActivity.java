@@ -12,7 +12,9 @@ import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.View;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ import com.example.polyville2.service.BluetoothService;
 import com.example.polyville2.upnp.CallActionDevice;
 import com.example.polyville2.upnp.DiscoveryDevice;
 import com.example.polyville2.R;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 
 import org.fourthline.cling.android.AndroidUpnpService;
 import org.fourthline.cling.android.AndroidUpnpServiceImpl;
@@ -106,7 +109,16 @@ public class MainActivity extends AppCompatActivity implements Observer {
         }
 
         publicaitonNotification = new PublicaitonNotification(context);
+
+        BottomNavigationItemView buttonOne = findViewById(R.id.action_account);
+        buttonOne.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent activity2Intent = new Intent(getApplicationContext(), ConnectionActivity.class);
+                startActivity(activity2Intent);
+            }
+        });
     }
+
 
     @Override
     public void update(Observable observable, Object o) {

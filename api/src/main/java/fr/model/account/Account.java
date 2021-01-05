@@ -1,5 +1,7 @@
 package fr.model.account;
 
+import fr.Main;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +25,7 @@ public class Account {
 	}
 	public Account(String username, String password) {
 		this.username=username;
-		this.password=password;
+		this.password=Main.encoder.encode(password);
 	}
 	
 	public String getUsername() {
@@ -34,7 +36,16 @@ public class Account {
 		return id;
 	}
 	public boolean IsGoodPasword(String passwordType) {
-		return passwordType.equals(password);
+		return Main.encoder.matches(passwordType, password);
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Account{" +
+				"id=" + id +
+				", username='" + username + '\'' +
+				", password='" + password + '\'' +
+				", cardNumber='" + cardNumber + '\'' +
+				'}';
+	}
 }
