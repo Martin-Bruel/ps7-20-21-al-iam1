@@ -17,4 +17,7 @@
     <string name="disablingDebugLogging">Disabling debug logging…</string>
     <string name="deviceDetailsNotYetAvailable">Device details are being discovered, please wait.</string>
 
+    <string name="bottom_navigation_menu_home">Home</string>
+    <string name="bottom_navigation_menu_account">Account</string>
+
 </resources>
