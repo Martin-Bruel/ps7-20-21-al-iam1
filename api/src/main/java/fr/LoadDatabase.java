@@ -1,5 +1,7 @@
 package fr;
 
+import fr.model.account.Account;
+import fr.model.account.AccountRepository;
 import fr.model.store.Store;
 import fr.model.store.StoreRepository;
 import fr.model.traffic.Traffic;
@@ -21,7 +23,7 @@ public class LoadDatabase {
     private final LocalDate date = LocalDate.now();
 
     @Bean
-    CommandLineRunner initDatabase(TrafficRepository trafficRepository, StoreRepository storeRepository) {
+    CommandLineRunner initDatabase(TrafficRepository trafficRepository, StoreRepository storeRepository,AccountRepository accountRepository) {
 
         return args -> {
 
@@ -41,6 +43,10 @@ public class LoadDatabase {
             log.info("Preloading " + storeRepository.save(new Store(1235,"Gifi la mode")));
             log.info("Preloading " + storeRepository.save(new Store(1236,"Les fleurs de la cabane au fond du jardin")));
             log.info("Preloading " + storeRepository.save(new Store(0,"Coffee and Shop")));
+            
+
+            log.info("Preloading " + accountRepository.save(new Account("user1","Coffee and Shop")));
+            log.info("Preloading " + accountRepository.save(new Account("user2","admin")));
 
         };
     }
