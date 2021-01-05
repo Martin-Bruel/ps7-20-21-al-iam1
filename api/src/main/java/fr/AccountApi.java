@@ -24,10 +24,10 @@ public class AccountApi {
 	
 	@GetMapping("/create/{username}/{password}")
 	boolean createAccount(@PathVariable String username,@PathVariable String password) {
-		System.out.println("account "+username+" "+password); 
+
 		Optional<Account> optT = accountRepository.findAll().stream().filter((account) -> account.getUsername().equals(username)).findFirst();
 		if(optT.isEmpty()) {
-			accountRepository.save(new Account(username,password));
+			System.out.println(accountRepository.save(new Account(username,password)));
 			return true;
 		}
 		return false;
@@ -35,11 +35,13 @@ public class AccountApi {
 	
 	@GetMapping("/connect/{username}/{password}")
 	Long connection(@PathVariable String username,@PathVariable String password) {
-		System.out.println("account "+username+" "+password); 
+
 		Optional<Account> optT = accountRepository.findAll().stream().filter((account) -> account.getUsername().equals(username) && account.IsGoodPasword(password)).findFirst();
 		if(optT.isEmpty()) {
+			System.out.println(username + " connexion refused.");
 			return null;
 		}
+		System.out.println(username + " connexion accepted.");
 		return optT.get().getID();
 	}    
 	
