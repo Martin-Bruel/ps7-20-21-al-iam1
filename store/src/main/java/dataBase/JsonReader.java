@@ -8,7 +8,11 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 
 import model.Store;
-
+/**
+ * Read the file json who represents the store
+ * @author Martin Bruel, Florian Striebel, Maeva Lecavalier, Nicolas Lanoux 
+ *
+ */
 public class JsonReader {
 	
 	public static Store read() {
