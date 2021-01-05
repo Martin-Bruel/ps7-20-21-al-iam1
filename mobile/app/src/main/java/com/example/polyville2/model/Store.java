@@ -83,8 +83,16 @@ public abstract class Store implements Serializable{
 		}
 	}
 
+	public List<Currency> getLocalCurrencies(){
+		return localCurrencies;
+	}
+
 	public void addCurrency(Currency currency){
 		localCurrencies.add(currency);
+	}
+
+	public void setLocalCurrencies(List<Currency> currencies){
+		localCurrencies=currencies;
 	}
 
 	public OpeningHours getOpeningHours() {
