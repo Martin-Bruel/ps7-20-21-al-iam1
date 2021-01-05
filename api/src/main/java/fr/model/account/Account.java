@@ -44,15 +44,26 @@ public class Account {
 	public void setCardNumber(String cardnb){
 		this.cardNumber = cardnb;
 	}
-
-	public boolean isGoodPasword(String passwordType) {
-		return passwordType.equals(password);
-	}
 	
 	public void setBalanceAccount(double amount){
 		this.balanceAccount = amount;
 	}
+	/**
+	 * 
+	 * @param passwordType
+	 * @return boolean
+	 * 
+	 * checks if the given password is the same as the account password. Return true if yes, else false.
+	 */
+	public boolean isGoodPasword(String passwordType) {
+		return passwordType.equals(password);
+	}
 
+	/**
+	 * 
+	 * @param amount
+	 * increment Balance account to the amount given in parameter
+	 */
 	public void creditBalanceAccount(double amount){
 		this.balanceAccount += amount;
 	}

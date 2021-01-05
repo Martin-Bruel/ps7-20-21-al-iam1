@@ -22,8 +22,17 @@ public class AccountApi {
 		this.accountRepository = accountRepository;
 	}
 	
-	@GetMapping("/create/{username}/{password}")
-	boolean createAccount(@PathVariable String username,@PathVariable String password) {
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @return boolean : true if account is created, false if not
+	 * 
+	 * creates an account with given username and password and saves it to the database
+	 * return false if an account with the same username exits
+	 */
+	@PostMapping("/create")
+	boolean createAccount(@RequestBody String username,@RequestBody String password) {
 		System.out.println("account "+username+" "+password); 
 		Optional<Account> optT = accountRepository.findAll().stream().filter((account) -> account.getUsername().equals(username)).findFirst();
 		if(optT.isEmpty()) {
@@ -33,8 +42,18 @@ public class AccountApi {
 		return false;
 	}
 	
-	@GetMapping("/connect/{username}/{password}")
-	Long connection(@PathVariable String username,@PathVariable String password) {
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @return account's id - null
+	 * 
+	 * Tries connection to account with username and password
+	 * If connection has succeeded, returns id of the account logged
+	 * else it returns null. 
+	 */
+	@PostMapping("/connect")
+	Long connection(@RequestBody String username,@RequestBody String password) {
 		System.out.println("account "+username+" "+password); 
 		Optional<Account> optT = accountRepository.findAll().stream().filter((account) -> account.getUsername().equals(username) && account.isGoodPasword(password)).findFirst();
 		if(optT.isEmpty()) {
@@ -43,8 +62,16 @@ public class AccountApi {
 		return optT.get().getID();
 	}
 
-	@GetMapping("/{username}/{password}/balance")
-	Double getBalanceAccount(@PathVariable String username, @PathVariable String password){
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @return double
+	 * 
+	 * returns the amount of the balance account
+	 */
+	@PostMapping("/balance")
+	Double getBalanceAccount(@RequestBody String username, @RequestBody String password){
 		System.out.println(username+" requires balance");
 		Optional<Account> opt = accountRepository.findAll().stream().filter((account) -> account.getUsername().equals(username) && account.isGoodPasword(password)).findFirst();
 		if(opt.isEmpty()){
@@ -53,8 +80,18 @@ public class AccountApi {
 		return opt.get().getBalanceAccount();
 	}
 
-	@PostMapping("/{username}/{password}/balance")
-	Double incrementBalanceAccount(@RequestBody double amountToAdd, @PathVariable String username, @PathVariable String password){
+	/**
+	 * 
+	 * @param amountToAdd
+	 * @param username
+	 * @param password
+	 * @return double
+	 * 
+	 * adds the amount given in paramater to the current balance account
+	 * return the new amount
+	 */
+	@PostMapping("/balanceIncrement")
+	Double incrementBalanceAccount(@RequestBody double amountToAdd, @RequestBody String username, @RequestBody String password){
 		System.out.println(username+" increments balance bt "+amountToAdd);
 		Optional<Account> opt = accountRepository.findAll().stream().filter((account) -> account.getUsername().equals(username) && account.isGoodPasword(password)).findFirst();
         if (opt.isEmpty()) {
@@ -65,7 +102,12 @@ public class AccountApi {
         return opt.get().getBalanceAccount();
 	}
 
-	
+	/**
+	 * 
+	 * @return List<Account>
+	 * 
+	 * return all accounts existing
+	 */
     @GetMapping("/")
 	List<Account> allAccount(){
 		return accountRepository.findAll();
