@@ -36,12 +36,13 @@ public class AccountApi {
 	@GetMapping("/connect/{username}/{password}")
 	Long connection(@PathVariable String username,@PathVariable String password) {
 		System.out.println("account "+username+" "+password); 
-		Optional<Account> optT = accountRepository.findAll().stream().filter((account) -> account.getUsername().equals(username) && account.IsGoodPasword(password)).findFirst();
+		Optional<Account> optT = accountRepository.findAll().stream().filter((account) -> account.getUsername().equals(username) && account.isGoodPasword(password)).findFirst();
 		if(optT.isEmpty()) {
 			return null;
 		}
 		return optT.get().getID();
-	}    
+	}
+
 	
     @GetMapping("/")
 	List<Account> allAccount(){

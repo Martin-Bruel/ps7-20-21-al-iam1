@@ -17,13 +17,16 @@ public class Account {
 	private String username;
 	private String password;
 	private String cardNumber;
+	private String balanceAccount;
 	
 	public Account() {
 		
 	}
 	public Account(String username, String password) {
-		this.username=username;
-		this.password=password;
+		this.username = username;
+		this.password = password;
+		this.cardNumber = "none";
+		this.balanceAccount = "0";
 	}
 	
 	public String getUsername() {
@@ -33,8 +36,18 @@ public class Account {
 	public Long getID() {
 		return id;
 	}
-	public boolean IsGoodPasword(String passwordType) {
+
+	public String getBalanceAccount(){
+		return this.balanceAccount;
+	}
+
+	public void setCardNumber(String cardnb){
+		this.cardNumber = cardnb;
+	}
+
+	public boolean isGoodPasword(String passwordType) {
 		return passwordType.equals(password);
 	}
+	
 	
 }
