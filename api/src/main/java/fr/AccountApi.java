@@ -55,7 +55,7 @@ public class AccountApi {
 		Optional<Account> optT = accountRepository.findAll().stream().filter((account) -> account.getUsername().equals(username) && account.isGoodPasword(password)).findFirst();
 		if(optT.isEmpty()) {
 			System.out.println(username + " connexion refused.");
-			return null;
+			return (long) -1;
 		}
 		System.out.println(username + " connexion accepted.");
 		return optT.get().getID();

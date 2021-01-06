@@ -20,7 +20,6 @@ public class Account {
     @Column(unique = true)
 	private String username;
 	private String password;
-	private String cardNumber;
 	private double balanceAccount;
 	
 	public Account() {
@@ -29,7 +28,6 @@ public class Account {
 
 	public Account(String username, String password) {
 		this.username = username;
-		this.cardNumber = "none";
 		this.balanceAccount = 0;
 		this.password=Main.encoder.encode(password);
 	}
@@ -46,9 +44,7 @@ public class Account {
 		return this.balanceAccount;
 	}
 
-	public void setCardNumber(String cardnb){
-		this.cardNumber = cardnb;
-	}
+
 	
 	public void setBalanceAccount(double amount){
 		this.balanceAccount = amount;
@@ -80,14 +76,13 @@ public class Account {
 				"id=" + id +
 				", username='" + username + '\'' +
 				", password='" + password + '\'' +
-				", cardNumber='" + cardNumber + '\'' +
 				", balanceAccount='" + balanceAccount +'\'' +
 				'}';
 	}
 
 	@Override
     public int hashCode() {
-        return Objects.hash(id, username, password, cardNumber, balanceAccount);
+        return Objects.hash(id, username, password, balanceAccount);
 	}
 	
 }
