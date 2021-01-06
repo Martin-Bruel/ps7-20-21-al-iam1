@@ -39,8 +39,10 @@ public class BoutiqueActivity extends AppCompatActivity {
             String acceptedCurrencies= "This store accepts ";
             List<Currency> localCurrencies=s.getLocalCurrencies();
             for (int i =0;i<localCurrencies.size();i++){
-                if (i==localCurrencies.size()-1)
-                    acceptedCurrencies += "and "+localCurrencies.get(i).toString()+".";
+                if (i==localCurrencies.size()-1){
+                    if(i!=0)acceptedCurrencies += "and ";
+                    acceptedCurrencies += localCurrencies.get(i).toString()+".";
+                }
                 else
                     acceptedCurrencies += localCurrencies.get(i).toString()+", ";
             }
