@@ -3,6 +3,7 @@ package fr;
 import fr.model.account.Account;
 import fr.model.account.AccountRepository;
 
+import fr.model.account.Currency;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,7 +51,7 @@ public class AccountApi {
 	 * else it returns null. 
 	 */
 	@PostMapping("/connect")
-	Long connection(@RequestParam("username") String username,@RequestParam("password")String password) {
+	Account connection(@RequestParam("username") String username,@RequestParam("password")String password) {
 		System.out.println("account "+username+" "+password); 
 		Optional<Account> optT = accountRepository.findAll().stream().filter((account) -> account.getUsername().equals(username) && account.isGoodPasword(password)).findFirst();
 		if(optT.isEmpty()) {
@@ -58,7 +59,7 @@ public class AccountApi {
 			return null;
 		}
 		System.out.println(username + " connexion accepted.");
-		return optT.get().getID();
+		return optT.get();
 	}
 
 	/**
@@ -69,14 +70,35 @@ public class AccountApi {
 	 * 
 	 * returns the amount of the balance account
 	 */
+	@PostMapping("/balance/{currencyType}")
+	double getBalanceAccount(@RequestParam("username") String username, @RequestParam("password")String password, @PathVariable String currencyType){
+		System.out.println(username+" requires balance");
+		Optional<Account> opt = accountRepository.findAll().stream().filter((account) -> account.getUsername().equals(username) && account.isGoodPasword(password)).findFirst();
+		if(opt.isEmpty()){
+			System.out.println(username+" do not exist or wrong password...");
+			return 0;
+		}
+		Currency currency = opt.get().findCurrencyByName(currencyType);
+		if (currency != null) return currency.getBalance();
+		return 0;
+	}
+
+	/**
+	 *
+	 * @param username
+	 * @param password
+	 * @return double
+	 *
+	 * returns the amount of the balance account
+	 */
 	@PostMapping("/balance")
-	Double getBalanceAccount(@RequestParam("username") String username,@RequestParam("password")String password){
+	List<Currency> getBalanceAccount(@RequestParam("username") String username, @RequestParam("password")String password){
 		System.out.println(username+" requires balance");
 		Optional<Account> opt = accountRepository.findAll().stream().filter((account) -> account.getUsername().equals(username) && account.isGoodPasword(password)).findFirst();
 		if(opt.isEmpty()){
 			return null;
 		}
-		return opt.get().getBalanceAccount();
+		return opt.get().getCurrencies();
 	}
 
 	/**
@@ -90,15 +112,16 @@ public class AccountApi {
 	 * return the new amount
 	 */
 	@PostMapping("/balanceIncrement")
-	Double incrementBalanceAccount(@RequestParam("amout") double amountToAdd, @RequestParam("username") String username,@RequestParam("password")String password){
+	String incrementBalanceAccount(@RequestParam("amout") double amountToAdd, @RequestParam("currencyType") String currencyType, @RequestParam("username") String username,@RequestParam("password")String password){
 		System.out.println(username+" increments balance bt "+amountToAdd);
 		Optional<Account> opt = accountRepository.findAll().stream().filter((account) -> account.getUsername().equals(username) && account.isGoodPasword(password)).findFirst();
         if (opt.isEmpty()) {
 			return null;
 		}
-		opt.get().creditBalanceAccount(amountToAdd);
-		accountRepository.save(opt.get());
-        return opt.get().getBalanceAccount();
+        Account account = opt.get();
+        account.creditBalance(amountToAdd, currencyType);
+		accountRepository.save(account);
+        return "done";
 	}
 
 	/**

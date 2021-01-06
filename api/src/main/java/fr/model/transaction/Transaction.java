@@ -1,44 +1,41 @@
 package fr.model.transaction;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDate;
 
+@Entity
 public class Transaction {
 
     private  @Id@GeneratedValue Long id;
-    private int accountId;
-    private int amount;
+    private Long accountId;
+    private double amount;
     private int storeId;
     private LocalDate date;
+    private String currencyType;
 
-    public Transaction(int accountId, int amount, int storeId, LocalDate date) {
+    public Transaction(Long accountId, double amount, String currencyType, int storeId, LocalDate date) {
         this.accountId = accountId;
         this.amount = amount;
         this.storeId = storeId;
         this.date = date;
+        this.currencyType = currencyType;
     }
 
-    /**
-     * update account amount
-     */
-    public void process(){
+    public Transaction(){}
 
-    }
-
-
-
-    public int getAccountId() {
+    public Long getAccountId() {
         return accountId;
     }
-    public void setAccountId(int accountId) {
+    public void setAccountId(Long accountId) {
         this.accountId = accountId;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -54,5 +51,12 @@ public class Transaction {
     }
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public String getCurrencyType() {
+        return currencyType;
+    }
+    public void setCurrencyType(String currencyType) {
+        this.currencyType = currencyType;
     }
 }
