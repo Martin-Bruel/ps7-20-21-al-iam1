@@ -49,5 +49,6 @@
     "title" : "Clouds : be far-sighted",
     "labels" : [ "CLOUDS" ],
     "description" : " Come buy an umbrella to our shop before the rain ! "
-  } ]
+  } ],
+  "localCurrencies" : [ "POLYCOIN" ]
 }

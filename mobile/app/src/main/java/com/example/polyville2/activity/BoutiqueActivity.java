@@ -10,9 +10,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.polyville2.R;
+import com.example.polyville2.model.Currency;
 import com.example.polyville2.model.Store;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class BoutiqueActivity extends AppCompatActivity {
 
@@ -32,6 +34,20 @@ public class BoutiqueActivity extends AppCompatActivity {
         ListView days = findViewById(R.id.lv_days); // ne s'affiche que si la liste n'est pas vide
         DayAdapter Days = new DayAdapter(s.getOpeningHours(), this);
         days.setAdapter(Days);
+
+        if (s.getLocalCurrencies().size()>0){
+            String acceptedCurrencies= "This store accepts ";
+            List<Currency> localCurrencies=s.getLocalCurrencies();
+            for (int i =0;i<localCurrencies.size();i++){
+                if (i==localCurrencies.size()-1)
+                    acceptedCurrencies += "and "+localCurrencies.get(i).toString()+".";
+                else
+                    acceptedCurrencies += localCurrencies.get(i).toString()+", ";
+            }
+            TextView tv_currencies = findViewById(R.id.tv_currencies);
+            tv_currencies.setText(acceptedCurrencies);
+        }
+
 
 
         Button bt1 = findViewById(R.id.buttonPublications);

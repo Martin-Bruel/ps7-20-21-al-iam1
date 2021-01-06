@@ -46,6 +46,7 @@ public class Main {
 		hours.add(LocalTime.now().withHour(15).withMinute(25));
 		OpeningHours openingHours=new OpeningHours(hours,hours,hours,hours,hours,hours,hours);
 		shop.setOpeningHours(openingHours);
+		shop.addCurrency(Currency.POLYCOIN);
 		shop.makeJSON();
 	}
 }
