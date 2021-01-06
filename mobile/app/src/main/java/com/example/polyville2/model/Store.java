@@ -6,11 +6,14 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import android.bluetooth.BluetoothDevice;
 import android.os.Parcelable;
 
 import java.io.File;
@@ -31,6 +34,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({ @JsonSubTypes.Type(value = Shop.class, name = "shop"), })
 @JsonTypeName("store")
+@JsonIgnoreProperties({"MACaddress", "bluetoothDevice"})
 public abstract class Store implements Serializable{
 	int id;
 	String name;
@@ -41,6 +45,17 @@ public abstract class Store implements Serializable{
 	List<Publication> allPublications;
 	List<Publication> contextPublications;
 	protected List<Label> weather;
+	@JsonIgnore
+	String MACaddress;
+
+
+	public String getMACaddress(){
+		return this.MACaddress;
+	}
+
+	public void setMACaddress(String MACaddress) {
+		this.MACaddress = MACaddress;
+	}
 
 	public List<Double> getAddress() {
 		return this.address;
