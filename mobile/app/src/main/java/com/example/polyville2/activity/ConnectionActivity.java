@@ -40,8 +40,7 @@ public class ConnectionActivity extends AppCompatActivity {
         }
         buttonOne.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent activity2Intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(activity2Intent);
+                finish();
             }
         });
         TextView createAccount = findViewById(R.id.tv_connection_create_account);
