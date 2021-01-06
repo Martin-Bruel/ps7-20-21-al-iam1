@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
+
 
 @Entity
 @Table(name = "user")
@@ -82,4 +84,10 @@ public class Account {
 				", balanceAccount='" + balanceAccount +'\'' +
 				'}';
 	}
+
+	@Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, cardNumber, balanceAccount);
+	}
+	
 }
