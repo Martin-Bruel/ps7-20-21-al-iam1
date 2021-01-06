@@ -17,4 +17,13 @@
     <string name="disablingDebugLogging">Disabling debug logging…</string>
     <string name="deviceDetailsNotYetAvailable">Device details are being discovered, please wait.</string>
 
+
+    <string name="accountCreationToastEmptyField">All field need to be completed to validate your registration</string>
+    <string name="accountCreationToastMailMalformed">Please enter a valid e-mail</string>
+    <string name="accountCreationToastDifferentPassword">passwords are different</string>
+
+    <string name="bottom_navigation_menu_home">Home</string>
+    <string name="bottom_navigation_menu_account">Account</string>
+    <string name="link_create_account"><u>create an account</u></string>
+
 </resources>
