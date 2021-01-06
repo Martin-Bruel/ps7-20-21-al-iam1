@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
+
 
 @Entity
 @Table(name = "user")
@@ -19,12 +21,16 @@ public class Account {
 	private String username;
 	private String password;
 	private String cardNumber;
+	private double balanceAccount;
 	
 	public Account() {
 		
 	}
+
 	public Account(String username, String password) {
-		this.username=username;
+		this.username = username;
+		this.cardNumber = "none";
+		this.balanceAccount = 0;
 		this.password=Main.encoder.encode(password);
 	}
 	
@@ -35,10 +41,39 @@ public class Account {
 	public Long getID() {
 		return id;
 	}
-	public boolean IsGoodPasword(String passwordType) {
+
+	public double getBalanceAccount(){
+		return this.balanceAccount;
+	}
+
+	public void setCardNumber(String cardnb){
+		this.cardNumber = cardnb;
+	}
+	
+	public void setBalanceAccount(double amount){
+		this.balanceAccount = amount;
+	}
+	/**
+	 * 
+	 * @param passwordType
+	 * @return boolean
+	 * 
+	 * checks if the given password is the same as the account password. Return true if yes, else false.
+	 * Password is encoding for security
+	 */
+	public boolean isGoodPasword(String passwordType) {
 		return Main.encoder.matches(passwordType, password);
 	}
 
+	/**
+	 * 
+	 * @param amount
+	 * increment Balance account to the amount given in parameter
+	 */
+	public void creditBalanceAccount(double amount){
+		this.balanceAccount += amount;
+	}
+	
 	@Override
 	public String toString() {
 		return "Account{" +
@@ -46,6 +81,13 @@ public class Account {
 				", username='" + username + '\'' +
 				", password='" + password + '\'' +
 				", cardNumber='" + cardNumber + '\'' +
+				", balanceAccount='" + balanceAccount +'\'' +
 				'}';
 	}
+
+	@Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, cardNumber, balanceAccount);
+	}
+	
 }
