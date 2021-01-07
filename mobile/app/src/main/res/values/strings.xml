@@ -17,4 +17,19 @@
     <string name="disablingDebugLogging">Disabling debug logging…</string>
     <string name="deviceDetailsNotYetAvailable">Device details are being discovered, please wait.</string>
 
+
+    <string name="accountCreationToastEmptyField">All field need to be completed to validate your registration</string>
+    <string name="accountCreationToastMailMalformed">Please enter a valid e-mail</string>
+    <string name="accountCreationToastDifferentPassword">passwords are different</string>
+
+    <string name="bottom_navigation_menu_home">Home</string>
+    <string name="bottom_navigation_menu_account">Account</string>
+    <string name="link_create_account"><u>create an account</u></string>
+    <string name="existant_account">An account with this mail is already exist</string>
+    <string name="account_created">Account created</string>
+    <string name="preference_file_key">user</string>
+    <string name="userToken">token</string>
+    <string name="badIdentifiant">no match with this password and mail</string>
+    <string name="password">password</string>
+
 </resources>
