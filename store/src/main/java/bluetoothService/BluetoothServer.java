@@ -1,9 +1,15 @@
 package bluetoothService;
 
+import traffic.RESTClient;
+import upnpService.Server;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 
 import javax.bluetooth.DiscoveryAgent;
 import javax.bluetooth.LocalDevice;
@@ -16,6 +22,9 @@ import javax.microedition.io.StreamConnectionNotifier;
 
 // d0c722b07e1511e1b0c40800200c9a66
 public class BluetoothServer extends Thread {
+
+	RESTClient restClient = new RESTClient();
+
 	/** Constructor */
 	public BluetoothServer() {
 	}
@@ -61,8 +70,8 @@ public class BluetoothServer extends Thread {
 				DataInputStream dataIn = conn.openDataInputStream();
 				System.out.println("Socket opened.");
 				byte[] bytesReceived = new byte[1024];
-				dataIn.read(bytesReceived);
-				String s = new String(bytesReceived, StandardCharsets.UTF_8);
+				int nbByte = dataIn.read(bytesReceived);
+				String s = new String(bytesReceived, 0, nbByte, StandardCharsets.UTF_8);
 				System.out.println("Data receive : " + s );
 				OutputStream dataOut = conn.openOutputStream();
 				byte[] bytesToSend = "OK".getBytes();
@@ -70,10 +79,30 @@ public class BluetoothServer extends Thread {
 				dataOut.write(bytesToSend); 
 				System.out.println("Data send.");
 
+				String[] data = s.split(",");
+				updateAmountApi(data[1], data[0]);
+
 			} catch (Exception e) {
 				e.printStackTrace();
 				return;
 			}
+		}
+	}
+
+	public void updateAmountApi(String userId, String amount){
+
+		String json = "{\n" +
+				"  \"accountId\": "+ userId + ",\n" +
+				"  \"amount\": " + amount + ",\n" +
+				"  \"currencyType\": \"POLYCOIN\",\n" +
+				"  \"date\": \"" + LocalDate.now().toString() + "\",\n" +
+				"  \"storeId\": " + Server.store.getId() + "\n" +
+				"}";
+
+		try {
+			restClient.sendRequest("POST", json, "/transaction/");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

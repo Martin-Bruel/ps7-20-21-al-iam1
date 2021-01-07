@@ -11,9 +11,9 @@ public class RESTClient {
 
     private final String URL = "http://localhost:8080";
 
-    public boolean sendRequest(String method, String json) throws IOException {
+    public boolean sendRequest(String method, String json, String path) throws IOException {
 
-        java.net.URL url = new URL(URL+"/traffic/");
+        java.net.URL url = new URL(URL+path);
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod(method);

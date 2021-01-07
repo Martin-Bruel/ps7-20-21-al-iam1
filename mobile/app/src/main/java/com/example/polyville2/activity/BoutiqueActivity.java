@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,22 +17,30 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.polyville2.R;
+import com.example.polyville2.model.Account;
 import com.example.polyville2.model.CurrencyType;
 import com.example.polyville2.model.Store;
 import com.example.polyville2.service.BluetoothManager;
 import com.example.polyville2.service.BluetoothPayment;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
 public class BoutiqueActivity extends AppCompatActivity {
 
+    private long userId = -1;
+    private Store store;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
         setContentView(R.layout.activity_boutique);
-        Store store = (Store) getIntent().getSerializableExtra("store");
+        store = (Store) getIntent().getSerializableExtra("store");
 
         //TextView tvAddress = findViewById(R.id.tv_address);
         //tvAddress.setText(s.getAddress());
@@ -89,14 +98,41 @@ public class BoutiqueActivity extends AppCompatActivity {
 
                 // try to connect with shop
                 Log.d("BLUETOOTH CONNECTION", "Beginnning to connect...");
-                BluetoothPayment payment = new BluetoothPayment(store.getMACaddress(), price);
+                BluetoothPayment payment = new BluetoothPayment(store.getMACaddress(), price + "," + userId);
                 payment.start();
                 // String to double : double priceDouble = Double.parseDouble(price);
                 //TODO : vérifier que le prix est inférieur à l'argent dans le porte-feuille
                 // if(price > porte-feuille) WARNING : not enough money
                 System.out.println("Price : " + price);
+                priceEditor.getText().clear();
             }
         });
 
+        setUserId();
+
+    }
+
+    private void setUserId(){
+
+
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String token = sharedPref.getString(getString(R.string.userToken),"");
+        System.out.println("token1"+token);
+        if(!token.equals("")){
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                Account account = mapper.readValue(token, Account.class);
+                userId = account.getId();
+                Button bt3 = findViewById(R.id.buttonPay);
+                bt3.setEnabled(true);
+
+                EditText priceEditor = findViewById(R.id.priceDecimalInput);
+                priceEditor.setEnabled(true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("connect to server");
+        }
     }
 }
