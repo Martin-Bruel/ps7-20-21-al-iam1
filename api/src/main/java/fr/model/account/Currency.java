@@ -6,17 +6,19 @@ import javax.persistence.*;
 public class Currency {
 
     private double balance;
-    private String type;
+    private String name;
     @Id@GeneratedValue
     private Long id;
+    private String type;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="account_id")
     private Account account;
 
-    public Currency(double balance, String type) {
+    public Currency(double balance, String name) {
         this.balance = balance;
-        this.type = type;
+        this.name = name;
+        this.type = "Currency";
     }
 
     public Currency(){}
@@ -28,15 +30,22 @@ public class Currency {
         this.balance = balance;
     }
 
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
     public String getType() {
         return type;
     }
     public void setType(String type) {
         this.type = type;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     /**
@@ -60,7 +69,7 @@ public class Currency {
     public String toString() {
         return "Currency{" +
                 "balance=" + balance +
-                ", type='" + type + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

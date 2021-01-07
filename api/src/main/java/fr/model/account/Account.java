@@ -115,7 +115,7 @@ public class Account {
 	 * @return currency
 	 */
 	public Currency findCurrencyByName(String type){
-		return currencies.stream().filter(currency -> currency.getType().equals(type)).findFirst().orElse(null);
+		return currencies.stream().filter(currency -> currency.getName().equals(type)).findFirst().orElse(null);
 	}
 
 	@Override
