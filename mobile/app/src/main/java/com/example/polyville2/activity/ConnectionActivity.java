@@ -14,12 +14,15 @@ import android.widget.Toast;
 
 import com.example.polyville2.R;
 import com.example.polyville2.api.PolyvilleAPI;
+import com.example.polyville2.model.Account;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
@@ -35,7 +38,7 @@ public class ConnectionActivity extends AppCompatActivity {
         String token = sharedPref.getString(getString(R.string.userToken),"");
         System.out.println("token1"+token);
         if(!token.equals("")){
-            //TODO go user page
+            goToUserPage();
             System.out.println("connect to server");
         }
         buttonOne.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +121,40 @@ public class ConnectionActivity extends AppCompatActivity {
             editor.putString(getString(R.string.userToken),"username="+mail+"&password="+password);
             editor.apply();
             System.out.println("connect to server");
-            //TODO go user page
+            goToUserPage();
         }
+    }
+
+    public void goToUserPage(){
+        Intent intent = new Intent(getApplicationContext(), CurrencyBalanceActivity.class);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = "{\n" +
+                "  \"id\": 11,\n" +
+                "  \"username\": \"user2\",\n" +
+                "  \"password\": \"$2a$08$hVyRFP.nmQ6nEaJBT8vEluLM7Ek9jZK8XcfedhEqpTwXZMUiUH2Wu\",\n" +
+                "  \"cardNumber\": \"none\",\n" +
+                "  \"currencies\": [\n" +
+                "    {\n" +
+                "      \"type\": \"Currency\",\n" +
+                "      \"balance\": 1,\n" +
+                "      \"name\": \"POLYCOIN\"\n" +
+                "\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"type\": \"Currency\",\n" +
+                "      \"balance\": 11,\n" +
+                "      \"name\": \"POLYCOIN\"\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}";
+        try {
+            Account account = mapper.readValue(json,Account.class);
+            intent.putExtra("currencies", (Serializable) account.getCurrencies());
+            startActivity(intent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        finish();
     }
 }

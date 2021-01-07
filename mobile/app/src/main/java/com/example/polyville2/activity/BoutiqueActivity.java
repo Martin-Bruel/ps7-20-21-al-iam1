@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.polyville2.R;
-import com.example.polyville2.model.Currency;
+import com.example.polyville2.model.CurrencyType;
 import com.example.polyville2.model.Store;
 
 import java.io.Serializable;
@@ -37,7 +37,7 @@ public class BoutiqueActivity extends AppCompatActivity {
 
         if (s.getLocalCurrencies().size()>0){
             String acceptedCurrencies= "This store accepts ";
-            List<Currency> localCurrencies=s.getLocalCurrencies();
+            List<CurrencyType> localCurrencies=s.getLocalCurrencies();
             for (int i =0;i<localCurrencies.size();i++){
                 if (i==localCurrencies.size()-1){
                     if(i!=0)acceptedCurrencies += "and ";
