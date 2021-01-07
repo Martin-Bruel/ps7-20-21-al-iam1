@@ -132,16 +132,23 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
 
 
+    /**
+     * Dès qu'on découvre un appareil (store) en UPNP et en Bluetooth on rentre dans update
+     * @param observable
+     * @param o
+     */
     @Override
     public void update(Observable observable, Object o) {
+        // if detection UPNP
         if(observable.equals(registryListener)) {
             RemoteDevice device = (RemoteDevice) o;
+            // je le rajoute à ma liste
             devicesList.add(device);
             CallActionDevice callActionDevice = new CallActionDevice((RemoteDevice)o, upnpService);
+            // je charge les détails du magasin
             callActionDevice.getStoredevice(context);
-            callActionDevice.getMACOfDevice(context);
         }
-        else {
+        else{
             String mac = (String) o;
             if (macOfDevice.containsKey(mac)) {
                 RemoteDevice d = macOfDevice.get(mac);
@@ -156,6 +163,11 @@ public class MainActivity extends AppCompatActivity implements Observer {
         }
     }
 
+    /**
+     * Ajoute le store bien récupéré au context
+     * @param s
+     * @param remoteDevice
+     */
     public void addStore(Store s,RemoteDevice remoteDevice){
         System.out.println("------------ici store--------------- ");
         storeList.add(s);
@@ -180,9 +192,17 @@ public class MainActivity extends AppCompatActivity implements Observer {
             }
         });
     }
-    public void linkMacAndDevice(String s, RemoteDevice device){
-        macOfDevice.put(s,device);
-        scanner.getBluetoothManager().discover(s);
+
+    /**
+     * Rajouter à une hashmap le device et son adresse mac
+     * @param macAddress
+     * @param device
+     */
+    public void linkMacAndDevice(String macAddress, RemoteDevice device){
+        macOfDevice.put(macAddress,device);
+        scanner.getBluetoothManager().discover(macAddress);
+        Store store = linkIOTAndStore.get(device);
+        store.setMACaddress(macAddress);
     }
 
     public void verifyBluetoothActivation(BluetoothAdapter adapter){
@@ -193,6 +213,10 @@ public class MainActivity extends AppCompatActivity implements Observer {
             }
     }
 
+    /**
+     * Envoie une notification avec titre et description
+     * @param pub
+     */
     public void notifyPublication(Publication pub){
         publicaitonNotification.sendNotificaiton(pub.getTitle(), pub.getDescription());
     }

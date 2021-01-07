@@ -7,41 +7,6 @@
     tools:context=".activity.BoutiqueActivity">
 
 
-    <Button
-        android:id="@+id/buttonPublications"
-        android:layout_width="180dp"
-        android:layout_height="79dp"
-        android:layout_marginBottom="25dp"
-        android:text="Publications"
-        app:layout_constraintBottom_toTopOf="@+id/buttonProduits"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/buttonProduits"
-        android:layout_width="179dp"
-        android:layout_height="78dp"
-        android:layout_marginBottom="30dp"
-        android:text="Products"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="189dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="111dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="111dp"
-        android:layout_marginBottom="15dp"
-        android:text="Nom du magasin"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <!--<TextView
         android:id="@+id/tv_address"
         android:layout_width="wrap_content"
@@ -50,31 +15,106 @@
         tools:layout_editor_absoluteX="61dp"
         tools:layout_editor_absoluteY="95dp" />-->
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="254dp"
-        android:layout_marginBottom="15dp"
-        android:text="Opening Hours"
-        app:layout_constraintBottom_toTopOf="@+id/lv_days"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="61dp">
 
-    <ListView
-        android:id="@+id/lv_days"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonPublications"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="189dp"
+                    android:layout_height="42dp"
+                    android:layout_marginStart="111dp"
+                    android:layout_marginEnd="111dp"
+                    android:foregroundGravity="center_vertical|center|center_horizontal"
+                    android:text="Nom du magasin"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="254dp"
+                android:text="Opening Hours" />
+
+            <ListView
+                android:id="@+id/lv_days"
+                android:layout_width="370dp"
+                android:layout_height="414dp"
+                android:layout_gravity="center|center_horizontal|center_vertical"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="10dp">
+
+            </ListView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_horizontal|top"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/priceDecimalInput"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:foregroundGravity="center_vertical|center|center_horizontal"
+                    android:inputType="numberDecimal" />
+
+                <Button
+                    android:id="@+id/buttonPay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pay" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonPublications"
+                    android:layout_width="143dp"
+                    android:layout_height="49dp"
+                    android:layout_marginRight="20dp"
+                    android:text="Publications" />
+
+                <Button
+                    android:id="@+id/buttonProduits"
+                    android:layout_width="143dp"
+                    android:layout_height="49dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="Products" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
     <TextView
         android:id="@+id/tv_currencies"
