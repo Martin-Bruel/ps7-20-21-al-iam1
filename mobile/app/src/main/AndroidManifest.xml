@@ -18,16 +18,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
-
-        android:theme="@style/AppTheme">
-
-        <activity
-            android:name=".activity.CurrencyBalanceActivity"
-            android:label="@string/title_activity_currency_balance"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.AccountCreationActivity" />
-
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".activity.AccountCreationActivity"></activity>
         <activity android:name=".activity.ConnectionActivity" /> <!-- <service android:name=".bluetooth.BluetoothService" /> -->
         <!-- <service android:name=".bluetooth.BluetoothService" /> -->
         <activity android:name=".activity.BoutiqueActivity" />

@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +22,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 public class ConnectionActivity extends AppCompatActivity {
     SharedPreferences sharedPref;
@@ -35,7 +35,7 @@ public class ConnectionActivity extends AppCompatActivity {
         String token = sharedPref.getString(getString(R.string.userToken),"");
         System.out.println("token1"+token);
         if(!token.equals("")){
-            goToUserPage();
+            //TODO go user page
             System.out.println("connect to server");
         }
         buttonOne.setOnClickListener(new View.OnClickListener() {
@@ -107,28 +107,18 @@ public class ConnectionActivity extends AppCompatActivity {
         });
     }
     public void connect(String response , String mail, String password) {
-        if (response.contains("-1")) {
+        if(response.contains("-1")){
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     Toast.makeText(getApplicationContext(), R.string.badIdentifiant, Toast.LENGTH_LONG).show();
-                }
-            });
-        } else {
+                }});
+        }else{
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString(getString(R.string.userToken), "username=" + mail + "&password=" + password);
+            editor.putString(getString(R.string.userToken),"username="+mail+"&password="+password);
             editor.apply();
             System.out.println("connect to server");
-            goToUserPage();
+            //TODO go user page
         }
     }
-
-    public void goToUserPage(){
-        Intent intent = new Intent(getApplicationContext(), CurrencyBalanceActivity.class);//TODO recupdonnes du compte
-        //intent.putExtra("currencies", account.getLocalCurrencies);
-        startActivity(intent);
-        finish();
-    }
-
-
 }

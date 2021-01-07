@@ -1,6 +1,9 @@
 package com.example.polyville2.model;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -8,8 +11,17 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
-import java.io.Serializable;
+import android.os.Parcelable;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -23,7 +35,7 @@ public abstract class Store implements Serializable{
 	int id;
 	String name;
 	List<Double> address;
-	List<CurrencyType> localCurrencies;
+	List<Currency> localCurrencies;
 	protected List<Product> products;
 	OpeningHours openingHours;
 	List<Publication> allPublications;
@@ -71,15 +83,15 @@ public abstract class Store implements Serializable{
 		}
 	}
 
-	public List<CurrencyType> getLocalCurrencies(){
+	public List<Currency> getLocalCurrencies(){
 		return localCurrencies;
 	}
 
-	public void addCurrency(CurrencyType currency){
+	public void addCurrency(Currency currency){
 		localCurrencies.add(currency);
 	}
 
-	public void setLocalCurrencies(List<CurrencyType> currencies){
+	public void setLocalCurrencies(List<Currency> currencies){
 		localCurrencies=currencies;
 	}
 
