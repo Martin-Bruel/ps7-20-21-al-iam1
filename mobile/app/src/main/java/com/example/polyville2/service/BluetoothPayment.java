@@ -3,6 +3,9 @@ package com.example.polyville2.service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -32,27 +35,26 @@ public class BluetoothPayment extends Thread {
         } catch (IOException e) {
             System.out.println("Socket's create() method failed. Stack trace:" + e);
         }
-        System.out.println("ligne 35");
         mmSocket = tmp;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void run() {
         // Cancel discovery because it otherwise slows down the connection.
-
         bluetoothAdapter.cancelDiscovery();
-        System.out.println("ligne 42");
         try {
             // Connect to the remote device through the socket. This call blocks
             // until it succeeds or throws an exception.
-            System.out.println("ligne 46");
+            System.out.println("Connecting to bluetooth store...");
             mmSocket.connect();
-            System.out.println("ligne 48");
-        } catch (IOException connectException) {
-            System.out.println("ligne 51");
+            System.out.println("Connected to store bluetooth ! Sleep 5 sec while server connecting...");
+            Thread.sleep(5000);
+        } catch (IOException | InterruptedException connectException) {
             // Unable to connect; close the socket and return.
             try {
-                System.out.println("close ligne 54");
+                System.out.println("Problem while connecting. Closing socket...");
                 mmSocket.close();
+                System.out.println("Socket closed.");
             } catch (IOException closeException) {
                 System.out.println("Could not close the client socket. Stack trace: "+closeException);
             }
@@ -62,7 +64,16 @@ public class BluetoothPayment extends Thread {
         // The connection attempt succeeded. Perform work associated with
         // the connection in a separate thread.
         // manageMyConnectedSocket(mmSocket);
+        System.out.println("Begin communication between store and phone");
+        BluetoothPaymentProcess process = new BluetoothPaymentProcess(mmSocket);
+        new Thread(process).start();
         System.out.println("connected");
+        process.write("test android bluetooth".getBytes());
+        try {
+            mmSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Closes the client socket and causes the thread to finish.

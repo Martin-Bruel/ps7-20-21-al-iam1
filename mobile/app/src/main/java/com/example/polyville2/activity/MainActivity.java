@@ -123,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
             CallActionDevice callActionDevice = new CallActionDevice((RemoteDevice)o, upnpService);
             // je charge les détails du magasin
             callActionDevice.getStoredevice(context);
-            System.out.println("is bt device in store ?");
         }
         // else detection bluetooth
         else{

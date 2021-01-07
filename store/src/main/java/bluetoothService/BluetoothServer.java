@@ -1,27 +1,26 @@
 package bluetoothService;
 
 import java.io.DataInputStream;
-import java.util.UUID;
+import java.io.DataOutputStream;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
-import javax.bluetooth.BluetoothStateException;
 import javax.bluetooth.DiscoveryAgent;
 import javax.bluetooth.LocalDevice;
+import javax.bluetooth.RemoteDevice;
+import javax.bluetooth.UUID;
 import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
 import javax.microedition.io.StreamConnectionNotifier;
 
+
+// d0c722b07e1511e1b0c40800200c9a66
 public class BluetoothServer extends Thread {
-    public String name = "StoreBTServer";
-    LocalDevice local = null;
-    StreamConnectionNotifier server = null;
-    StreamConnection conn = null;
+	/** Constructor */
+	public BluetoothServer() {
+	}
 
-    public BluetoothServer() throws BluetoothStateException {
-        System.out.println("Setting device to be discoverable...");
-        javax.bluetooth.LocalDevice.getLocalDevice().setDiscoverable(DiscoveryAgent.GIAC);
-    }
-
-    @Override
+	@Override
 	public void run() {
 		waitForConnection();
 	}
@@ -32,29 +31,44 @@ public class BluetoothServer extends Thread {
 		LocalDevice local = null;
 
 		StreamConnectionNotifier notifier;
-		StreamConnection connection = null;
-
+		
 		// setup the server to listen for connection
 		try {
 			local = LocalDevice.getLocalDevice();
 			local.setDiscoverable(DiscoveryAgent.GIAC);
 
-			javax.bluetooth.UUID uuid = new javax.bluetooth.UUID("d0c722b07e1511e1b0c40800200c9a66", false);
+			UUID uuid = new UUID("d0c722b07e1511e1b0c40800200c9a66", false);
 			System.out.println(uuid.toString());
 
-            String url = "btspp://localhost:" + uuid.toString() + ";name=RemoteBluetooth";
-            notifier = (StreamConnectionNotifier)Connector.open(url);
+			String url = "btspp://localhost:" + uuid.toString() + ";name=RemoteBluetooth";
+			notifier = (StreamConnectionNotifier) Connector.open(url);
 		} catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
+			e.printStackTrace();
+			return;
+		}
 
 		// waiting for connection
-		while(true) {
+		while (true) {
 			try {
-				System.out.println("waiting for connection...");
-	            connection = notifier.acceptAndOpen();
-	            System.out.println("\n\n\nAfter AcceptAndOpen...\n\n\n");
+				 System.out.println("waiting for connection...");
+				 // Wait for client connection
+				StreamConnection conn = notifier.acceptAndOpen();
+				// New client connection accepted; get a handle on it
+				RemoteDevice rd = RemoteDevice.getRemoteDevice(conn);
+				System.out.println("New client connection... " + rd.getFriendlyName(false));
+				// Read input message, in this example a String
+				System.out.println("Creating socket...");
+				DataInputStream dataIn = conn.openDataInputStream();
+				System.out.println("Socket opened.");
+				byte[] bytesReceived = new byte[1024];
+				dataIn.read(bytesReceived);
+				String s = new String(bytesReceived, StandardCharsets.UTF_8);
+				System.out.println("Data receive : " + s );
+				OutputStream dataOut = conn.openOutputStream();
+				byte[] bytesToSend = "OK".getBytes();
+				System.out.println("Sending data...");
+				dataOut.write(bytesToSend); 
+				System.out.println("Data send.");
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -63,3 +77,6 @@ public class BluetoothServer extends Thread {
 		}
 	}
 }
+
+
+
