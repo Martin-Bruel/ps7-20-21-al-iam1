@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.widget.Toast;
 
 import java.nio.charset.StandardCharsets;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+
+import com.example.polyville2.activity.BoutiqueActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -70,7 +73,8 @@ public class BluetoothPaymentProcess extends Thread implements Handler.Callback 
             mmOutStream.write(bytes);
             System.out.println("Receiving data...");
             numBytes = mmInStream.read(mmBuffer);
-            System.out.println("receive : " + new String(mmBuffer, 0, 2, StandardCharsets.UTF_8));
+            String result = new String(mmBuffer, 0, 2, StandardCharsets.UTF_8);
+            System.out.println("receive : " + result);
         } catch (IOException e) {
             System.out.println("Error occurred when sending data. Stack trace : " + e);
 

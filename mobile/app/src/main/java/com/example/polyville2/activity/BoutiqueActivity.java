@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,11 +30,6 @@ public class BoutiqueActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_boutique);
         Store store = (Store) getIntent().getSerializableExtra("store");
-
-        // try to connect with shop
-        Log.d("BLUETOOTH CONNECTION", "Beginnning to connect...");
-        BluetoothPayment payment = new BluetoothPayment(store.getMACaddress());
-        new Thread(payment).start();
 
         //TextView tvAddress = findViewById(R.id.tv_address);
         //tvAddress.setText(s.getAddress());
@@ -72,11 +68,15 @@ public class BoutiqueActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String price = priceEditor.getText().toString();
+
+                // try to connect with shop
+                Log.d("BLUETOOTH CONNECTION", "Beginnning to connect...");
+                BluetoothPayment payment = new BluetoothPayment(store.getMACaddress(), price);
+                payment.start();
                 // String to double : double priceDouble = Double.parseDouble(price);
                 //TODO : vérifier que le prix est inférieur à l'argent dans le porte-feuille
                 // if(price > porte-feuille) WARNING : not enough money
                 System.out.println("Price : " + price);
-                payment.sendData("hello there PAy");
             }
         });
 

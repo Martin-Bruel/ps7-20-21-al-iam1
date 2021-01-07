@@ -16,13 +16,15 @@ public class BluetoothPayment extends Thread {
     private BluetoothDevice mmDevice;
     private final String macAddress;
     public static int inProgress = 0;
+    private String data;
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 
-    public BluetoothPayment(String macAddress) {
+    public BluetoothPayment(String macAddress, String data) {
         // Use a temporary object that is later assigned to mmSocket
         // because mmSocket is final.
         this.macAddress = macAddress;
+        this.data = data;
         // mmDevice = device;
         // mmSocket = tmp;
     }
@@ -64,7 +66,7 @@ public class BluetoothPayment extends Thread {
                 }
                 return;
             }
-            sendData("hello there");
+            sendData(data);
             // The connection attempt succeeded. Perform work associated with
             // the connection in a separate thread.
             // sendData("none");
@@ -107,16 +109,13 @@ public class BluetoothPayment extends Thread {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public int sendData(String data){
-        if(inProgress == 0){
-            inProgress = 1;
-            System.out.println("Begin communication between store and phone");
-            BluetoothPaymentProcess process = new BluetoothPaymentProcess(mmSocket);
-            new Thread(process).start();
-            System.out.println("connected");
-            process.write(data.getBytes());
-            return 0;
-        }
-        return -1;
+
+        System.out.println("Begin communication between store and phone");
+        BluetoothPaymentProcess process = new BluetoothPaymentProcess(mmSocket);
+        process.start();
+        System.out.println("connected");
+        process.write(data.getBytes());
+        return 0;
     }
 
 }
