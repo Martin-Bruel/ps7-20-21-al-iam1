@@ -12,67 +12,63 @@ import java.math.BigInteger;
 import java.util.UUID;
 
 public class BluetoothPayment extends Thread {
-    private final BluetoothSocket mmSocket;
-    private final BluetoothDevice mmDevice;
+    private BluetoothSocket mmSocket;
+    private BluetoothDevice mmDevice;
+    private final String macAddress;
+    public static int inProgress = 0;
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 
-    public BluetoothPayment(BluetoothDevice device) {
+    public BluetoothPayment(String macAddress) {
         // Use a temporary object that is later assigned to mmSocket
         // because mmSocket is final.
-        BluetoothSocket tmp = null;
-        mmDevice = device;
-
-        try {
-            // Get a BluetoothSocket to connect with the given BluetoothDevice.
-            // MY_UUID is the app's UUID string, also used in the server code.
-            String uuidString = "d0c722b07e1511e1b0c40800200c9a66";
-            UUID uuid = new UUID(
-                    new BigInteger(uuidString.substring(0, 16), 16).longValue(),
-                    new BigInteger(uuidString.substring(16), 16).longValue());
-            System.out.println(uuid.toString());
-            tmp = device.createRfcommSocketToServiceRecord(uuid);
-        } catch (IOException e) {
-            System.out.println("Socket's create() method failed. Stack trace:" + e);
-        }
-        mmSocket = tmp;
+        this.macAddress = macAddress;
+        // mmDevice = device;
+        // mmSocket = tmp;
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void run() {
-        // Cancel discovery because it otherwise slows down the connection.
-        bluetoothAdapter.cancelDiscovery();
-        try {
-            // Connect to the remote device through the socket. This call blocks
-            // until it succeeds or throws an exception.
-            System.out.println("Connecting to bluetooth store...");
-            mmSocket.connect();
-            System.out.println("Connected to store bluetooth ! Sleep 5 sec while server connecting...");
-            Thread.sleep(5000);
-        } catch (IOException | InterruptedException connectException) {
-            // Unable to connect; close the socket and return.
-            try {
-                System.out.println("Problem while connecting. Closing socket...");
-                mmSocket.close();
-                System.out.println("Socket closed.");
-            } catch (IOException closeException) {
-                System.out.println("Could not close the client socket. Stack trace: "+closeException);
-            }
-            return;
-        }
+        while(true) {
+            // ---------- GET DEVICE FROM MAC ADDRESS ------------ //
+            BluetoothDevice device = getDevice();
+            mmDevice = device;
 
-        // The connection attempt succeeded. Perform work associated with
-        // the connection in a separate thread.
-        // manageMyConnectedSocket(mmSocket);
-        System.out.println("Begin communication between store and phone");
-        BluetoothPaymentProcess process = new BluetoothPaymentProcess(mmSocket);
-        new Thread(process).start();
-        System.out.println("connected");
-        process.write("test android bluetooth".getBytes());
-        try {
-            mmSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            // --------- SOCKET CREATION ------------------------ //
+            try {
+                mmSocket = socketCreation(mmDevice);
+            } catch (IOException e) {
+                System.out.println("Can't connect to socket...");
+                e.printStackTrace();
+            }
+            // ------------ CONNECTION TO REMOTE DEVICE ---------------- //
+
+            // Cancel discovery because it otherwise slows down the connection.
+            bluetoothAdapter.cancelDiscovery();
+            try {
+                // Connect to the remote device through the socket. This call blocks
+                // until it succeeds or throws an exception.
+                System.out.println("Connecting to bluetooth store...");
+                mmSocket.connect();
+                System.out.println("Connected to store bluetooth ! Sleep 5 sec while server connecting...");
+                Thread.sleep(5000);
+            } catch (IOException | InterruptedException connectException) {
+                // Unable to connect; close the socket and return.
+                try {
+                    System.out.println("Problem while connecting. Closing socket...");
+                    mmSocket.close();
+                    System.out.println("Socket closed.");
+                } catch (IOException closeException) {
+                    System.out.println("Could not close the client socket. Stack trace: " + closeException);
+                }
+                return;
+            }
+            sendData("hello there");
+            // The connection attempt succeeded. Perform work associated with
+            // the connection in a separate thread.
+            // sendData("none");
+
         }
     }
 
@@ -83,6 +79,44 @@ public class BluetoothPayment extends Thread {
         } catch (IOException e) {
             System.out.println("Could not close the client socket. Stack trace: "+e);
         }
+    }
+
+    private BluetoothDevice getDevice(){
+        BluetoothDevice device = null;
+        while(device == null){
+            device = BluetoothManager.getDevice(this.macAddress);
+            try{
+                Thread.sleep(500);
+            } catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+        return device;
+    }
+
+    private BluetoothSocket socketCreation(BluetoothDevice device) throws IOException {
+        BluetoothSocket tmp = null;
+        String uuidString = "d0c722b07e1511e1b0c40800200c9a66";
+        UUID uuid = new UUID(
+                new BigInteger(uuidString.substring(0, 16), 16).longValue(),
+                new BigInteger(uuidString.substring(16), 16).longValue());
+        System.out.println(uuid.toString());
+        tmp = device.createRfcommSocketToServiceRecord(uuid);
+        return tmp;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public int sendData(String data){
+        if(inProgress == 0){
+            inProgress = 1;
+            System.out.println("Begin communication between store and phone");
+            BluetoothPaymentProcess process = new BluetoothPaymentProcess(mmSocket);
+            new Thread(process).start();
+            System.out.println("connected");
+            process.write(data.getBytes());
+            return 0;
+        }
+        return -1;
     }
 
 }

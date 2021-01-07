@@ -6,20 +6,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import com.example.polyville2.activity.MainActivity;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Base64;
 
 public class BluetoothPaymentProcess extends Thread implements Handler.Callback {
     private final BluetoothSocket mmSocket;
@@ -65,27 +60,6 @@ public class BluetoothPaymentProcess extends Thread implements Handler.Callback 
         mmOutStream = tmpOut;
     }
 
-    public void run() {
-        mmBuffer = new byte[1024];
-        int numBytes; // bytes returned from read()
-//
-//        // Keep listening to the InputStream until an exception occurs.
-//        while (true) {
-//            try {
-//                // Read from the InputStream.
-//                // numBytes = mmInStream.read(mmBuffer);
-//                // Send the obtained bytes to the UI activity.
-////                Message readMsg = handler.obtainMessage(
-////                        MessageConstants.MESSAGE_READ, numBytes, -1,
-////                        mmBuffer);
-////                readMsg.sendToTarget();
-//            } catch (IOException e) {
-//                System.out.println("Input stream was disconnected. Stack trace : " + e);
-//                break;
-//            }
-//        }
-    }
-
     // Call this from the main activity to send data to the remote device.
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void write(byte[] bytes) {
@@ -96,13 +70,7 @@ public class BluetoothPaymentProcess extends Thread implements Handler.Callback 
             mmOutStream.write(bytes);
             System.out.println("Receiving data...");
             numBytes = mmInStream.read(mmBuffer);
-            System.out.println("receive : " + new String(mmBuffer, StandardCharsets.UTF_8));
-
-//            // Share the sent message with the UI activity.
-//            Message writtenMsg = handler.obtainMessage(
-//                    MessageConstants.MESSAGE_WRITE, -1, -1, bytes);
-//            writtenMsg.sendToTarget();
-            // Thread.sleep(5000);
+            System.out.println("receive : " + new String(mmBuffer, 0, 2, StandardCharsets.UTF_8));
         } catch (IOException e) {
             System.out.println("Error occurred when sending data. Stack trace : " + e);
 
