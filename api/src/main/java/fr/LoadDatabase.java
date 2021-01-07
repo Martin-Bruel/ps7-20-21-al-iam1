@@ -2,10 +2,13 @@ package fr;
 
 import fr.model.account.Account;
 import fr.model.account.AccountRepository;
+import fr.model.account.Currency;
+import fr.model.account.CurrencyRepository;
 import fr.model.store.Store;
 import fr.model.store.StoreRepository;
 import fr.model.traffic.Traffic;
 import fr.model.traffic.TrafficRepository;
+import fr.model.transaction.TransactionRepository;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.boot.CommandLineRunner;
@@ -14,6 +17,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Configuration
 @ComponentScan("fr.model.traffic")
@@ -23,7 +27,7 @@ public class LoadDatabase {
     private final LocalDate date = LocalDate.now();
 
     @Bean
-    CommandLineRunner initDatabase(TrafficRepository trafficRepository, StoreRepository storeRepository,AccountRepository accountRepository) {
+    CommandLineRunner initDatabase(TrafficRepository trafficRepository, StoreRepository storeRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, CurrencyRepository currencyRepository) {
 
         return args -> {
 
@@ -46,8 +50,10 @@ public class LoadDatabase {
             
 
             log.info("Preloading " + accountRepository.save(new Account("user1","Coffee and Shop")));
-            log.info("Preloading " + accountRepository.save(new Account("user2","admin")));
 
+            Account user1 = new Account("user2","admin");
+            user1.creditBalance(4, "POLYCOIN");
+            log.info("Preloading " + accountRepository.save(user1));
         };
     }
 }

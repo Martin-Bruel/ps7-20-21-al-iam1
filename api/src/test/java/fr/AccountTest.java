@@ -82,7 +82,7 @@ class AccountTest {
         accountApi.createAccount(username, password);
         assertEquals(accountApi.getBalanceAccount(username, password), 0);
         double amountToAdd = 30;
-        assertEquals(accountApi.incrementBalanceAccount(amountToAdd, username, password), amountToAdd);       
+        assertEquals(accountApi.incrementBalanceAccount(amountToAdd, username, password, "POLYCOIN"), amountToAdd);
     }
 
 }
