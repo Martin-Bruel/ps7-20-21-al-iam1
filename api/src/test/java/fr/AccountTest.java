@@ -72,7 +72,7 @@ class AccountTest {
 
     @Test
     public void connectionFailed(){
-        assertEquals(accountApi.connection("doesntexist","nopaswd"), null);
+        assertEquals(accountApi.connection("doesntexist","nopaswd"), -1);
     }
 
     @Test
