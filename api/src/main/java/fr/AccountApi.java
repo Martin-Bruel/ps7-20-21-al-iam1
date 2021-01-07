@@ -112,7 +112,7 @@ public class AccountApi {
 	 * return the new amount
 	 */
 	@PostMapping("/balanceIncrement")
-	double incrementBalanceAccount(@RequestParam("amout") double amountToAdd, @RequestParam("currencyType") String currencyType, @RequestParam("username") String username,@RequestParam("password")String password){
+	double incrementBalanceAccount(@RequestParam("amount") double amountToAdd, @RequestParam("currencyType") String currencyType, @RequestParam("username") String username,@RequestParam("password")String password){
 		System.out.println(username+" increments balance bt "+amountToAdd);
 		Optional<Account> opt = accountRepository.findAll().stream().filter((account) -> account.getUsername().equals(username) && account.isGoodPasword(password)).findFirst();
         if (opt.isEmpty()) {
