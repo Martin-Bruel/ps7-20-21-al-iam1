@@ -30,5 +30,6 @@
     <string name="preference_file_key">user</string>
     <string name="userToken">token</string>
     <string name="badIdentifiant">no match with this password and mail</string>
+    <string name="password">password</string>
 
 </resources>

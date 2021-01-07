@@ -53,6 +53,7 @@ public class LoadDatabase {
 
             Account user1 = new Account("user2","admin");
             user1.creditBalance(4, "POLYCOIN");
+            user1.creditBalance(10, "OUI");
             log.info("Preloading " + accountRepository.save(user1));
         };
     }
