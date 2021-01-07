@@ -9,12 +9,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -136,10 +136,21 @@ public class MainActivity extends AppCompatActivity implements Observer {
                 Store s = linkIOTAndStore.get(macOfDevice.get(mac));
                 CallActionDevice callActionDevice = new CallActionDevice(d, upnpService);
                 callActionDevice.getContextPublicationsOfDevice(context, s);
+                if (isConnected()) //TODO recup monnaies du compte
+                    //checkAndNotifyCommonCurrencies(s.getName(),s.getLocalCurrencies(), account.getLocalCurrencies());
                 scanner.getBluetoothManager().knownDevices.add(mac);
                 System.out.println(mac + " is known.");
             }
         }
+    }
+
+    public boolean isConnected(){
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String token = sharedPref.getString(getString(R.string.userToken),"");
+        if(!token.equals("")){
+            return true;
+        }
+        else return false;
     }
 
     public void addStore(Store s,RemoteDevice remoteDevice){
@@ -181,5 +192,26 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
     public void notifyPublication(Publication pub){
         publicaitonNotification.sendNotificaiton(pub.getTitle(), pub.getDescription());
+    }
+
+    public void checkAndNotifyCommonCurrencies(String storeName, List<CurrencyType> storeCurrencies, List<CurrencyType> accountCurrencies){
+        List<CurrencyType> commonCurrencies = new ArrayList<>();
+        for (CurrencyType c:storeCurrencies){
+            if(accountCurrencies.contains(c));
+            commonCurrencies.add(c);
+        }
+        if(commonCurrencies.size()>0){
+            String description = "This store accept your local currency.\n";
+            for (int i =0;i<commonCurrencies.size();i++){
+                if (i==commonCurrencies.size()-1){
+                    if(i!=0)description += "and ";
+                    description += commonCurrencies.get(i).toString()+".";
+                }
+                else
+                    description += commonCurrencies.get(i).toString()+", ";
+            }
+            publicaitonNotification.sendNotificaiton(storeName, description);
+        }
+
     }
 }
