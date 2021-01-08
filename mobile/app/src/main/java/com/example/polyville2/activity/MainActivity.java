@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.polyville2.model.Account;
+import com.example.polyville2.model.Currency;
 import com.example.polyville2.model.CurrencyType;
 import com.example.polyville2.model.Publication;
 import com.example.polyville2.model.Store;
@@ -27,12 +29,14 @@ import com.example.polyville2.service.BluetoothService;
 import com.example.polyville2.upnp.CallActionDevice;
 import com.example.polyville2.upnp.DiscoveryDevice;
 import com.example.polyville2.R;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 
 import org.fourthline.cling.android.AndroidUpnpService;
 import org.fourthline.cling.android.AndroidUpnpServiceImpl;
 import org.fourthline.cling.model.meta.RemoteDevice;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
     private Context context=this;
     private PublicaitonNotification publicaitonNotification;
     private BluetoothScanner scanner;
+    SharedPreferences sharedPref;
 
     public AndroidUpnpService getUpnpService() {
         return upnpService;
@@ -157,8 +162,21 @@ public class MainActivity extends AppCompatActivity implements Observer {
                 callActionDevice.getContextPublicationsOfDevice(context, s);
                 scanner.getBluetoothManager().knownDevices.add(mac);
                 System.out.println(mac + " is known.");
-                //if (isConnected()) //TODO recup monnaies du compte
-                    //checkAndNotifyCommonCurrencies(s.getName(),s.getLocalCurrencies(), account.getLocalCurrencies());
+                if (isConnected()) {
+                    sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                    String token = sharedPref.getString(getString(R.string.userToken), "");
+                    String password = sharedPref.getString(getString(R.string.password), "");
+                    if (!token.equals("")) {
+                        ObjectMapper mapper = new ObjectMapper();
+                        try {
+                            Account account = mapper.readValue(token, Account.class);
+                            checkAndNotifyCommonCurrencies(s.getName(), s.getLocalCurrencies(), account.getCurrencies());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
             }
         }
     }
@@ -221,11 +239,14 @@ public class MainActivity extends AppCompatActivity implements Observer {
         publicaitonNotification.sendNotificaiton(pub.getTitle(), pub.getDescription());
     }
 
-    public void checkAndNotifyCommonCurrencies(String storeName, List<CurrencyType> storeCurrencies, List<CurrencyType> accountCurrencies){
+    public void checkAndNotifyCommonCurrencies(String storeName, List<CurrencyType> storeCurrencies, List<Currency> accountCurrencies){
         List<CurrencyType> commonCurrencies = new ArrayList<>();
         for (CurrencyType c:storeCurrencies){
-            if(accountCurrencies.contains(c));
-            commonCurrencies.add(c);
+            for(Currency c2:accountCurrencies){
+                if (c.toString().equals(c2.getType())){
+                    commonCurrencies.add(c);
+                }
+            }
         }
         if(commonCurrencies.size()>0){
             String description = "This store accept your local currency.\n";
