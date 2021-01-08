@@ -80,7 +80,7 @@ public class BluetoothServer extends Thread {
 				System.out.println("Data send.");
 
 				String[] data = s.split(",");
-				updateAmountApi(data[1], data[0]);
+				updateAmountApi(data[1], data[0], data[2]);
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -89,12 +89,12 @@ public class BluetoothServer extends Thread {
 		}
 	}
 
-	public void updateAmountApi(String userId, String amount){
+	public void updateAmountApi(String userId, String amount, String currency){
 
 		String json = "{\n" +
 				"  \"accountId\": "+ userId + ",\n" +
 				"  \"amount\": " + amount + ",\n" +
-				"  \"currencyType\": \"POLYCOIN\",\n" +
+				"  \"currencyType\": \""+currency+"\",\n" +
 				"  \"date\": \"" + LocalDate.now().toString() + "\",\n" +
 				"  \"storeId\": " + Server.store.getId() + "\n" +
 				"}";

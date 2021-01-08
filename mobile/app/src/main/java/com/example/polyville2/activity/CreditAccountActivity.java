@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ShareActionProvider;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import com.example.polyville2.R;
 import com.example.polyville2.api.PolyvilleAPI;
 import com.example.polyville2.model.Account;
@@ -33,7 +35,7 @@ public class CreditAccountActivity extends AppCompatActivity {
 
         EditText amountTv = findViewById(R.id.edit_text_credit_account);
         Spinner spinner = findViewById(R.id.spinner);
-        List<String> coins= List.of("POLYCOIN","SICOIN") ;
+        List<String> coins= List.of("POLYCOIN","SICOIN", "BIOT MONEY") ;
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item,coins);
         spinner.setAdapter(adapter);
         spinner.setSelection(0);
@@ -54,11 +56,9 @@ public class CreditAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String amount = amountTv.getText().toString();//Integer.parseInt(amountTv.getText().toString());
-                //System.out.println(amountTv.getText().toString());
-                if(spinner.getPrompt()==null)
-                    callApi(amount,"POLYCOIN");
-                else
-                    callApi(amount,spinner.getPrompt().toString());
+                Toast.makeText(getApplicationContext(), "Your balance account is update.", Toast.LENGTH_LONG).show();
+                callApi(amount,spinner.getSelectedItem().toString());
+                finish();
             }
         });
     }

@@ -76,6 +76,14 @@ public class Account {
         }
     }
 
+    public boolean canPay(double price, String currency){
+
+        for (Currency c: currencies) {
+            if(c.getType().equals(currency) && price <= c.getBalance()) return true;
+        }
+        return false;
+    }
+
 }
 
 

@@ -51,9 +51,9 @@ public class LoadDatabase {
 
             log.info("Preloading " + accountRepository.save(new Account("user1","Coffee and Shop")));
 
-            Account user1 = new Account("user2","admin");
-            user1.creditBalance(4, "POLYCOIN");
-            user1.creditBalance(10, "OUI");
+            Account user1 = new Account("martin","12345");
+            user1.creditBalance(50, "POLYCOIN");
+            user1.creditBalance(20, "BIOT MONEY");
             log.info("Preloading " + accountRepository.save(user1));
         };
     }
