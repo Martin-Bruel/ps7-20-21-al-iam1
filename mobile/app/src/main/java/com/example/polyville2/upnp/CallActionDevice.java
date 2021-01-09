@@ -21,6 +21,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+/**
+ * classe qui permet les appels UPNP
+ */
 public class CallActionDevice {
     public final int STOREPOS = 2;
     public final int MACPOS=0;
@@ -35,6 +38,11 @@ public class CallActionDevice {
         this.device=device;
         this.upnpservice=upnpservice;
     }
+
+    /**
+     * Appelle la méthode en UPNP qui rajoute tous les details au store
+     * @param context
+     */
     public void getStoredevice(final Context context){
         Service service = device.getServices()[0];
         Action statusAction = service.getActions()[STOREPOS];
@@ -46,7 +54,9 @@ public class CallActionDevice {
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.registerModule(new JavaTimeModule());
                 try {
+                    // récupère le store
                     Store s = mapper.readValue((String)invocation.getOutput()[0].getValue(),Store.class);
+                    // récupère les produits du store
                     getProductsOfDevice(context,s);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -61,6 +71,11 @@ public class CallActionDevice {
         upnpservice.getControlPoint().execute(callback);
     }
 
+    /**
+     * Récupère les produits du store
+     * @param context
+     * @param store
+     */
     public void getProductsOfDevice(final Context context, final Store store){
         Service service = device.getServices()[0];
         Action statusAction = service.getActions()[PRODUCTPOS];
@@ -89,6 +104,11 @@ public class CallActionDevice {
         upnpservice.getControlPoint().execute(callback);
     }
 
+    /**
+     * Récupère les publications du store
+     * @param context
+     * @param store
+     */
     public void getPublicationsOfDevice(final Context context, final Store store){
         Service service = device.getServices()[0];
         Action statusAction = service.getActions()[PUBLICATIONPOS];
@@ -104,6 +124,8 @@ public class CallActionDevice {
                         store.addPublication(p);
                     }
                     ((MainActivity)context).addStore(store,device);
+                    // on récupère l'adresse MAC d'un store dès qu'on le détecte
+                    getMACOfDevice(context);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -117,7 +139,10 @@ public class CallActionDevice {
         upnpservice.getControlPoint().execute(callback);
     }
 
-
+    /**
+     * L'adresse MAC du device visible en UPNP
+     * @param context
+     */
     public void getMACOfDevice(final Context context){
         Service service = device.getServices()[0];
         Action statusAction = service.getActions()[MACPOS];
@@ -137,7 +162,11 @@ public class CallActionDevice {
         upnpservice.getControlPoint().execute(callback);
     }
 
-
+    /**
+     * A chaque fois que je récupère une context publication je crée une notification
+     * @param context
+     * @param store
+     */
     public void getContextPublicationsOfDevice(final Context context, final Store store){
         Service service = device.getServices()[0];
         Action statusAction = service.getActions()[CONTEXTPUBPOS];
@@ -149,6 +178,7 @@ public class CallActionDevice {
                 ObjectMapper mapper = new ObjectMapper();
                 try {
                     Publication[] publications = mapper.readValue((String)invocation.getOutput()[0].getValue(),Publication[].class);
+                    // notifie pour chaque publication
                     for(Publication p:publications) {
                         ((MainActivity)context).notifyPublication(p);
                     }

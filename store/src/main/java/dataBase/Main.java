@@ -20,7 +20,13 @@ public class Main {
 		OpenWeatherAPI api = new OpenWeatherAPI("metric");
 		Store shop = new Shop(0, "Coffee and Shop", address, null, null, null, null, api);
 	
-		shop.addProduct(new Item("item1", 13));
+		shop.addProduct(new Item("Umbrella", 20));
+		shop.addProduct(new Item("K-way", 35));
+		shop.addProduct(new Item("Sunglasses", 15));
+		shop.addProduct(new Item("Hat", 5));
+		shop.addProduct(new Item("Beer", 2));
+		shop.addProduct(new Item("Coffee", 0.5F));
+		shop.addProduct(new Item("Tea", 0.6F));
 
 		Publication p1 = new Publication("Umbrella sales","It's raining. If you need an umbrella you can visit our shop.",null);
 		p1.addLabel(Label.RAIN);
@@ -47,6 +53,7 @@ public class Main {
 		OpeningHours openingHours=new OpeningHours(hours,hours,hours,hours,hours,hours,hours);
 		shop.setOpeningHours(openingHours);
 		shop.addCurrency(Currency.POLYCOIN);
+		shop.addCurrency(Currency.SICOIN);
 		shop.makeJSON();
 	}
 }

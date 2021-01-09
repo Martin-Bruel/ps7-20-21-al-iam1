@@ -1,27 +1,22 @@
 package com.example.polyville2.model;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import android.bluetooth.BluetoothDevice;
 import android.os.Parcelable;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -31,16 +26,28 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({ @JsonSubTypes.Type(value = Shop.class, name = "shop"), })
 @JsonTypeName("store")
+@JsonIgnoreProperties({"MACaddress", "bluetoothDevice"})
 public abstract class Store implements Serializable{
 	int id;
 	String name;
 	List<Double> address;
-	List<Currency> localCurrencies;
+	List<CurrencyType> localCurrencies;
 	protected List<Product> products;
 	OpeningHours openingHours;
 	List<Publication> allPublications;
 	List<Publication> contextPublications;
 	protected List<Label> weather;
+	@JsonIgnore
+	String MACaddress;
+
+
+	public String getMACaddress(){
+		return this.MACaddress;
+	}
+
+	public void setMACaddress(String MACaddress) {
+		this.MACaddress = MACaddress;
+	}
 
 	public List<Double> getAddress() {
 		return this.address;
@@ -83,15 +90,15 @@ public abstract class Store implements Serializable{
 		}
 	}
 
-	public List<Currency> getLocalCurrencies(){
+	public List<CurrencyType> getLocalCurrencies(){
 		return localCurrencies;
 	}
 
-	public void addCurrency(Currency currency){
+	public void addCurrency(CurrencyType currency){
 		localCurrencies.add(currency);
 	}
 
-	public void setLocalCurrencies(List<Currency> currencies){
+	public void setLocalCurrencies(List<CurrencyType> currencies){
 		localCurrencies=currencies;
 	}
 

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/button__account_creation_validate"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AccountCreationActivity">
+
+    <EditText
+        android:id="@+id/editText_account_creation_mail"
+        android:layout_width="206dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_create_account" />
+
+    <TextView
+        android:id="@+id/tv_account_creation_confirm_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="confirm password:"
+        app:layout_constraintBottom_toTopOf="@+id/editText_account_creation_confirm_password"
+        app:layout_constraintStart_toStartOf="@+id/editText_account_creation_confirm_password" />
+
+    <EditText
+        android:id="@+id/editText_account_creation_confirm_password"
+        android:layout_width="206dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:ems="10"
+        android:password="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_account_creation_password" />
+
+    <TextView
+        android:id="@+id/tv_account_creation_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="password:"
+        app:layout_constraintBottom_toTopOf="@+id/editText_account_creation_password"
+        app:layout_constraintStart_toStartOf="@+id/editText_account_creation_password" />
+
+    <TextView
+        android:id="@+id/tv_create_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Create your Polyville account"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_account_creation_password"
+        android:layout_width="206dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:password="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_account_creation_mail" />
+
+    <TextView
+        android:id="@+id/tv_account_creation_mail_adress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="mail adress:"
+        app:layout_constraintBottom_toTopOf="@+id/editText_account_creation_mail"
+        app:layout_constraintStart_toStartOf="@+id/editText_account_creation_mail" />
+
+    <Button
+        android:id="@+id/button_creation_account_validate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="validate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_account_creation_confirm_password" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

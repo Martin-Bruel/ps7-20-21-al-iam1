@@ -5,8 +5,32 @@
   "address" : [ 43.61563752169879, 7.071778197708522 ],
   "products" : [ {
     "type" : "item",
-    "name" : "item1",
-    "price" : 13.0
+    "name" : "Umbrella",
+    "price" : 20.0
+  }, {
+    "type" : "item",
+    "name" : "K-way",
+    "price" : 35.0
+  }, {
+    "type" : "item",
+    "name" : "Sunglasses",
+    "price" : 15.0
+  }, {
+    "type" : "item",
+    "name" : "Hat",
+    "price" : 5.0
+  }, {
+    "type" : "item",
+    "name" : "Beer",
+    "price" : 2.0
+  }, {
+    "type" : "item",
+    "name" : "Coffee",
+    "price" : 0.5
+  }, {
+    "type" : "item",
+    "name" : "Tea",
+    "price" : 0.6
   } ],
   "openingHours" : {
     "type" : "openingHours",
@@ -50,5 +74,5 @@
     "labels" : [ "CLOUDS" ],
     "description" : " Come buy an umbrella to our shop before the rain ! "
   } ],
-  "localCurrencies" : [ "POLYCOIN" ]
+  "localCurrencies" : [ "POLYCOIN", "SICOIN" ]
 }

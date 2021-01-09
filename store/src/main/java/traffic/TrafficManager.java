@@ -94,7 +94,7 @@ public class TrafficManager {
                 "    \"store\": \""+Server.store.getName()+"\"\n" +
                 "}";
 
-        return restClient.sendRequest("POST", json);
+        return restClient.sendRequest("POST", json, "/traffic/");
     }
 
 

@@ -19,10 +19,6 @@ public class Item extends Product{
 		this.name = name;
 	}
 
-	//public Item(String name,float price) {
-	//	this.price=price;
-	//	this.name=name;
-	//}
 	public float getPrice(){
 		return price;
 	}

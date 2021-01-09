@@ -1,5 +1,7 @@
 package model;
 
 public enum Currency {
-    POLYCOIN
+    POLYCOIN,
+    SICOIN,
+    BIOT_MONEY
 }

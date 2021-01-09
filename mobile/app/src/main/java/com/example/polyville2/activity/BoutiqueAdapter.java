@@ -1,5 +1,6 @@
 package com.example.polyville2.activity;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -18,10 +19,13 @@ import java.util.List;
 public class BoutiqueAdapter extends BaseAdapter{
     private List<Store> stores;
     private Context context;
+
     public BoutiqueAdapter(List<Store>stores,Context context){
-        this.context=context;
-        this.stores=stores;
+        this.context = context;
+        this.stores = stores;
     }
+
+
     @Override
     public int getCount() {
         return stores.size();
@@ -55,4 +59,5 @@ public class BoutiqueAdapter extends BaseAdapter{
         });
         return view;
     }
+
 }
