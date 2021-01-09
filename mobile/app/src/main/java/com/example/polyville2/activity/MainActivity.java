@@ -165,7 +165,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
                 if (isConnected()) {
                     sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
                     String token = sharedPref.getString(getString(R.string.userToken), "");
-                    String password = sharedPref.getString(getString(R.string.password), "");
                     if (!token.equals("")) {
                         ObjectMapper mapper = new ObjectMapper();
                         try {
@@ -251,6 +250,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         if(commonCurrencies.size()>0){
             String description = "This store accept your local currency.\n";
             for (int i =0;i<commonCurrencies.size();i++){
+                System.out.println(commonCurrencies.get(i));
                 if (i==commonCurrencies.size()-1){
                     if(i!=0)description += "and ";
                     description += commonCurrencies.get(i).toString()+".";

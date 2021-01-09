@@ -53,7 +53,7 @@ public class LoadDatabase {
 
             Account user1 = new Account("martin","12345");
             user1.creditBalance(50, "POLYCOIN");
-            user1.creditBalance(20, "BIOT MONEY");
+            user1.creditBalance(20, "BIOT_MONEY");
             log.info("Preloading " + accountRepository.save(user1));
         };
     }

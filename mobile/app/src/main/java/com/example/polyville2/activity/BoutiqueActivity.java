@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BoutiqueActivity extends AppCompatActivity {
@@ -73,9 +74,14 @@ public class BoutiqueActivity extends AppCompatActivity {
             tv_currencies.setText(acceptedCurrencies);
         }
 
-
         Spinner spinner = findViewById(R.id.spinner2);
-        List<String> coins= List.of("POLYCOIN","SICOIN", "BIOT MONEY") ;
+
+
+
+        List<String> coins= new ArrayList<>();
+        for (CurrencyType c: store.getLocalCurrencies()) {
+            coins.add(c.name());
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item,coins);
         spinner.setAdapter(adapter);
         spinner.setSelection(0);

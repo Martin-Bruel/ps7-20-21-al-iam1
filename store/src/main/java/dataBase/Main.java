@@ -53,6 +53,7 @@ public class Main {
 		OpeningHours openingHours=new OpeningHours(hours,hours,hours,hours,hours,hours,hours);
 		shop.setOpeningHours(openingHours);
 		shop.addCurrency(Currency.POLYCOIN);
+		shop.addCurrency(Currency.SICOIN);
 		shop.makeJSON();
 	}
 }

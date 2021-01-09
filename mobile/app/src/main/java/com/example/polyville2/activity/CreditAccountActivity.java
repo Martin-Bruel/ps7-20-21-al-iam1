@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.example.polyville2.R;
 import com.example.polyville2.api.PolyvilleAPI;
 import com.example.polyville2.model.Account;
+import com.example.polyville2.model.Currency;
+import com.example.polyville2.model.CurrencyType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
@@ -24,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreditAccountActivity extends AppCompatActivity {
@@ -35,7 +38,8 @@ public class CreditAccountActivity extends AppCompatActivity {
 
         EditText amountTv = findViewById(R.id.edit_text_credit_account);
         Spinner spinner = findViewById(R.id.spinner);
-        List<String> coins= List.of("POLYCOIN","SICOIN", "BIOT MONEY") ;
+        List<String> coins= new ArrayList<>();
+        for (CurrencyType c: CurrencyType.values()) coins.add(c.toString());
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item,coins);
         spinner.setAdapter(adapter);
         spinner.setSelection(0);
