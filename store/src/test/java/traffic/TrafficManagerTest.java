@@ -16,7 +16,7 @@ class TrafficManagerTest {
     void addNewClient() throws IOException {
 
         RESTClient restClientMock = mock(RESTClient.class);
-        when(restClientMock.sendRequest(anyString(), anyString())).thenReturn(true);
+        when(restClientMock.sendRequest(anyString(), anyString(), anyString())).thenReturn(true);
 
         TrafficManager trafficManager = new TrafficManager(Clock.systemUTC(), restClientMock);
         assertTrue(trafficManager.addNewClient("1"));

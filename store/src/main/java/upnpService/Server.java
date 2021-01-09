@@ -1,6 +1,7 @@
 package upnpService;
 
 import model.Store;
+import bluetoothService.BluetoothServer;
 import org.fourthline.cling.UpnpService;
 import org.fourthline.cling.UpnpServiceImpl;
 import org.fourthline.cling.binding.LocalServiceBindingException;
@@ -14,7 +15,6 @@ import org.fourthline.cling.model.types.UDN;
 import dataBase.JsonReader;
 
 import javax.bluetooth.BluetoothStateException;
-import javax.bluetooth.DiscoveryAgent;
 
 public class Server {
 
@@ -31,7 +31,9 @@ public class Server {
      */
     public void startServer() throws ValidationException, BluetoothStateException {
 
-        javax.bluetooth.LocalDevice.getLocalDevice().setDiscoverable(DiscoveryAgent.GIAC);
+        BluetoothServer btServ = new BluetoothServer();
+        new Thread(btServ).start();
+       // javax.bluetooth.LocalDevice.getLocalDevice().setDiscoverable(DiscoveryAgent.GIAC);
         //Creation d'un service UPNP
         final UpnpService upnpService = new UpnpServiceImpl();
         Runtime.getRuntime().addShutdownHook(new Thread() {

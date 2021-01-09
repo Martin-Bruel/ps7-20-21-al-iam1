@@ -32,9 +32,9 @@
 
 
 ## A propos du projet
-Notre projet est un système de découverte de points d’intérêts (commerces, musées, cinéma, plage, etc…) et les personnes qui se trouvent autour de cet endroit.
+Notre projet est un système de découverte de points d’intérêts (commerces, musées, cinéma, plage, etc…).
 Les utilisateurs peuvent connaître les points d’intérêt connectés sur le même réseau qu'eux grâce à une application mobile. Ils peuvent aussi recevoir des notifications lorsqu'ils sont à proximité de ces points d'intérêt. Ces notifications correspondent au contexte actuel (météo, horaires d'ouverture...). 
-Une API est également mise à disposition afin de connaitre l'affluence des magasins en fonction des jours.
+Une API est également mise à disposition afin de connaitre l'affluence des magasins en fonction des jours. Nous mettons également à disposition un système de monnaies locales permettant ainsi de soutenir les commerces locaux. Les visiteurs peuvent créditer leur compte en monnaies locales directement depuis l’application mobile et payer en magasin  de façon sécuriser avec le Bluetooth.
 
 ## Installation
 Téléchargez la dernière version depuis la liste des [releases ](https://github.com/PNS-PS7and8/ps7-20-21-al-iam1/releases).
@@ -69,6 +69,7 @@ cd api
 docker build -t ps7-20-21-al-iam1/api .
 docker run -it -p 8080:8080 ps7-20-21-al-iam1/api
 ```
+
 
 Après avoir lancé l'API, vous pouvez vous rendre sur ce [lien](#http://localhost:8080/swagger-ui/index.html) pour accéder à la **documentation**.
 
@@ -127,6 +128,7 @@ Afin de bien organiser le projet chaque nouvelle fonctionnalité doit respecter 
 	-   Un tag Moscow
 
 2. Création d'une branche depuis **develop**. Cette branche doit se nommer **feature/\<nomDeLaFeature>**
+
 
 3. Lorsque que la fonctionnalité est prête, une **pull request** peut être créée depuis la branche vers develop, tous les membres doivent êtres ajoutés en reviewer. Afin de valider l'issue, celle-ci doit respecter la **Definition of done**:
 

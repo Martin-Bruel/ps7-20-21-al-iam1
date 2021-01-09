@@ -20,22 +20,28 @@ public class Main {
 		OpenWeatherAPI api = new OpenWeatherAPI("metric");
 		Store shop = new Shop(0, "Coffee and Shop", address, null, null, null, null, api);
 	
-		shop.addProduct(new Item("item1", 13));
+		shop.addProduct(new Item("Umbrella", 20));
+		shop.addProduct(new Item("K-way", 35));
+		shop.addProduct(new Item("Sunglasses", 15));
+		shop.addProduct(new Item("Hat", 5));
+		shop.addProduct(new Item("Beer", 2));
+		shop.addProduct(new Item("Coffee", 0.5F));
+		shop.addProduct(new Item("Tea", 0.6F));
 
-		Publication p1 = new Publication("Vente de parapluie","Aujourd'hui il pleut, si tu as besoin d'un parapluie n'hésite pas à passer à notre magasin. MagasinPluie",null);
+		Publication p1 = new Publication("Umbrella sales","It's raining. If you need an umbrella you can visit our shop.",null);
 		p1.addLabel(Label.RAIN);
 		shop.addPublication(p1);
 
-		Publication p2 = new Publication("Chocolat chaud", "Vous avez un peu froid ? N'hésitez pas à venir vous réchauffer auprès d'un chocolat chaud chez nous ! MagasinPluie", null);
+		Publication p2 = new Publication("Hot Chocolate", "You're cold? You come to our shop and have a hot chocolate !", null);
 		p2.addLabel(Label.CHILLY);
 		p2.addLabel(Label.COLD);
 		shop.addPublication(p2);
 
-		Publication p3 = new Publication("Lunettes de soleil", "Trop de soleil, ça pique les yeux ! N'hésitez pas à passer pour prendre des lunettes et contrer cette luminosité ! ", null);
+		Publication p3 = new Publication("Sunglasses", "Too sunny, it stings the eyes ! Come to us and get sunglasses ! ", null);
 		p3.addLabel(Label.SUNNY);
 		shop.addPublication(p3);
 
-		Publication p4 = new Publication("Nuages : prévoyez ! ", "Avant que l'averse se déclenche n'hésitez pas à venir chercher votre parapluie !", null);
+		Publication p4 = new Publication("Clouds : be far-sighted"," Come buy an umbrella to our shop before the rain ! ", null);
 		p4.addLabel(Label.CLOUDS);
 		shop.addPublication(p4);
 
@@ -46,6 +52,8 @@ public class Main {
 		hours.add(LocalTime.now().withHour(15).withMinute(25));
 		OpeningHours openingHours=new OpeningHours(hours,hours,hours,hours,hours,hours,hours);
 		shop.setOpeningHours(openingHours);
+		shop.addCurrency(Currency.POLYCOIN);
+		shop.addCurrency(Currency.SICOIN);
 		shop.makeJSON();
 	}
 }

@@ -5,8 +5,32 @@
   "address" : [ 43.61563752169879, 7.071778197708522 ],
   "products" : [ {
     "type" : "item",
-    "name" : "item1",
-    "price" : 13.0
+    "name" : "Umbrella",
+    "price" : 20.0
+  }, {
+    "type" : "item",
+    "name" : "K-way",
+    "price" : 35.0
+  }, {
+    "type" : "item",
+    "name" : "Sunglasses",
+    "price" : 15.0
+  }, {
+    "type" : "item",
+    "name" : "Hat",
+    "price" : 5.0
+  }, {
+    "type" : "item",
+    "name" : "Beer",
+    "price" : 2.0
+  }, {
+    "type" : "item",
+    "name" : "Coffee",
+    "price" : 0.5
+  }, {
+    "type" : "item",
+    "name" : "Tea",
+    "price" : 0.6
   } ],
   "openingHours" : {
     "type" : "openingHours",
@@ -20,34 +44,35 @@
   },
   "allPublications" : [ {
     "type" : "Publication",
-    "title" : "Vente de parapluie",
+    "title" : "Umbrella sales",
     "labels" : [ "RAIN" ],
-    "description" : "Aujourd'hui il pleut, si tu as besoin d'un parapluie n'hésite pas à passer à notre magasin. MagasinPluie"
+    "description" : "It's raining. If you need an umbrella you can visit our shop."
   }, {
     "type" : "Publication",
-    "title" : "Chocolat chaud",
+    "title" : "Hot Chocolate",
     "labels" : [ "CHILLY", "COLD" ],
-    "description" : "Vous avez un peu froid ? N'hésitez pas à venir vous réchauffer auprès d'un chocolat chaud chez nous ! MagasinPluie"
+    "description" : "You're cold? You come to our shop and have a hot chocolate !"
   }, {
     "type" : "Publication",
-    "title" : "Lunettes de soleil",
+    "title" : "Sunglasses",
     "labels" : [ "SUNNY" ],
-    "description" : "Trop de soleil, ça pique les yeux ! N'hésitez pas à passer pour prendre des lunettes et contrer cette luminosité ! "
+    "description" : "Too sunny, it stings the eyes ! Come to us and get sunglasses ! "
   }, {
     "type" : "Publication",
-    "title" : "Nuages : prévoyez ! ",
+    "title" : "Clouds : be far-sighted",
     "labels" : [ "CLOUDS" ],
-    "description" : "Avant que l'averse se déclenche n'hésitez pas à venir chercher votre parapluie !"
+    "description" : " Come buy an umbrella to our shop before the rain ! "
   } ],
   "contextPublications" : [ {
     "type" : "Publication",
-    "title" : "Chocolat chaud",
+    "title" : "Hot Chocolate",
     "labels" : [ "CHILLY", "COLD" ],
-    "description" : "Vous avez un peu froid ? N'hésitez pas à venir vous réchauffer auprès d'un chocolat chaud chez nous ! MagasinPluie"
+    "description" : "You're cold? You come to our shop and have a hot chocolate !"
   }, {
     "type" : "Publication",
-    "title" : "Nuages : prévoyez ! ",
+    "title" : "Clouds : be far-sighted",
     "labels" : [ "CLOUDS" ],
-    "description" : "Avant que l'averse se déclenche n'hésitez pas à venir chercher votre parapluie !"
-  } ]
+    "description" : " Come buy an umbrella to our shop before the rain ! "
+  } ],
+  "localCurrencies" : [ "POLYCOIN", "SICOIN" ]
 }

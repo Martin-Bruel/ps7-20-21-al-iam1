@@ -32,6 +32,7 @@ public class Shop extends Store {
 		if (contextPublications != null) this.contextPublications = contextPublications;
 		else this.contextPublications = new ArrayList<Publication>();
 		openingHours = hours;
+		localCurrencies=new ArrayList<CurrencyType>();
 	}
 
 	public void addProduct(Product i) {
